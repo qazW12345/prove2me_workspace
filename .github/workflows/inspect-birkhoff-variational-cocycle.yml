@@ -12,13 +12,12 @@ permissions:
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 8
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
-      MISSION_ID: 7fefbc49-9c05-4183-9365-4d1bc25259fe
 
     steps:
-      - name: Inspect definition bundle, related support, and mission
+      - name: Inspect periodic-solution definition and support lemmas
         shell: bash
         run: |
           set -euo pipefail
@@ -29,35 +28,18 @@ jobs:
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          echo "===== DEFINITION ====="
-          ENCDEF=$(printf '%s' 'BirkhoffGlobalSection_AmbientRotation' | jq -sRr @uri)
+          echo "===== DYNAMICAL CONVEXITY DEFINITION ====="
+          ENCDEF=$(printf '%s' 'BirkhoffGlobalSection_DynamicalConvexity' | jq -sRr @uri)
           curl --fail-with-body --silent --show-error             "$API/theorems?q=$ENCDEF&status=Definition&limit=100"             -H "Authorization: Bearer $TOKEN"             | jq '(.theorems // .items // .results // .) |
-                  map(select((.theorem_name // .definition_name // "") == "BirkhoffGlobalSection_AmbientRotation"))'
+                  map(select((.theorem_name // .definition_name // "") == "BirkhoffGlobalSection_DynamicalConvexity"))'
 
-          echo "===== RELATED THEOREMS ====="
+          echo "===== ODE/PERIODIC SUPPORT ====="
           ENC=$(printf '%s' 'BirkhoffGlobalSection' | jq -sRr @uri)
           RESP=$(curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=200"             -H "Authorization: Bearer $TOKEN")
           echo "$RESP" | jq '(.theorems // .items // .results // .) |
             map(select((.theorem_name // "") | startswith("BirkhoffGlobalSection."))) |
             map(select(
-              ((.theorem_name // "") | ascii_downcase | test("period|variational|flow|unique|cocycle|hamilton")) or
-              ((.theorem_title // "") | ascii_downcase | test("period|variational|flow|unique|cocycle|hamilton"))
+              ((.theorem_name // "") | ascii_downcase | test("solution|periodic|unique|uniqueness|variational|cocycle")) or
+              ((.theorem_title // "") | ascii_downcase | test("solution|periodic|unique|uniqueness|variational|cocycle"))
             )) |
-            map({theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,source,tags})'
-
-          echo "===== MISSION ====="
-          OFFSET=0
-          MISSION=""
-          while true; do
-            PAGE=$(curl --fail-with-body --silent --show-error "$API/missions?limit=100&offset=$OFFSET"               -H "Authorization: Bearer $TOKEN")
-            TOTAL=$(jq -r '.total' <<<"$PAGE")
-            FOUND=$(jq -c --arg id "$MISSION_ID" '.missions | map(select(.id == $id)) | first // empty' <<<"$PAGE")
-            if [[ -n "$FOUND" ]]; then MISSION="$FOUND"; break; fi
-            OFFSET=$((OFFSET + 100))
-            if (( OFFSET >= TOTAL )); then break; fi
-          done
-          test -n "$MISSION"
-          jq '{id,name,description,mission_type,fields,main_theorem}' <<<"$MISSION"
-
-          echo "===== MILESTONES ====="
-          curl --fail-with-body --silent --show-error "$API/missions/$MISSION_ID/milestones?limit=100&offset=0"             -H "Authorization: Bearer $TOKEN" | jq '{pagination,milestones}'
+            map({theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement})'
