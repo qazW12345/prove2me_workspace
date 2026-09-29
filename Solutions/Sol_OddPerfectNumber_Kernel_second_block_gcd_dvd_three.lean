@@ -35,8 +35,7 @@ theorem solution (p : Nat) (hp4 : p % 4 = 1) :
     omega
   have hring :
       p ^ 2 = ((p - 2) * (p + 1) + 2) + p := by
-    rw [hp_decomp]
-    ring
+    nlinarith [hp_decomp]
   have hsub :
       p ^ 2 - p = (p - 2) * (p + 1) + 2 := by
     omega
@@ -44,7 +43,7 @@ theorem solution (p : Nat) (hp4 : p % 4 = 1) :
       (p ^ 2 - p + 1) - ((p - 2) * (p + 1)) = 3 := by
     omega
   have hdivdiff : d ∣ (p ^ 2 - p + 1) - ((p - 2) * (p + 1)) := by
-    exact Nat.dvd_sub' hdB hprod
+    exact Nat.dvd_sub hdB hprod
   rw [hdiff] at hdivdiff
   exact hdivdiff
 
