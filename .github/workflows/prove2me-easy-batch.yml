@@ -1,4 +1,4 @@
-name: Prove2Me easy batch inspect
+name: Prove2Me easy batch contribution
 
 on:
   push:
@@ -10,14 +10,70 @@ permissions:
   contents: read
 
 jobs:
-  inspect:
+  prove-and-submit:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 40
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+      TARGET_MATHLIB_REV: 0df444a360eaa60ab8c11dca51a86af692955474
+      TARGET_TOOLCHAIN: leanprover/lean4:v4.33.1
 
     steps:
-      - name: Authenticate and fetch candidates
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v elan >/dev/null 2>&1; then
+            curl --fail --silent --show-error https://elan.lean-lang.org/elan-init.sh               | sh -s -- -y --default-toolchain none
+          fi
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Pin Prove2Me Lean environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' "$TARGET_TOOLCHAIN" > lean-toolchain
+          cat > lakefile.lean <<'EOF'
+          import Lake
+          open Lake DSL
+
+          package «prove2me» where
+            leanOptions := #[⟨`autoImplicit, false⟩]
+
+          require mathlib from git
+            "https://github.com/leanprover-community/mathlib4.git" @
+            "__MATHLIB_REV__"
+
+          lean_lib «Definitions» where
+          lean_lib «Theorems» where
+          @[default_target]
+          lean_lib «Solutions» where
+          EOF
+          sed -i "s/__MATHLIB_REV__/$TARGET_MATHLIB_REV/" lakefile.lean
+
+      - name: Fetch Mathlib and prebuilt cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake update
+          lake exe cache get
+          RESOLVED=$(git -C .lake/packages/mathlib rev-parse HEAD)
+          test "$RESOLVED" = "$TARGET_MATHLIB_REV"
+
+      - name: Compile all three exact solutions locally
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build Solutions.Sol_WorkbookCorrected_plus_53720
+          lake build Solutions.Sol_WorkbookCorrected_plus_11131
+          lake build Solutions.Sol_WorkbookCorrected_plus_48990
+          ! grep -RniE '(^|[^[:alpha:]])sorry([^[:alpha:]]|$)'             Solutions/Sol_WorkbookCorrected_plus_53720.lean             Solutions/Sol_WorkbookCorrected_plus_11131.lean             Solutions/Sol_WorkbookCorrected_plus_48990.lean
+          echo 'All local Lean builds passed.'
+
+      - name: Authenticate to Prove2Me
+        id: auth
         shell: bash
         run: |
           set -euo pipefail
@@ -27,9 +83,64 @@ jobs:
           TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
+          echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
 
-          for ID in             da6228dd-b137-41bd-b91a-a132ca409087             e8882b56-97c0-4880-9aeb-8dcc1b0a7d5c             f99db012-dac2-49e4-95ac-5460abf468f9
-          do
-            echo "===== $ID ====="
-            curl --fail-with-body --silent --show-error "$API/theorems/$ID"               -H "Authorization: Bearer $TOKEN"               | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,preamble,source,tags,mathlib_rev,created_at}'
-          done
+      - name: Submit all still-open targets and poll
+        shell: bash
+        env:
+          ACCESS_TOKEN: ${{ steps.auth.outputs.token }}
+        run: |
+          set -euo pipefail
+          API='https://prove2.me/api/v1'
+
+          submit_one() {
+            ID="$1"
+            NAME="$2"
+            FILE="$3"
+            EXPLANATION="$4"
+
+            curl --fail-with-body --silent --show-error "$API/theorems/$ID"               -H "Authorization: Bearer $ACCESS_TOKEN" -o target.json
+
+            STATUS_NOW=$(jq -r '.status' target.json)
+            NAME_NOW=$(jq -r '.theorem_name' target.json)
+            REV_NOW=$(jq -r '.mathlib_rev' target.json)
+            echo "$NAME_NOW current status: $STATUS_NOW"
+
+            test "$NAME_NOW" = "$NAME"
+            test "$REV_NOW" = "$TARGET_MATHLIB_REV"
+
+            if [[ "$STATUS_NOW" != 'Open' ]]; then
+              echo "$NAME is no longer Open; skipping submission."
+              return 0
+            fi
+
+            SUBMIT=$(curl --fail-with-body --silent --show-error               -X POST "$API/verify"               -H "Authorization: Bearer $ACCESS_TOKEN"               -F "theorem_id=$ID"               -F "file=@$FILE"               -F "proof_type=prove"               --form-string "explanation=$EXPLANATION")
+
+            SID=$(jq -r '.submission_id // empty' <<<"$SUBMIT")
+            STATUS=$(jq -r '.status // empty' <<<"$SUBMIT")
+            test -n "$SID"
+            echo "$NAME submission: $SID ($STATUS)"
+
+            VERDICT="$SUBMIT"
+            for _ in $(seq 1 120); do
+              if [[ "$STATUS" != 'PENDING' ]]; then
+                break
+              fi
+              sleep 5
+              VERDICT=$(curl --fail-with-body --silent --show-error --get "$API/verify"                 -H "Authorization: Bearer $ACCESS_TOKEN"                 --data-urlencode "submission_id=$SID")
+              STATUS=$(jq -r '.status // empty' <<<"$VERDICT")
+              echo "$NAME verifier status: $STATUS"
+            done
+
+            echo "$VERDICT" | jq '{status,error_message,message}'
+            case "$STATUS" in
+              ACCEPTED|SKETCH_ACCEPTED) ;;
+              *) echo "$NAME was not accepted: $STATUS" >&2; return 30 ;;
+            esac
+          }
+
+          submit_one             da6228dd-b137-41bd-b91a-a132ca409087             WorkbookCorrected.plus_53720             Solutions/Sol_WorkbookCorrected_plus_53720.lean             'Direct arithmetic evaluation gives \(\binom{15}{4}=1365\) and \(\binom{20}{4}=4845\). Therefore \(323\cdot1365=91\cdot4845\). Lean verifies the finite binomial computations and rational arithmetic using norm_num with the recursive definition of Nat.choose.'
+
+          submit_one             e8882b56-97c0-4880-9aeb-8dcc1b0a7d5c             WorkbookCorrected.plus_11131             Solutions/Sol_WorkbookCorrected_plus_11131.lean             'Direct arithmetic evaluation gives \(\binom{9}{6}=84\) and \(\binom{16}{6}=8008\). Thus \(286\cdot84=3\cdot8008\). Lean verifies these concrete binomial coefficients and the resulting rational identity using norm_num with Nat.choose.'
+
+          submit_one             f99db012-dac2-49e4-95ac-5460abf468f9             WorkbookCorrected.plus_48990             Solutions/Sol_WorkbookCorrected_plus_48990.lean             'Every term is a concrete natural-number binomial coefficient. Evaluating the coefficients and then the truncated natural-number subtractions reduces the left-hand side to 55. Lean performs this exact finite computation using norm_num together with Nat.choose.'
