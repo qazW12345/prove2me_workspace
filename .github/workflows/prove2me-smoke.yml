@@ -38,7 +38,7 @@ jobs:
         run: |
           set -euo pipefail
           printf '%s\n' "$TARGET_TOOLCHAIN" > lean-toolchain
-          cat > lakefile.lean <<EOF
+          cat > lakefile.lean <<'EOF'
           import Lake
           open Lake DSL
 
@@ -47,13 +47,14 @@ jobs:
 
           require mathlib from git
             "https://github.com/leanprover-community/mathlib4.git" @
-            "$TARGET_MATHLIB_REV"
+            "__MATHLIB_REV__"
 
           lean_lib «Definitions» where
           lean_lib «Theorems» where
           @[default_target]
           lean_lib «Solutions» where
           EOF
+          sed -i "s/__MATHLIB_REV__/$TARGET_MATHLIB_REV/" lakefile.lean
 
       - name: Fetch Mathlib and prebuilt cache
         shell: bash
