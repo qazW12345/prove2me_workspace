@@ -33,5 +33,5 @@ jobs:
             echo "===== $ID ====="
             curl --fail-with-body --silent --show-error "$API/theorems/$ID"               -H "Authorization: Bearer $TOKEN"               | jq '{theorem_id,theorem_name,status,proved_at,disproved_at}'
 
-            curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions?first=true"               -H "Authorization: Bearer $TOKEN"               | jq '{submissions: [.submissions[]? | {id,status,proof_type,username,accepted_at}]}'
+            curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"               -H "Authorization: Bearer $TOKEN"               | jq '{submissions: [.submissions[]? | {id,status,proof_type,username,accepted_at,error_message}]}'
           done
