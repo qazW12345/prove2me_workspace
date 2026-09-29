@@ -12,38 +12,27 @@ permissions:
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 8
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
 
     steps:
-      - name: Inspect Hasse support neighborhood and proved convergence
+      - name: Inspect proved Weil-Stepanov support theorem only
         shell: bash
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
+          NAME='WeilStepanov.weil_stepanov'
           BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
           AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
           TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          echo "===== L-SERIES SUMMABLE SUBMISSIONS ====="
-          SUBS=$(curl --fail-with-body --silent --show-error             "$API/theorems/c48ddb62-7c56-4adb-a72f-784fe2342dcf/submissions"             -H "Authorization: Bearer $TOKEN")
-          echo "$SUBS" | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] | {id,status,username,accepted_at,error_message,explanation}]}'
-          SID=$(jq -r '(.submissions // .items // .results // []) | map(select(.status=="ACCEPTED")) | first | .id // empty' <<<"$SUBS")
-          if [[ -n "$SID" ]]; then
-            echo "===== ACCEPTED L-SERIES SOLUTION ====="
-            curl --fail-with-body --silent --show-error "$API/submissions/$SID/solution"               -H "Authorization: Bearer $TOKEN" | jq '.'
-          fi
-
-          echo "===== BSD HASSE/FROBENIUS NEIGHBORHOOD ====="
-          ENC=$(printf '%s' 'BSD' | jq -sRr @uri)
-          RESP=$(curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=200"             -H "Authorization: Bearer $TOKEN")
-          echo "$RESP" | jq '(.theorems // .items // .results // .) |
-            map(select((.theorem_name // "") | startswith("BSD."))) |
-            map(select(
-              ((.theorem_name // "") | ascii_downcase | test("hasse|froben|finite|card|lseries|local|point")) or
-              ((.theorem_title // "") | ascii_downcase | test("hasse|froben|finite field|point|l-series|local"))
-            )) |
-            map({theorem_id,theorem_name,theorem_title,status,natural_language_statement,source,tags})'
+          ENC=$(printf '%s' "$NAME" | jq -sRr @uri)
+          RESP=$(curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=100"             -H "Authorization: Bearer $TOKEN")
+          MATCH=$(jq -c --arg n "$NAME" '(.theorems // .items // .results // .) |
+            map(select(.theorem_name == $n)) | first // empty' <<<"$RESP")
+          test -n "$MATCH"
+          ID=$(jq -r '.theorem_id' <<<"$MATCH")
+          curl --fail-with-body --silent --show-error "$API/theorems/$ID"             -H "Authorization: Bearer $TOKEN"             | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,source,tags}'
