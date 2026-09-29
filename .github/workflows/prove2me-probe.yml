@@ -8,6 +8,7 @@ on:
       - ".github/workflows/prove2me-probe.yml"
       - "scripts/agent_probe.py"
       - "scripts/agent_discover.py"
+      - "scripts/agent_dare.py"
   workflow_dispatch:
 
 permissions:
@@ -33,17 +34,17 @@ jobs:
             exit 2
           fi
           python3 scripts/agent_probe.py
-          python3 scripts/agent_discover.py
+          python3 scripts/agent_dare.py
 
       - name: Commit sanitized live state
         shell: bash
         run: |
           set -euo pipefail
           test -f agent-state/probe-result.json
-          test -f agent-state/discovery.json
+          test -f agent-state/dare.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add agent-state/probe-result.json agent-state/discovery.json
+          git add agent-state/probe-result.json agent-state/dare.json
           if git diff --cached --quiet; then
             echo "Live state is unchanged."
           else
