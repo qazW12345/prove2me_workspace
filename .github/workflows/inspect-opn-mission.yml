@@ -12,13 +12,13 @@ permissions:
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
-      ROOT_ID: 68e5a0c5-3bc6-4be2-a323-b4caecce6f5a
+      MISSION_ID: f37bda44-314b-4d8e-8917-fe26209e0c9c
 
     steps:
-      - name: Inspect all current frontier leaves and open graph nodes
+      - name: Survey all mission-linked open OddPerfectNumber theorems
         shell: bash
         run: |
           set -euo pipefail
@@ -29,19 +29,25 @@ jobs:
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          echo "===== OPEN NODES IN ROOT GRAPH ====="
-          curl --fail-with-body --silent --show-error "$API/theorems/$ROOT_ID/graph"             -H "Authorization: Bearer $TOKEN"             | jq '[.. | objects | select(.status? == "Open" and .theorem_id? != null) |
-                    {theorem_id,theorem_name,theorem_title,status}] | unique_by(.theorem_id)'
+          ENC=$(printf '%s' 'OddPerfectNumber' | jq -sRr @uri)
+          RESP=$(curl --fail-with-body --silent --show-error             "$API/theorems?q=$ENC&status=Open&limit=200"             -H "Authorization: Bearer $TOKEN")
+          CANDS=$(jq -c '(.theorems // .items // .results // .) |
+            map(select((.theorem_name // "") | startswith("OddPerfectNumber"))) ' <<<"$RESP")
+          echo "Candidate namespace count: $(jq 'length' <<<"$CANDS")"
 
-          for ID in             1e19be36-a9fb-45e5-aa4e-464aba65dfe9             ce554eab-1088-4764-861f-e2e862916365             37803710-70c6-47a6-8d9a-1fb406a91f30
-          do
-            echo "===== LEAF $ID ====="
-            curl --fail-with-body --silent --show-error "$API/theorems/$ID"               -H "Authorization: Bearer $TOKEN"               | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,preamble,source,tags,mathlib_rev,created_at}'
+          OUT='[]'
+          while IFS= read -r ROW; do
+            ID=$(jq -r '.theorem_id' <<<"$ROW")
+            M=$(curl --fail-with-body --silent --show-error "$API/theorems/$ID/missions"               -H "Authorization: Bearer $TOKEN")
+            IN=$(jq -r --arg mid "$MISSION_ID" 'any(.missions[]?; .id == $mid)' <<<"$M")
+            if [[ "$IN" == "true" ]]; then
+              DETAIL=$(curl --fail-with-body --silent --show-error "$API/theorems/$ID"                 -H "Authorization: Bearer $TOKEN")
+              ITEM=$(jq -c '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,
+                             source,tags,created_at}' <<<"$DETAIL")
+              OUT=$(jq -cn --argjson a "$OUT" --argjson x "$ITEM" '$a + [$x]')
+            fi
+          done < <(jq -c '.[]' <<<"$CANDS")
 
-            echo "===== SUBMISSIONS $ID ====="
-            curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"               -H "Authorization: Bearer $TOKEN"               | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] |
-                    {id,status,proof_type,username,accepted_at,error_message,explanation}]}'
-
-            echo "===== DECOMPOSITIONS $ID ====="
-            curl --fail-with-body --silent --show-error "$API/theorems/$ID/decompositions"               -H "Authorization: Bearer $TOKEN"               | jq '.'
-          done
+          echo "===== ALL MISSION-LINKED OPEN ODDPERFECTNUMBER THEOREMS ====="
+          jq 'sort_by(.theorem_name)' <<<"$OUT"
+          echo "Mission-linked open count: $(jq 'length' <<<"$OUT")"
