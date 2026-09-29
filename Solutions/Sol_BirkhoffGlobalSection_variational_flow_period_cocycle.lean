@@ -5,7 +5,7 @@ import Mathlib.Analysis.Calculus.Deriv.Shift
 import Mathlib.Topology.Connected.Clopen
 import Mathlib.Tactic
 
-open scoped ContDiff
+open scoped ContDiff Topology
 
 namespace BirkhoffGlobalSection
 
