@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   probe:
@@ -33,11 +33,29 @@ jobs:
           fi
           python3 scripts/agent_probe.py
 
+      - name: Commit sanitized live state
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -f agent-state/probe-result.json ]]; then
+            echo "No sanitized state file was produced." >&2
+            exit 3
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add agent-state/probe-result.json
+          if git diff --cached --quiet; then
+            echo "Live state is unchanged."
+          else
+            git commit -m "chore: refresh sanitized Prove2Me live state"
+            git push
+          fi
+
       - name: Upload sanitized probe report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: prove2me-probe-result
-          path: probe-result.json
+          path: agent-state/probe-result.json
           if-no-files-found: ignore
           retention-days: 7
