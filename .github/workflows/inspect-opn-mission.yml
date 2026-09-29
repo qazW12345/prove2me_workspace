@@ -12,13 +12,12 @@ permissions:
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
-      MISSION_ID: f37bda44-314b-4d8e-8917-fe26209e0c9c
 
     steps:
-      - name: Survey all mission-linked open OddPerfectNumber theorems
+      - name: Inspect candidate normalization lemmas only
         shell: bash
         run: |
           set -euo pipefail
@@ -29,25 +28,15 @@ jobs:
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          ENC=$(printf '%s' 'OddPerfectNumber' | jq -sRr @uri)
-          RESP=$(curl --fail-with-body --silent --show-error             "$API/theorems?q=$ENC&status=Open&limit=200"             -H "Authorization: Bearer $TOKEN")
-          CANDS=$(jq -c '(.theorems // .items // .results // .) |
-            map(select((.theorem_name // "") | startswith("OddPerfectNumber"))) ' <<<"$RESP")
-          echo "Candidate namespace count: $(jq 'length' <<<"$CANDS")"
+          for ID in             b07eff7b-bdf1-4a20-a734-f65fa18df7bb             200ef201-e2c0-4f73-aed2-e116a333c2dd
+          do
+            echo "===== THEOREM $ID ====="
+            curl --fail-with-body --silent --show-error "$API/theorems/$ID"               -H "Authorization: Bearer $TOKEN"               | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,preamble,source,tags}'
 
-          OUT='[]'
-          while IFS= read -r ROW; do
-            ID=$(jq -r '.theorem_id' <<<"$ROW")
-            M=$(curl --fail-with-body --silent --show-error "$API/theorems/$ID/missions"               -H "Authorization: Bearer $TOKEN")
-            IN=$(jq -r --arg mid "$MISSION_ID" 'any(.missions[]?; .id == $mid)' <<<"$M")
-            if [[ "$IN" == "true" ]]; then
-              DETAIL=$(curl --fail-with-body --silent --show-error "$API/theorems/$ID"                 -H "Authorization: Bearer $TOKEN")
-              ITEM=$(jq -c '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,
-                             source,tags,created_at}' <<<"$DETAIL")
-              OUT=$(jq -cn --argjson a "$OUT" --argjson x "$ITEM" '$a + [$x]')
-            fi
-          done < <(jq -c '.[]' <<<"$CANDS")
+            echo "===== SUBMISSIONS $ID ====="
+            curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"               -H "Authorization: Bearer $TOKEN"               | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] |
+                    {id,status,proof_type,username,accepted_at,error_message,explanation}]}'
 
-          echo "===== ALL MISSION-LINKED OPEN ODDPERFECTNUMBER THEOREMS ====="
-          jq 'sort_by(.theorem_name)' <<<"$OUT"
-          echo "Mission-linked open count: $(jq 'length' <<<"$OUT")"
+            echo "===== DECOMPOSITIONS $ID ====="
+            curl --fail-with-body --silent --show-error "$API/theorems/$ID/decompositions"               -H "Authorization: Bearer $TOKEN"               | jq '.'
+          done
