@@ -15,11 +15,10 @@ jobs:
     timeout-minutes: 10
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
-      DEFINITION_ID: 46c9bb9b-4d03-4206-9e4c-47afb72c9e59
       MISSION_ID: 7fefbc49-9c05-4183-9365-4d1bc25259fe
 
     steps:
-      - name: Inspect definition bundle and nearby theorem support
+      - name: Inspect definition bundle, related support, and mission
         shell: bash
         run: |
           set -euo pipefail
@@ -31,7 +30,9 @@ jobs:
           echo "::add-mask::$TOKEN"
 
           echo "===== DEFINITION ====="
-          curl --fail-with-body --silent --show-error "$API/definitions/$DEFINITION_ID"             -H "Authorization: Bearer $TOKEN" | jq '.'
+          ENCDEF=$(printf '%s' 'BirkhoffGlobalSection_AmbientRotation' | jq -sRr @uri)
+          curl --fail-with-body --silent --show-error             "$API/theorems?q=$ENCDEF&status=Definition&limit=100"             -H "Authorization: Bearer $TOKEN"             | jq '(.theorems // .items // .results // .) |
+                  map(select((.theorem_name // .definition_name // "") == "BirkhoffGlobalSection_AmbientRotation"))'
 
           echo "===== RELATED THEOREMS ====="
           ENC=$(printf '%s' 'BirkhoffGlobalSection' | jq -sRr @uri)
@@ -42,7 +43,7 @@ jobs:
               ((.theorem_name // "") | ascii_downcase | test("period|variational|flow|unique|cocycle|hamilton")) or
               ((.theorem_title // "") | ascii_downcase | test("period|variational|flow|unique|cocycle|hamilton"))
             )) |
-            map({theorem_id,theorem_name,theorem_title,status,natural_language_statement,source,tags})'
+            map({theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,source,tags})'
 
           echo "===== MISSION ====="
           OFFSET=0
