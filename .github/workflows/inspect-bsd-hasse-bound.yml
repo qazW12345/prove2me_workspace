@@ -12,13 +12,12 @@ permissions:
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
-      MISSION_ID: 8f292930-cea8-4b30-83e9-082b496196a9
 
     steps:
-      - name: Inspect BSD mission milestones and frontier
+      - name: Inspect Hasse support neighborhood and proved convergence
         shell: bash
         run: |
           set -euo pipefail
@@ -29,24 +28,22 @@ jobs:
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          MISSION=""
-          OFFSET=0
-          while true; do
-            PAGE=$(curl --fail-with-body --silent --show-error "$API/missions?limit=100&offset=$OFFSET"               -H "Authorization: Bearer $TOKEN")
-            TOTAL=$(jq -r '.total' <<<"$PAGE")
-            FOUND=$(jq -c --arg id "$MISSION_ID" '.missions | map(select(.id == $id)) | first // empty' <<<"$PAGE")
-            if [[ -n "$FOUND" ]]; then MISSION="$FOUND"; break; fi
-            OFFSET=$((OFFSET + 100))
-            if (( OFFSET >= TOTAL )); then break; fi
-          done
-          test -n "$MISSION"
-          ROOT=$(jq -r '.main_theorem.theorem_id' <<<"$MISSION")
+          echo "===== L-SERIES SUMMABLE SUBMISSIONS ====="
+          SUBS=$(curl --fail-with-body --silent --show-error             "$API/theorems/c48ddb62-7c56-4adb-a72f-784fe2342dcf/submissions"             -H "Authorization: Bearer $TOKEN")
+          echo "$SUBS" | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] | {id,status,username,accepted_at,error_message,explanation}]}'
+          SID=$(jq -r '(.submissions // .items // .results // []) | map(select(.status=="ACCEPTED")) | first | .id // empty' <<<"$SUBS")
+          if [[ -n "$SID" ]]; then
+            echo "===== ACCEPTED L-SERIES SOLUTION ====="
+            curl --fail-with-body --silent --show-error "$API/submissions/$SID/solution"               -H "Authorization: Bearer $TOKEN" | jq '.'
+          fi
 
-          echo "===== MISSION ====="
-          jq '{id,name,description,mission_type,fields,creator,main_theorem}' <<<"$MISSION"
-
-          echo "===== MILESTONES ====="
-          curl --fail-with-body --silent --show-error "$API/missions/$MISSION_ID/milestones?limit=100&offset=0"             -H "Authorization: Bearer $TOKEN" | jq '{pagination,milestones}'
-
-          echo "===== FRONTIER ====="
-          curl --fail-with-body --silent --show-error "$API/theorems/$ROOT/open-leaves?limit=100&offset=0"             -H "Authorization: Bearer $TOKEN" | jq '.'
+          echo "===== BSD HASSE/FROBENIUS NEIGHBORHOOD ====="
+          ENC=$(printf '%s' 'BSD' | jq -sRr @uri)
+          RESP=$(curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=200"             -H "Authorization: Bearer $TOKEN")
+          echo "$RESP" | jq '(.theorems // .items // .results // .) |
+            map(select((.theorem_name // "") | startswith("BSD."))) |
+            map(select(
+              ((.theorem_name // "") | ascii_downcase | test("hasse|froben|finite|card|lseries|local|point")) or
+              ((.theorem_title // "") | ascii_downcase | test("hasse|froben|finite field|point|l-series|local"))
+            )) |
+            map({theorem_id,theorem_name,theorem_title,status,natural_language_statement,source,tags})'
