@@ -15,38 +15,38 @@ jobs:
     timeout-minutes: 8
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+      MISSION_ID: 8f292930-cea8-4b30-83e9-082b496196a9
 
     steps:
-      - name: Inspect target theorem and mission context
+      - name: Inspect BSD mission milestones and frontier
         shell: bash
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
-          NAME='BSD.hasse_bound'
           BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
           AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
           TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          ENC=$(printf '%s' "$NAME" | jq -sRr @uri)
-          RESP=$(curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=100"             -H "Authorization: Bearer $TOKEN")
-          MATCH=$(jq -c --arg n "$NAME" '
-            (.theorems // .items // .results // .) |
-            map(select(.theorem_name == $n)) |
-            first // empty
-          ' <<<"$RESP")
-          test -n "$MATCH"
-          ID=$(jq -r '.theorem_id // .id' <<<"$MATCH")
+          MISSION=""
+          OFFSET=0
+          while true; do
+            PAGE=$(curl --fail-with-body --silent --show-error "$API/missions?limit=100&offset=$OFFSET"               -H "Authorization: Bearer $TOKEN")
+            TOTAL=$(jq -r '.total' <<<"$PAGE")
+            FOUND=$(jq -c --arg id "$MISSION_ID" '.missions | map(select(.id == $id)) | first // empty' <<<"$PAGE")
+            if [[ -n "$FOUND" ]]; then MISSION="$FOUND"; break; fi
+            OFFSET=$((OFFSET + 100))
+            if (( OFFSET >= TOTAL )); then break; fi
+          done
+          test -n "$MISSION"
+          ROOT=$(jq -r '.main_theorem.theorem_id' <<<"$MISSION")
 
-          echo "===== TARGET ====="
-          curl --fail-with-body --silent --show-error "$API/theorems/$ID"             -H "Authorization: Bearer $TOKEN"             | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,preamble,source,tags,mathlib_rev,created_at}'
+          echo "===== MISSION ====="
+          jq '{id,name,description,mission_type,fields,creator,main_theorem}' <<<"$MISSION"
 
-          echo "===== SUBMISSIONS ====="
-          curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"             -H "Authorization: Bearer $TOKEN"             | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] | {id,status,proof_type,username,accepted_at,error_message,explanation}]}'
+          echo "===== MILESTONES ====="
+          curl --fail-with-body --silent --show-error "$API/missions/$MISSION_ID/milestones?limit=100&offset=0"             -H "Authorization: Bearer $TOKEN" | jq '{pagination,milestones}'
 
-          echo "===== DECOMPOSITIONS ====="
-          curl --fail-with-body --silent --show-error "$API/theorems/$ID/decompositions"             -H "Authorization: Bearer $TOKEN" | jq '.'
-
-          echo "===== MISSIONS ====="
-          curl --fail-with-body --silent --show-error "$API/theorems/$ID/missions"             -H "Authorization: Bearer $TOKEN" | jq '.'
+          echo "===== FRONTIER ====="
+          curl --fail-with-body --silent --show-error "$API/theorems/$ROOT/open-leaves?limit=100&offset=0"             -H "Authorization: Bearer $TOKEN" | jq '.'
