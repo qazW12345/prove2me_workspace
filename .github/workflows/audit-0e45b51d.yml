@@ -1,4 +1,4 @@
-name: Audit Prove2Me 0e45b51d
+name: Audit Prove2Me 0e45b51d mission
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
       TARGET_ID: 0e45b51d-915a-4c31-bec6-b2f945374870
     steps:
-      - name: Read theorem and submissions
+      - name: Read theorem missions
         shell: bash
         run: |
           set -euo pipefail
@@ -26,5 +26,5 @@ jobs:
           TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
-          curl --fail-with-body --silent --show-error "$API/theorems/$TARGET_ID"             -H "Authorization: Bearer $TOKEN" | jq '{theorem_id,theorem_name,status}'
-          curl --fail-with-body --silent --show-error "$API/theorems/$TARGET_ID/submissions"             -H "Authorization: Bearer $TOKEN"             | jq '{submissions:[.submissions[]? | {id,status,username,accepted_at,error_message}]}'
+          echo '=== missions lookup ==='
+          curl --fail-with-body --silent --show-error "$API/theorems/$TARGET_ID/missions"             -H "Authorization: Bearer $TOKEN" | jq .
