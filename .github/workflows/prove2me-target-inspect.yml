@@ -1,0 +1,36 @@
+name: Prove2Me target inspect
+
+on:
+  push:
+    branches:
+      - prove2me/b9d780bf
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+      TARGET_ID: b9d780bf-274a-4fc9-ad7d-0f6e500361ee
+
+    steps:
+      - name: Authenticate and fetch theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          API='https://prove2.me/api/v1'
+          BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
+          AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
+          TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
+          VERSION=$(jq -r '.version // empty' <<<"$AUTH")
+          test -n "$TOKEN"
+          echo "::add-mask::$TOKEN"
+
+          curl --fail-with-body --silent --show-error "$API/theorems/$TARGET_ID"             -H "Authorization: Bearer $TOKEN" -o theorem.json
+
+          echo "Platform version: $VERSION"
+          jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,preamble,source,tags,mathlib_rev,created_by_username,created_at}' theorem.json
