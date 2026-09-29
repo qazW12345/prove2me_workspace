@@ -17,20 +17,29 @@ jobs:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
 
     steps:
-      - name: Inspect open packaged core history only
+      - name: Inspect final packaged core node only
         shell: bash
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
-          ID='914c5936-f2f6-4861-930b-c4fc62dc19f4'
           BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
           AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
           TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          echo "===== CORE ====="
+          ENC=$(printf '%s' 'OddPerfectNumber.dris_packaged_core' | jq -sRr @uri)
+          RESP=$(curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=100"             -H "Authorization: Bearer $TOKEN")
+          MATCH=$(jq -c '
+            (.theorems // .items // .results // .) |
+            map(select(.theorem_name == "OddPerfectNumber.dris_packaged_core")) |
+            first // empty
+          ' <<<"$RESP")
+          test -n "$MATCH"
+          ID=$(jq -r '.theorem_id' <<<"$MATCH")
+
+          echo "===== RESEARCH CORE ====="
           curl --fail-with-body --silent --show-error "$API/theorems/$ID"             -H "Authorization: Bearer $TOKEN"             | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,source,tags}'
 
           echo "===== CORE SUBMISSIONS ====="
-          curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"             -H "Authorization: Bearer $TOKEN"             | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] | {id,status,proof_type,username,accepted_at,error_message,explanation}]}'
+          curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"             -H "Authorization: Bearer $TOKEN"             | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] | {id,status,username,error_message,explanation}]}'
