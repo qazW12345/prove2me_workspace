@@ -1,0 +1,120 @@
+name: Prove2Me smoke discovery
+
+on:
+  push:
+    branches:
+      - prove2me/smoke-test
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+      P2M_API_KEY: ${{ secrets.P2M_API_KEY }}
+      PROVE2ME_ACCESS_TOKEN: ${{ secrets.PROVE2ME_ACCESS_TOKEN }}
+      P2M_ACCESS_TOKEN: ${{ secrets.P2M_ACCESS_TOKEN }}
+      PROVE2ME_EMAIL: ${{ secrets.PROVE2ME_EMAIL }}
+      PROVE2ME_PASSWORD: ${{ secrets.PROVE2ME_PASSWORD }}
+      P2M_EMAIL: ${{ secrets.P2M_EMAIL }}
+      P2M_PASSWORD: ${{ secrets.P2M_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Prove2Me
+        id: auth
+        shell: bash
+        run: |
+          set -euo pipefail
+          API='https://prove2.me/api/v1'
+          ACCESS=''
+          KEY=''
+          MODE=''
+
+          if [[ -n "$PROVE2ME_API_KEY" ]]; then
+            KEY="$PROVE2ME_API_KEY"
+            MODE='PROVE2ME_API_KEY'
+          elif [[ -n "$P2M_API_KEY" ]]; then
+            KEY="$P2M_API_KEY"
+            MODE='P2M_API_KEY'
+          fi
+
+          if [[ -n "$KEY" ]]; then
+            BODY=$(jq -nc --arg k "$KEY" '{api_key:$k}')
+            RESPONSE=$(curl --fail-with-body --silent --show-error -X POST "$API/agent/refresh" -H 'Content-Type: application/json' -d "$BODY")
+            ACCESS=$(jq -r '.access_token // empty' <<<"$RESPONSE")
+            VERSION=$(jq -r '.version // empty' <<<"$RESPONSE")
+          elif [[ -n "$PROVE2ME_ACCESS_TOKEN" ]]; then
+            ACCESS="$PROVE2ME_ACCESS_TOKEN"
+            MODE='PROVE2ME_ACCESS_TOKEN'
+            VERSION='unknown'
+          elif [[ -n "$P2M_ACCESS_TOKEN" ]]; then
+            ACCESS="$P2M_ACCESS_TOKEN"
+            MODE='P2M_ACCESS_TOKEN'
+            VERSION='unknown'
+          else
+            EMAIL=''
+            PASSWORD=''
+            if [[ -n "$PROVE2ME_EMAIL" && -n "$PROVE2ME_PASSWORD" ]]; then
+              EMAIL="$PROVE2ME_EMAIL"
+              PASSWORD="$PROVE2ME_PASSWORD"
+              MODE='PROVE2ME_EMAIL+PROVE2ME_PASSWORD'
+            elif [[ -n "$P2M_EMAIL" && -n "$P2M_PASSWORD" ]]; then
+              EMAIL="$P2M_EMAIL"
+              PASSWORD="$P2M_PASSWORD"
+              MODE='P2M_EMAIL+P2M_PASSWORD'
+            else
+              echo 'No supported Prove2Me credential secret names were found.' >&2
+              exit 2
+            fi
+            BODY=$(jq -nc --arg e "$EMAIL" --arg p "$PASSWORD" '{email:$e,password:$p}')
+            RESPONSE=$(curl --fail-with-body --silent --show-error -X POST "$API/login" -H 'Content-Type: application/json' -d "$BODY")
+            ACCESS=$(jq -r '.access_token // empty' <<<"$RESPONSE")
+            VERSION=$(jq -r '.version // empty' <<<"$RESPONSE")
+          fi
+
+          test -n "$ACCESS" || { echo 'Authentication returned no access token.' >&2; exit 3; }
+          echo "::add-mask::$ACCESS"
+          echo "token=$ACCESS" >> "$GITHUB_OUTPUT"
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Authenticated via $MODE; platform version: $VERSION"
+
+      - name: Query tiny GF(3) target
+        shell: bash
+        env:
+          ACCESS_TOKEN: ${{ steps.auth.outputs.token }}
+        run: |
+          set -euo pipefail
+          API='https://prove2.me/api/v1'
+          curl --fail-with-body --silent --show-error --get "$API/theorems" \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            --data-urlencode 'status=Open' \
+            --data-urlencode 'q=Characteristic 3 of GF(3)' \
+            --data-urlencode 'limit=20' \
+            -o target-search.json
+
+          if [[ $(jq '.theorems | length' target-search.json) -eq 0 ]]; then
+            curl --fail-with-body --silent --show-error --get "$API/theorems" \
+              -H "Authorization: Bearer $ACCESS_TOKEN" \
+              --data-urlencode 'status=Open' \
+              --data-urlencode 'q=additive order dividing 3' \
+              --data-urlencode 'limit=20' \
+              -o target-search.json
+          fi
+
+          jq '{total, theorems: [.theorems[] | {theorem_id, theorem_name, theorem_title, status, formal_statement, preamble, source, mathlib_rev}]}' target-search.json
+
+          {
+            echo '## Prove2Me smoke target discovery'
+            echo
+            echo '### Open candidates'
+            echo '~~~json'
+            jq '{total, theorems: [.theorems[] | {theorem_id, theorem_name, theorem_title, status, formal_statement, preamble, source, mathlib_rev}]}' target-search.json
+            echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
