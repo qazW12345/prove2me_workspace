@@ -17,29 +17,22 @@ jobs:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
 
     steps:
-      - name: Inspect periodic-solution definition and support lemmas
+      - name: Inspect accepted ODE-uniqueness precedent only
         shell: bash
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
+          ID='78761a4c-5114-4e54-9237-9c8e11f55974'
           BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
           AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
           TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          echo "===== DYNAMICAL CONVEXITY DEFINITION ====="
-          ENCDEF=$(printf '%s' 'BirkhoffGlobalSection_DynamicalConvexity' | jq -sRr @uri)
-          curl --fail-with-body --silent --show-error             "$API/theorems?q=$ENCDEF&status=Definition&limit=100"             -H "Authorization: Bearer $TOKEN"             | jq '(.theorems // .items // .results // .) |
-                  map(select((.theorem_name // .definition_name // "") == "BirkhoffGlobalSection_DynamicalConvexity"))'
-
-          echo "===== ODE/PERIODIC SUPPORT ====="
-          ENC=$(printf '%s' 'BirkhoffGlobalSection' | jq -sRr @uri)
-          RESP=$(curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=200"             -H "Authorization: Bearer $TOKEN")
-          echo "$RESP" | jq '(.theorems // .items // .results // .) |
-            map(select((.theorem_name // "") | startswith("BirkhoffGlobalSection."))) |
-            map(select(
-              ((.theorem_name // "") | ascii_downcase | test("solution|periodic|unique|uniqueness|variational|cocycle")) or
-              ((.theorem_title // "") | ascii_downcase | test("solution|periodic|unique|uniqueness|variational|cocycle"))
-            )) |
-            map({theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement})'
+          echo "===== PRECEDENT SUBMISSIONS ====="
+          SUBS=$(curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"             -H "Authorization: Bearer $TOKEN")
+          echo "$SUBS" | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] | {id,status,username,accepted_at,error_message,explanation}]}'
+          SID=$(jq -r '(.submissions // .items // .results // []) | map(select(.status=="ACCEPTED")) | first | .id // empty' <<<"$SUBS")
+          test -n "$SID"
+          echo "===== ACCEPTED PRECEDENT SOLUTION ====="
+          curl --fail-with-body --silent --show-error "$API/submissions/$SID/solution"             -H "Authorization: Bearer $TOKEN" | jq '.'
