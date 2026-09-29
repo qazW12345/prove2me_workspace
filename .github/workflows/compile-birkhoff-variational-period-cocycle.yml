@@ -1,0 +1,82 @@
+name: Compile Birkhoff variational period cocycle
+
+on:
+  push:
+    branches:
+      - prove2me/birkhoff-variational-period-cocycle
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TARGET_MATHLIB_REV: 0df444a360eaa60ab8c11dca51a86af692955474
+      TARGET_TOOLCHAIN: leanprover/lean4:v4.33.1
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v elan >/dev/null 2>&1; then
+            curl --fail --silent --show-error https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
+          fi
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Pin exact Prove2Me environment and fetch target definitions
+        shell: bash
+        env:
+          PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+        run: |
+          set -euo pipefail
+          printf '%s\n' "$TARGET_TOOLCHAIN" > lean-toolchain
+          cat > lakefile.lean <<'EOF'
+          import Lake
+          open Lake DSL
+
+          package «prove2me» where
+            leanOptions := #[⟨`autoImplicit, false⟩]
+
+          require mathlib from git
+            "https://github.com/leanprover-community/mathlib4.git" @
+            "__MATHLIB_REV__"
+
+          lean_lib «Definitions» where
+          @[default_target]
+          lean_lib «Solutions» where
+          EOF
+          sed -i "s/__MATHLIB_REV__/$TARGET_MATHLIB_REV/" lakefile.lean
+          lake update
+          lake exe cache get
+          test "$(git -C .lake/packages/mathlib rev-parse HEAD)" = "$TARGET_MATHLIB_REV"
+
+          API='https://prove2.me/api/v1'
+          BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
+          AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
+          TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
+          test -n "$TOKEN"
+          echo "::add-mask::$TOKEN"
+
+          for NAME in             BirkhoffGlobalSection_AmbientRotation             BirkhoffGlobalSection_DynamicalConvexity             BirkhoffGlobalSection_TangentialHessian
+          do
+            ENC=$(printf '%s' "$NAME" | jq -sRr @uri)
+            RESP=$(curl --fail-with-body --silent --show-error               "$API/theorems?q=$ENC&status=Definition&limit=100"               -H "Authorization: Bearer $TOKEN")
+            DEF=$(jq -r --arg n "$NAME" '(.theorems // .items // .results // .) |
+              map(select((.theorem_name // .definition_name // "") == $n)) |
+              first | .definition // empty' <<<"$RESP")
+            test -n "$DEF"
+            mkdir -p Definitions
+            printf '%s\n' "$DEF" > "Definitions/Def_${NAME}.lean"
+          done
+
+      - name: Compile current proof development
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build Solutions.Sol_BirkhoffGlobalSection_variational_flow_period_cocycle
