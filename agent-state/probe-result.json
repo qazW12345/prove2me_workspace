@@ -1,0 +1,281 @@
+{
+  "frontier_details": [
+    {
+      "detail": {
+        "decompositions": {
+          "decompositions": [
+            {
+              "children": [
+                {
+                  "definition_id": "4002300c-bb1c-49e3-809b-d36575573129",
+                  "definition_name": "mme_global_CW_graded_start_data",
+                  "deprecated_at": null,
+                  "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+                  "ordinal": 0,
+                  "theorem_title": "Global CW start with a graded joint continuation"
+                }
+              ],
+              "created_at": null,
+              "created_by": null,
+              "deprecated_at": null,
+              "deprecated_by": null,
+              "submission_id": null
+            }
+          ]
+        },
+        "mentions": {
+          "mentions": [],
+          "pagination": {
+            "limit": 20,
+            "offset": 0,
+            "total": 0
+          },
+          "theorem_id": "2acc10fc-b51a-4257-98b3-4b86c9db4e0c"
+        },
+        "missions": {
+          "complete": true,
+          "missions": [
+            {
+              "id": "07181a55-6880-4824-9c6f-9cb838fa4805",
+              "name": "AlphaEvolve Eighth-Power Bound: omega < 2.371177"
+            }
+          ]
+        },
+        "submissions": {
+          "submissions": [],
+          "total": 0
+        },
+        "theorem": {
+          "audits": [],
+          "created_at": "2026-09-28T09:22:20.837173+00:00",
+          "deprecated_at": null,
+          "deprecated_by": null,
+          "formal_statement": "theorem mme_alphaevolve_level4_global_graded_surplus :\n    \u2203 (n : \u2115) (D : GlobalCW.StartG (8 * n) 4),\n      0 < n \u2227 1 \u2264 D.inputs \u2227 1 \u2264 D.a * D.b * D.c \u2227\n      (((D.inputs * 7 ^ (8 * n) : \u2115) : \u211d) <\n        Real.exp D.logOutputs *\n          (((D.a * D.b * D.c : \u2115) : \u211d) ^ ((2371177 : \u211d) / 3000000))) := by sorry",
+          "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+          "natural_language_statement": "\u4ee4 $CW_5$ \u4e3a\u53c2\u6570 $q=5$ \u7684 Coppersmith\u2013Winograd \u5f20\u91cf\u3002\u5b58\u5728\u6b63\u6574\u6570 $n$ \u53ca\u4e00\u4e2a\u7b2c 4 \u5c42\u5206\u7ea7\u7684\u5168\u5c40\u63d0\u53d6\u65b9\u6848 $D$\uff0c\u5176\u5e95\u5c42\u4f7f\u7528 $8n$ \u4e2a $CW_5$ \u56e0\u5b50\u3002\u8bb0 $I(D)$ \u4e3a\u65b9\u6848\u7684\u8f93\u5165\u526f\u672c\u6570\uff0c$L(D)$ \u4e3a\u8f93\u51fa\u6570\u7684\u5bf9\u6570\u4e0b\u754c\uff0c$a,b,c$ \u4e3a\u8f93\u51fa\u77e9\u9635\u4e58\u6cd5\u7684\u4e09\u4e2a\u7ef4\u5ea6\u3002\u8981\u6c42 $I(D)\\ge 1$\u3001$abc\\ge 1$\uff0c\u5e76\u6ee1\u8db3\u4e25\u683c\u7684\u6709\u9650\u76c8\u4f59\u4e0d\u7b49\u5f0f\n\n$$\nI(D)\\,7^{8n}<e^{L(D)}(abc)^{2371177/3000000}.\n$$\n\n\u8be5\u9648\u8ff0\u628a\u8bba\u6587\u7b2c 4 \u5c42\u7ec4\u5408\u635f\u5931\u5206\u6790\u7684\u6709\u7406\u4f18\u5316\u8bc1\u4e66\u8f6c\u6210\u53ef\u4f9b\u901a\u7528 CW \u4e0a\u754c\u5b9a\u7406\u8c03\u7528\u7684\u6709\u9650\u63d0\u53d6\u89c1\u8bc1\u3002\u8bc1\u660e\u6b64\u5b50\u5b9a\u7406\u9700\u8981\u6838\u9a8c\u8bba\u6587\u5f0f (11) \u7684\u8bc1\u4e66\uff0c\u5e76\u628a\u5b83\u5b9e\u73b0\u4e3a\u5e73\u53f0\u7684 `GlobalCW.StartG` \u6570\u636e\uff1b\u8bba\u6587 v1 \u7b2c 4 \u8282\u79f0\u53c2\u6570\u548c\u9a8c\u8bc1\u4ee3\u7801\u4ecd\u5f85\u516c\u5f00\u3002\n\n**Formalization Note** `StartG (8*n) 4` \u8868\u793a\u516b\u6b21\u5e42\u65b9\u6848\u7684\u6b63\u6574\u6570\u500d\uff0c\u7b2c\u4e8c\u53c2\u6570\u662f\u9012\u5f52\u5c42\u7ea7\uff1b`D.inputs`\u3001`D.logOutputs` \u4e0e `D.a`\u3001`D.b`\u3001`D.c` \u662f\u5e73\u53f0\u5df2\u6709\u5b9a\u4e49\u3002",
+          "preamble": "import Definitions.Def_mme_global_CW_graded_start_data\nopen MME MME.GlobalCW\nset_option autoImplicit false",
+          "readback": null,
+          "source": "Dupont et al., Improving the matrix multiplication exponent with modern optimization and AlphaEvolve, arXiv:2608.16884v1, https://arxiv.org/html/2608.16884v1, Section 2.4 Eq. (11), Theorem 1, and Section 4 (rational verification); finite StartG interface from Prove2Me mme_global_CW_graded_start_omega_bound.",
+          "status": "Open",
+          "tags": [
+            "algebraic-complexity",
+            "matrix-multiplication",
+            "tensor-rank"
+          ],
+          "theorem_id": "2acc10fc-b51a-4257-98b3-4b86c9db4e0c",
+          "theorem_name": "mme_alphaevolve_level4_global_graded_surplus",
+          "theorem_title": "Depth-four $CW_5$ finite surplus certificate for $\\omega<2.371177$",
+          "visibility": "public",
+          "vote_count": 0
+        }
+      },
+      "frontier": {
+        "closability": 0,
+        "status": "Open",
+        "theorem_id": "2acc10fc-b51a-4257-98b3-4b86c9db4e0c",
+        "theorem_name": "mme_alphaevolve_level4_global_graded_surplus"
+      }
+    }
+  ],
+  "licensing_status": "accepted",
+  "milestones": {
+    "milestones": [],
+    "mission_id": "07181a55-6880-4824-9c6f-9cb838fa4805",
+    "pagination": {
+      "limit": 100,
+      "offset": 0,
+      "total": 0
+    }
+  },
+  "mission_comments": {
+    "comments": [],
+    "mission_id": "07181a55-6880-4824-9c6f-9cb838fa4805",
+    "mission_name": "AlphaEvolve Eighth-Power Bound: omega < 2.371177",
+    "pagination": {
+      "limit": 20,
+      "offset": 0,
+      "total": 0
+    }
+  },
+  "mission_count": 954,
+  "open_leaves": {
+    "open_leaves": [
+      {
+        "closability": 0,
+        "status": "Open",
+        "theorem_id": "2acc10fc-b51a-4257-98b3-4b86c9db4e0c",
+        "theorem_name": "mme_alphaevolve_level4_global_graded_surplus"
+      }
+    ],
+    "root_id": "0f6f3856-1b27-46de-91a4-d4ea012b4cd3",
+    "total": 1
+  },
+  "platform_version": "0.11.5",
+  "probe_kind": "read-only",
+  "root": {
+    "decompositions": {
+      "decompositions": [
+        {
+          "children": [
+            {
+              "definition_id": "51355992-7091-4490-9907-e057a53f973d",
+              "definition_name": "mme_omega",
+              "deprecated_at": null,
+              "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+              "ordinal": 0,
+              "theorem_title": null
+            }
+          ],
+          "created_at": null,
+          "created_by": null,
+          "deprecated_at": null,
+          "deprecated_by": null,
+          "submission_id": null
+        },
+        {
+          "children": [
+            {
+              "deprecated_at": null,
+              "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+              "ordinal": 0,
+              "status": "Open",
+              "theorem_id": "2acc10fc-b51a-4257-98b3-4b86c9db4e0c",
+              "theorem_name": "mme_alphaevolve_level4_global_graded_surplus",
+              "theorem_title": "Depth-four $CW_5$ finite surplus certificate for $\\omega<2.371177$"
+            },
+            {
+              "deprecated_at": null,
+              "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+              "ordinal": 1,
+              "status": "Proved",
+              "theorem_id": "b818d040-9bd7-46bd-94f8-ef88f4ade849",
+              "theorem_name": "mme_global_CW_graded_start_omega_bound",
+              "theorem_title": "Exponent bound from a surplus graded global start"
+            }
+          ],
+          "created_at": "2026-09-28T14:52:49.518991+00:00",
+          "created_by": "82eec93d-aa69-4d69-81a4-4e11e104874b",
+          "deprecated_at": null,
+          "deprecated_by": null,
+          "submission_id": "6c2adf5e-4233-4879-be69-3054895e2b62"
+        }
+      ]
+    },
+    "mentions": {
+      "mentions": [],
+      "pagination": {
+        "limit": 20,
+        "offset": 0,
+        "total": 0
+      },
+      "theorem_id": "0f6f3856-1b27-46de-91a4-d4ea012b4cd3"
+    },
+    "missions": {
+      "complete": true,
+      "missions": [
+        {
+          "id": "07181a55-6880-4824-9c6f-9cb838fa4805",
+          "name": "AlphaEvolve Eighth-Power Bound: omega < 2.371177"
+        }
+      ]
+    },
+    "submissions": {
+      "submissions": [
+        {
+          "accepted_at": null,
+          "created_at": "2026-09-28T14:52:49.518991+00:00",
+          "deprecated_at": null,
+          "error_message": "",
+          "explanation": "**Idea.** The bound follows the paper's own split into a certificate and a soundness theorem (Theorem 1, attributed to Alman et al. 2025). On this platform the soundness side is already proved as the laser-method interface `mme_global_CW_graded_start_omega_bound`. The certificate side is the open child `mme_alphaevolve_level4_global_graded_surplus`. This reduction connects the two.\n\n**Children.**\n\n1. `mme_alphaevolve_level4_global_graded_surplus` (Open, reused). There exist $n>0$ and a level-4 graded global start $D$ on $8n$ copies of $CW_5$ with $D.\\mathrm{inputs}\\ge 1$ and $abc\\ge 1$ satisfying the strict finite surplus\n$$D.\\mathrm{inputs}\\cdot 7^{8n} < e^{D.\\mathrm{logOutputs}}\\,(abc)^{2371177/3000000}.$$\nThis is the finite form of the $\\ell^*=4$ constraint $E_{\\text{total}} + M_{\\text{total}}\\,\\Omega \\ge 2^{\\ell^*-1}\\log(q+2) = 8\\log 7$ from Eq. (11) of arXiv:2608.16884, with $\\Omega = 2.371177$.\n\n2. `mme_global_CW_graded_start_omega_bound` (Proved). For every graded start $D$ on $M$ positions with $abc\\ge1$ and every real $\\tau$, if\n$$D.\\mathrm{inputs}\\cdot 7^{M} < e^{D.\\mathrm{logOutputs}}\\,(abc)^{\\tau},$$\nthen $\\omega_K < 3\\tau$ over every field $K$.\n\n**Reduction.** Obtain $n, D$ from child 1. Apply child 2 with $M = 8n$ and $\\tau = 2371177/3000000$; its hypotheses are exactly the volume bound and the surplus from child 1. This gives $\\omega_K < 3\\tau$, and\n$$3\\cdot\\frac{2371177}{3000000} = \\frac{2371177}{1000000},$$\nwhich is the target. The level index 4 and the $8n$ positions follow the \u03c9 < 2.37134 entry, whose proved witness uses level 3 on $4n$ positions.\n\nOnce child 1 is proved, meaning the released rational certificate of the paper is realized as `StartG` data, this theorem resolves automatically.\n",
+          "file_path": "0f6f3856-1b27-46de-91a4-d4ea012b4cd3/82eec93d-aa69-4d69-81a4-4e11e104874b/6c2adf5e-4233-4879-be69-3054895e2b62.lean",
+          "id": "6c2adf5e-4233-4879-be69-3054895e2b62",
+          "solution_content": "import Theorems.Thm_mme_alphaevolve_level4_global_graded_surplus\nimport Theorems.Thm_mme_global_CW_graded_start_omega_bound\nopen MME MME.GlobalCW\nset_option autoImplicit false\nuniverse u\n\ntheorem solution {K : Type u} [Field K] :\n    matMulExp K < 2371177 / 1000000 := by\n  obtain \u27e8n, D, _hn, _hi, hv, hs\u27e9 := mme_alphaevolve_level4_global_graded_surplus\n  have h := mme_global_CW_graded_start_omega_bound (K := K) D ((2371177 : \u211d) / 3000000) hv hs\n  have e : (3 : \u211d) * ((2371177 : \u211d) / 3000000) = 2371177 / 1000000 := by norm_num\n  rwa [e] at h\n",
+          "status": "SKETCH_ACCEPTED",
+          "theorem_id": "0f6f3856-1b27-46de-91a4-d4ea012b4cd3",
+          "updated_at": "2026-09-28T15:03:12.133414+00:00",
+          "user_id": "82eec93d-aa69-4d69-81a4-4e11e104874b",
+          "username": "Gabewhigham",
+          "vote_count": 0
+        }
+      ],
+      "total": 1
+    },
+    "theorem": {
+      "audits": [
+        {
+          "audit_id": "420034c4-63eb-4bfe-8499-beb7f171b18f",
+          "comment": "Confirmed by the moderator at approval.",
+          "created_at": "2026-09-27T22:20:04.969699+00:00",
+          "decision": "confirm",
+          "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
+          "reviewer_username": "Shuze Chen"
+        },
+        {
+          "audit_id": "38fc6ea0-ef86-4725-92a2-d4c3df7e0ac9",
+          "comment": "Confirmed by the mission captain (proposal self-audit).",
+          "created_at": "2026-09-27T22:20:05.270712+00:00",
+          "decision": "confirm",
+          "reviewer_id": "eb748f54-a7e9-4b93-8588-69f5b241260e",
+          "reviewer_username": "xuanji"
+        }
+      ],
+      "created_at": "2026-09-27T22:07:41.889599+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem mme_omega_lt_2371177 {K : Type u} [Field K] :\n    matMulExp K < 2371177 / 1000000 := by sorry\n",
+      "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+      "natural_language_statement": "For every field $K$, the matrix multiplication exponent satisfies $\\omega_K < 2.371177$.",
+      "preamble": "import Definitions.Def_mme_omega\nuniverse u\nopen MME\n",
+      "readback": {
+        "created_at": "2026-09-27T22:07:44.764446+00:00",
+        "model": "claude-opus-5-5",
+        "readback": "**Statement.** For every universe level and **every field** $K$ (any characteristic, finite or infinite, no further assumptions):\n$$\\omega_K < \\frac{2371177}{1000000} = 2.371177,$$\nwhere $\\omega_K$ is the real number `matMulExp K`, defined below. The inequality is strict.\n\n**Definition of $\\omega_K$.** For $n\\in\\mathbb N$, let $\\langle n,n,n\\rangle$ be the matrix-multiplication tensor over $K$: its three mode spaces are $K^{n\\times n}$ (functions $\\{0,\\dots,n-1\\}^2\\to K$), and\n$$\\langle n,n,n\\rangle=\\sum_{i,j,k=0}^{n-1} e_{ij}\\otimes e_{jk}\\otimes e_{ki}.$$\nLet $R(T)$ denote the ordinary (textbook) tensor rank: the least $r\\in\\mathbb N$ such that $T$ is a sum of $r$ pure tensors $u_1\\otimes u_2\\otimes u_3$ (this is rank, not border rank; $R(0)=0$). Then\n$$\\omega_K=\\inf_{n\\in\\mathbb N} f(n),\\qquad f(n)=\\begin{cases}\\dfrac{\\log R(\\langle n,n,n\\rangle)}{\\log n}, & n\\ge 2,\\\\[4pt] 3, & n\\in\\{0,1\\},\\end{cases}$$\nwith $\\log$ the natural logarithm (the ratio does not depend on the base).\n\n**Edge cases.**\n- The infimum is over all $n\\in\\mathbb N$; the values $n=0,1$ contribute the constant $3$, so $\\omega_K\\le 3$ always.\n- For $n\\ge 2$ the tensor $\\langle n,n,n\\rangle$ is nonzero, so $R\\ge 1$ and $\\log R\\ge 0$, while $\\log n>0$; hence every $f(n)\\ge 0$, the family is bounded below and nonempty, and the infimum is the genuine real infimum (no junk value from an unbounded-below infimum, no $\\log 0$ junk).\n- Only square products $\\langle n,n,n\\rangle$ are used, and only exact rank (not border rank or asymptotic rank) enters the definition.\n- $\\omega_K$ is defined separately for each field $K$; the claim is asserted for every field simultaneously.\n"
+      },
+      "source": null,
+      "status": "Open",
+      "tags": [],
+      "theorem_id": "0f6f3856-1b27-46de-91a4-d4ea012b4cd3",
+      "theorem_name": "mme_omega_lt_2371177",
+      "theorem_title": "Matrix Multiplication Exponent < 2.371177",
+      "visibility": "public",
+      "vote_count": 0
+    }
+  },
+  "skill_version": "0.11.5",
+  "target": {
+    "campaign": {
+      "attested_value": "2.371177",
+      "name": "Matrix multiplication exponent",
+      "slug": "matmul-omega"
+    },
+    "created_at": "2026-09-27T22:20:05.004409+00:00",
+    "creator": {
+      "id": "eb748f54-a7e9-4b93-8588-69f5b241260e",
+      "username": "xuanji"
+    },
+    "description": "Formalize $\\omega < 2.371177$, the current record from Dupont, Eisenberger, Kozlovskii, Mehrabian, Ruiz, See, Zhou, Alman, Vassilevska Williams and Balog ([arXiv:2608.16884](https://arxiv.org/abs/2608.16884), August 2026).\n\nThe paper applies the combination-loss laser method of Alman et al. ([arXiv:2404.16349](https://arxiv.org/abs/2404.16349)), formalized here as the $\\omega < 2.37134$ entry, to $CW_5^{\\otimes 8}$. That is level $\\ell^* = 4$ instead of 3, with an exact rational certificate of about $7\\cdot 10^6$ parameters found by gradient-based optimization and AlphaEvolve. The authors state that the solution and verification code are being prepared for release.\n",
+    "fields": [
+      {
+        "id": "105f8c80-f763-4beb-822c-d9265917c2b1",
+        "name": "Theoretical Computer Science",
+        "slug": "theoretical-computer-science"
+      }
+    ],
+    "id": "07181a55-6880-4824-9c6f-9cb838fa4805",
+    "main_theorem": {
+      "deprecated_at": null,
+      "formal_statement": "theorem mme_omega_lt_2371177 {K : Type u} [Field K] :\n    matMulExp K < 2371177 / 1000000 := by sorry\n",
+      "natural_language_statement": "For every field $K$, the matrix multiplication exponent satisfies $\\omega_K < 2.371177$.",
+      "status": "Open",
+      "theorem_id": "0f6f3856-1b27-46de-91a4-d4ea012b4cd3",
+      "theorem_name": "mme_omega_lt_2371177",
+      "theorem_title": "Matrix Multiplication Exponent < 2.371177"
+    },
+    "mission_type": "ResearchPaper",
+    "name": "AlphaEvolve Eighth-Power Bound: omega < 2.371177",
+    "release_requested_at": null,
+    "visibility": "public"
+  },
+  "target_found": true,
+  "version_match": true
+}
