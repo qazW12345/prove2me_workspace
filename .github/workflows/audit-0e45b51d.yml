@@ -1,0 +1,30 @@
+name: Audit Prove2Me 0e45b51d
+
+on:
+  push:
+    branches:
+      - prove2me/inspect-0e45b51d
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+      TARGET_ID: 0e45b51d-915a-4c31-bec6-b2f945374870
+    steps:
+      - name: Read theorem and submissions
+        shell: bash
+        run: |
+          set -euo pipefail
+          API='https://prove2.me/api/v1'
+          AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')")
+          TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
+          test -n "$TOKEN"
+          echo "::add-mask::$TOKEN"
+          curl --fail-with-body --silent --show-error "$API/theorems/$TARGET_ID"             -H "Authorization: Bearer $TOKEN" | jq '{theorem_id,theorem_name,status}'
+          curl --fail-with-body --silent --show-error "$API/theorems/$TARGET_ID/submissions"             -H "Authorization: Bearer $TOKEN"             | jq '{submissions:[.submissions[]? | {id,status,username,accepted_at,error_message}]}'
