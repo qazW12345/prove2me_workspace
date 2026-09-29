@@ -17,31 +17,46 @@ jobs:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
 
     steps:
-      - name: Fetch target metadata and context only
+      - name: Find exact theorem metadata only
         shell: bash
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
+          NAME='OddPerfectNumber.no_dris_thirteen_witnessed_core'
           BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
           AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
           TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          LIST=$(curl --fail-with-body --silent --show-error "$API/theorems?status=Open&limit=200"             -H "Authorization: Bearer $TOKEN")
-          TARGET=$(jq -c '
-            if type=="array" then .
-            elif .theorems then .theorems
-            elif .items then .items
-            elif .results then .results
-            else [] end
-            | map(select(.theorem_name == "OddPerfectNumber.no_dris_thirteen_witnessed_core"))
-            | first // empty
-          ' <<<"$LIST")
+          find_match() {
+            jq -c --arg n "$NAME" '
+              (if type=="array" then .
+               elif .theorems then .theorems
+               elif .items then .items
+               elif .results then .results
+               else [] end)
+              | map(select(.theorem_name == $n))
+              | first // empty
+            '
+          }
+
+          TARGET=""
+          for URL in             "$API/theorems?search=$(printf '%s' "$NAME" | jq -sRr @uri)&limit=200"             "$API/theorems?q=$(printf '%s' "$NAME" | jq -sRr @uri)&limit=200"             "$API/theorems?theorem_name=$(printf '%s' "$NAME" | jq -sRr @uri)&limit=200"             "$API/theorems?limit=1000"
+          do
+            echo "TRY $URL"
+            RESP=$(curl --fail-with-body --silent --show-error "$URL"               -H "Authorization: Bearer $TOKEN" || true)
+            [[ -n "$RESP" ]] || continue
+            MATCH=$(find_match <<<"$RESP" || true)
+            if [[ -n "$MATCH" ]]; then
+              TARGET="$MATCH"
+              break
+            fi
+            echo "$RESP" | jq '{total:(.total // null), returned:(if type=="array" then length else ((.theorems // .items // .results // [])|length) end)}' || true
+          done
 
           if [[ -z "$TARGET" ]]; then
-            echo "TARGET_NOT_FOUND_IN_OPEN_PAGE"
-            echo "$LIST" | jq '{keys:(keys), sample:(if type=="array" then .[0:3] else (.theorems // .items // .results // [])[0:3] end)}'
+            echo "TARGET_NOT_FOUND"
             exit 2
           fi
 
