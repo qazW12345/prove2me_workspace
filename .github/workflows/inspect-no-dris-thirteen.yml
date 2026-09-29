@@ -17,52 +17,29 @@ jobs:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
 
     steps:
-      - name: Find exact theorem metadata only
+      - name: Inspect target neighborhood only
         shell: bash
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
-          NAME='OddPerfectNumber.no_dris_thirteen_witnessed_core'
+          ID='02c63584-e733-4b4a-9fc3-46cbc16cee71'
           BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
           AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
           TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          find_match() {
-            jq -c --arg n "$NAME" '
-              (if type=="array" then .
-               elif .theorems then .theorems
-               elif .items then .items
-               elif .results then .results
-               else [] end)
-              | map(select(.theorem_name == $n))
-              | first // empty
-            '
-          }
-
-          TARGET=""
-          for URL in             "$API/theorems?search=$(printf '%s' "$NAME" | jq -sRr @uri)&limit=200"             "$API/theorems?q=$(printf '%s' "$NAME" | jq -sRr @uri)&limit=200"             "$API/theorems?theorem_name=$(printf '%s' "$NAME" | jq -sRr @uri)&limit=200"             "$API/theorems?limit=1000"
-          do
-            echo "TRY $URL"
-            RESP=$(curl --fail-with-body --silent --show-error "$URL"               -H "Authorization: Bearer $TOKEN" || true)
-            [[ -n "$RESP" ]] || continue
-            MATCH=$(find_match <<<"$RESP" || true)
-            if [[ -n "$MATCH" ]]; then
-              TARGET="$MATCH"
-              break
-            fi
-            echo "$RESP" | jq '{total:(.total // null), returned:(if type=="array" then length else ((.theorems // .items // .results // [])|length) end)}' || true
-          done
-
-          if [[ -z "$TARGET" ]]; then
-            echo "TARGET_NOT_FOUND"
-            exit 2
-          fi
-
-          ID=$(jq -r '.theorem_id // .id' <<<"$TARGET")
           echo "===== TARGET ====="
-          curl --fail-with-body --silent --show-error "$API/theorems/$ID"             -H "Authorization: Bearer $TOKEN"             | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,preamble,source,tags,mathlib_rev,created_at}'
+          curl --fail-with-body --silent --show-error "$API/theorems/$ID"             -H "Authorization: Bearer $TOKEN"             | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,source,tags,mathlib_rev}'
 
-          echo "===== MISSIONS ====="
-          curl --fail-with-body --silent --show-error "$API/theorems/$ID/missions"             -H "Authorization: Bearer $TOKEN"             | jq '.'
+          echo "===== SUBMISSIONS ====="
+          curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"             -H "Authorization: Bearer $TOKEN"             | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] | {id,status,proof_type,username,accepted_at,error_message,explanation}]}'
+
+          for Q in             'OddPerfectNumber no_dris thirteen'             'OddPerfectNumber thirteen residual'             'OddPerfectNumber dris cofactor'             'OddPerfectNumber witnessed core'
+          do
+            echo "===== SEARCH: $Q ====="
+            ENC=$(printf '%s' "$Q" | jq -sRr @uri)
+            curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=100"               -H "Authorization: Bearer $TOKEN"               | jq '(.theorems // .items // .results // .) |
+                    map(select((.theorem_name // "") | startswith("OddPerfectNumber"))) |
+                    map({theorem_id,theorem_name,theorem_title,status,natural_language_statement,source,tags})'
+          done
