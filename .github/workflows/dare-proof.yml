@@ -1,0 +1,45 @@
+name: DARE Proof Check
+
+on:
+  push:
+    branches:
+      - agent/dare-coefficient-energy
+    paths:
+      - ".github/workflows/dare-proof.yml"
+      - "Definitions/Def_DAREx_Model.lean"
+      - "Solutions/Sol_DAREx_CoefficientEnergyIdentity.lean"
+      - "lakefile.lean"
+      - "lean-toolchain"
+
+permissions:
+  contents: read
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSf https://elan.lean-lang.org/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Resolve pinned Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake update
+          lake exe cache get
+
+      - name: Build coefficient-energy proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake build Solutions.Sol_DAREx_CoefficientEnergyIdentity
