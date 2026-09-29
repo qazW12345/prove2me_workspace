@@ -50,19 +50,20 @@ jobs:
 
           : > pool.ndjson
           for REV in $(jq -r '.environments[].mathlib_rev' environments.json); do
-            for OFFSET in 0 200 400; do
-              TMP=$(mktemp)
-              curl --fail-with-body --silent --show-error --get "$API/theorems" \
-                -H "Authorization: Bearer $ACCESS_TOKEN" \
-                --data-urlencode 'status=Open' \
-                --data-urlencode 'sort=newest' \
-                --data-urlencode 'limit=200' \
-                --data-urlencode "offset=$OFFSET" \
-                --data-urlencode "env=$REV" \
-                -o "$TMP"
+            TMP=$(mktemp)
+            echo "Sampling newest Open theorems in $REV"
+            if curl --fail-with-body --silent --show-error --get "$API/theorems" \
+              -H "Authorization: Bearer $ACCESS_TOKEN" \
+              --data-urlencode 'status=Open' \
+              --data-urlencode 'sort=newest' \
+              --data-urlencode 'limit=200' \
+              --data-urlencode "env=$REV" \
+              -o "$TMP"; then
               jq -c '.theorems[]?' "$TMP" >> pool.ndjson
-              rm -f "$TMP"
-            done
+            else
+              echo "Warning: theorem listing failed for environment $REV; continuing." >&2
+            fi
+            rm -f "$TMP"
           done
 
           jq -s '
