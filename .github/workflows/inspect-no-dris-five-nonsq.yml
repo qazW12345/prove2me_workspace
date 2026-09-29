@@ -1,0 +1,49 @@
+name: Inspect no_dris_five_s_ge_two_not_even_nonsq
+
+on:
+  push:
+    branches:
+      - prove2me/inspect-no-dris-five-nonsq
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+
+    steps:
+      - name: Inspect theorem and submissions only
+        shell: bash
+        run: |
+          set -euo pipefail
+          API='https://prove2.me/api/v1'
+          NAME='OddPerfectNumber.no_dris_five_s_ge_two_not_even_nonsq'
+          BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
+          AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
+          TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
+          test -n "$TOKEN"
+          echo "::add-mask::$TOKEN"
+
+          ENC=$(printf '%s' "$NAME" | jq -sRr @uri)
+          RESP=$(curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=100"             -H "Authorization: Bearer $TOKEN")
+          MATCH=$(jq -c --arg n "$NAME" '
+            (.theorems // .items // .results // .) |
+            map(select(.theorem_name == $n)) |
+            first // empty
+          ' <<<"$RESP")
+          test -n "$MATCH"
+          ID=$(jq -r '.theorem_id // .id' <<<"$MATCH")
+
+          echo "===== TARGET ====="
+          curl --fail-with-body --silent --show-error "$API/theorems/$ID"             -H "Authorization: Bearer $TOKEN"             | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,preamble,source,tags,mathlib_rev,created_at}'
+
+          echo "===== SUBMISSIONS ====="
+          curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"             -H "Authorization: Bearer $TOKEN"             | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] | {id,status,proof_type,username,accepted_at,error_message,explanation}]}'
+
+          echo "===== MISSIONS ====="
+          curl --fail-with-body --silent --show-error "$API/theorems/$ID/missions"             -H "Authorization: Bearer $TOKEN"             | jq '.'
