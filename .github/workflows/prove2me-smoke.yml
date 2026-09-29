@@ -1,4 +1,4 @@
-name: Prove2Me smoke contribution
+name: Prove2Me smoke audit
 
 on:
   push:
@@ -10,158 +10,37 @@ permissions:
   contents: read
 
 jobs:
-  prove-and-submit:
+  audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
       TARGET_ID: 8554caa9-ba6e-4d98-bc6c-31c9d8caebb1
-      TARGET_MATHLIB_REV: 0df444a360eaa60ab8c11dca51a86af692955474
-      TARGET_TOOLCHAIN: leanprover/lean4:v4.33.1
-      SOLUTION_FILE: Solutions/Sol_WorkbookCorrected_plus_10988.lean
+      EXPECTED_SUBMISSION_ID: 4a756487-c866-4882-ac4f-a231d497f3ce
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install elan
-        shell: bash
-        run: |
-          set -euo pipefail
-          if ! command -v elan >/dev/null 2>&1; then
-            curl --fail --silent --show-error https://elan.lean-lang.org/elan-init.sh \
-              | sh -s -- -y --default-toolchain none
-          fi
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-
-      - name: Pin the Prove2Me Lean environment
-        shell: bash
-        run: |
-          set -euo pipefail
-          printf '%s\n' "$TARGET_TOOLCHAIN" > lean-toolchain
-          cat > lakefile.lean <<'EOF'
-          import Lake
-          open Lake DSL
-
-          package «prove2me» where
-            leanOptions := #[⟨`autoImplicit, false⟩]
-
-          require mathlib from git
-            "https://github.com/leanprover-community/mathlib4.git" @
-            "__MATHLIB_REV__"
-
-          lean_lib «Definitions» where
-          lean_lib «Theorems» where
-          @[default_target]
-          lean_lib «Solutions» where
-          EOF
-          sed -i "s/__MATHLIB_REV__/$TARGET_MATHLIB_REV/" lakefile.lean
-
-      - name: Fetch Mathlib and prebuilt cache
-        shell: bash
-        run: |
-          set -euo pipefail
-          lake update
-          lake exe cache get
-          RESOLVED=$(git -C .lake/packages/mathlib rev-parse HEAD)
-          echo "Resolved Mathlib: $RESOLVED"
-          test "$RESOLVED" = "$TARGET_MATHLIB_REV"
-
-      - name: Compile the exact solution locally
-        shell: bash
-        run: |
-          set -euo pipefail
-          lake build Solutions.Sol_WorkbookCorrected_plus_10988
-          if grep -nE '(^|[^[:alpha:]])sorry([^[:alpha:]]|$)' "$SOLUTION_FILE"; then
-            echo 'Solution unexpectedly contains sorry.' >&2
-            exit 20
-          fi
-          echo 'Local Lean verification passed.'
-
-      - name: Authenticate to Prove2Me
-        id: auth
+      - name: Authenticate and confirm accepted contribution
         shell: bash
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
           BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
-          RESPONSE=$(curl --fail-with-body --silent --show-error \
-            -X POST "$API/agent/refresh" \
-            -H 'Content-Type: application/json' \
-            -d "$BODY")
-          ACCESS=$(jq -r '.access_token // empty' <<<"$RESPONSE")
-          VERSION=$(jq -r '.version // empty' <<<"$RESPONSE")
-          test -n "$ACCESS"
-          test "$VERSION" = '0.11.5'
-          echo "::add-mask::$ACCESS"
-          echo "token=$ACCESS" >> "$GITHUB_OUTPUT"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "Authenticated to Prove2Me $VERSION."
+          AUTH=$(curl --fail-with-body --silent --show-error \
+            -X POST "$API/agent/refresh" -H 'Content-Type: application/json' -d "$BODY")
+          TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
+          test -n "$TOKEN"
+          echo "::add-mask::$TOKEN"
 
-      - name: Re-check exact target before submission
-        shell: bash
-        env:
-          ACCESS_TOKEN: ${{ steps.auth.outputs.token }}
-        run: |
-          set -euo pipefail
-          API='https://prove2.me/api/v1'
           curl --fail-with-body --silent --show-error "$API/theorems/$TARGET_ID" \
-            -H "Authorization: Bearer $ACCESS_TOKEN" -o target.json
+            -H "Authorization: Bearer $TOKEN" -o theorem.json
+          curl --fail-with-body --silent --show-error "$API/theorems/$TARGET_ID/submissions?first=true" \
+            -H "Authorization: Bearer $TOKEN" -o first.json
 
-          jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,mathlib_rev}' target.json
+          echo 'Theorem after smoke contribution:'
+          jq '{theorem_id,theorem_name,theorem_title,status,mathlib_rev}' theorem.json
+          echo 'First accepted submission:'
+          jq '{submissions: [.submissions[]? | {id,status,username,accepted_at,explanation}]}' first.json
 
-          test "$(jq -r '.status' target.json)" = 'Open'
-          test "$(jq -r '.mathlib_rev' target.json)" = "$TARGET_MATHLIB_REV"
-          test "$(jq -r '.theorem_name' target.json)" = 'WorkbookCorrected.plus_10988'
-
-      - name: Submit proof and poll verifier
-        shell: bash
-        env:
-          ACCESS_TOKEN: ${{ steps.auth.outputs.token }}
-        run: |
-          set -euo pipefail
-          API='https://prove2.me/api/v1'
-          EXPLANATION='Direct arithmetic evaluation proves the identity. We have $5! = 120$ and $6^5 = 7776$, hence $((2/6^5)\cdot 5!) = 240/7776 = 5/162$. The Lean proof uses norm_num, with the factorial definition available for normalization, to certify these exact rational computations.'
-
-          SUBMIT=$(curl --fail-with-body --silent --show-error \
-            -X POST "$API/verify" \
-            -H "Authorization: Bearer $ACCESS_TOKEN" \
-            -F "theorem_id=$TARGET_ID" \
-            -F "file=@$SOLUTION_FILE" \
-            -F "proof_type=prove" \
-            --form-string "explanation=$EXPLANATION")
-
-          echo "$SUBMIT" | jq '{submission_id,status,message}'
-          SID=$(jq -r '.submission_id // empty' <<<"$SUBMIT")
-          STATUS=$(jq -r '.status // empty' <<<"$SUBMIT")
-          test -n "$SID"
-
-          VERDICT="$SUBMIT"
-          for _ in $(seq 1 60); do
-            if [[ "$STATUS" != 'PENDING' ]]; then
-              break
-            fi
-            sleep 5
-            VERDICT=$(curl --fail-with-body --silent --show-error --get "$API/verify" \
-              -H "Authorization: Bearer $ACCESS_TOKEN" \
-              --data-urlencode "submission_id=$SID")
-            STATUS=$(jq -r '.status // empty' <<<"$VERDICT")
-            echo "Verifier status: $STATUS"
-          done
-
-          echo 'Final verifier response:'
-          echo "$VERDICT" | jq '{submission_id,status,error_message,message,accepted_at}'
-          {
-            echo '## Prove2Me smoke contribution'
-            echo
-            echo "- Theorem: `WorkbookCorrected.plus_10988`"
-            echo "- Theorem ID: `$TARGET_ID`"
-            echo "- Submission ID: `$SID`"
-            echo "- Final status: `$STATUS`"
-            echo
-            echo 'Local Lean build completed successfully before submission.'
-          } >> "$GITHUB_STEP_SUMMARY"
-
-          case "$STATUS" in
-            ACCEPTED|SKETCH_ACCEPTED) ;;
-            *) echo "Prove2Me did not accept the proof: $STATUS" >&2; exit 30 ;;
-          esac
+          test "$(jq -r '.status' theorem.json)" = 'Proved'
+          FIRST_ID=$(jq -r '.submissions[0].id // empty' first.json)
+          test "$FIRST_ID" = "$EXPECTED_SUBMISSION_ID"
