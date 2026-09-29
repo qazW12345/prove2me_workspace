@@ -15,10 +15,10 @@ jobs:
     timeout-minutes: 10
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
-      MISSION_ID: f37bda44-314b-4d8e-8917-fe26209e0c9c
+      ROOT_ID: 68e5a0c5-3bc6-4be2-a323-b4caecce6f5a
 
     steps:
-      - name: Locate mission and fetch frontier
+      - name: Inspect all current frontier leaves and open graph nodes
         shell: bash
         run: |
           set -euo pipefail
@@ -29,39 +29,19 @@ jobs:
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          MISSION=""
-          OFFSET=0
-          while true; do
-            PAGE=$(curl --fail-with-body --silent --show-error "$API/missions?limit=100&offset=$OFFSET"               -H "Authorization: Bearer $TOKEN")
-            TOTAL=$(jq -r '.total' <<<"$PAGE")
-            FOUND=$(jq -c --arg id "$MISSION_ID" '.missions | map(select(.id == $id)) | first // empty' <<<"$PAGE")
-            if [[ -n "$FOUND" ]]; then
-              MISSION="$FOUND"
-              break
-            fi
-            OFFSET=$((OFFSET + 100))
-            if (( OFFSET >= TOTAL )); then break; fi
+          echo "===== OPEN NODES IN ROOT GRAPH ====="
+          curl --fail-with-body --silent --show-error "$API/theorems/$ROOT_ID/graph"             -H "Authorization: Bearer $TOKEN"             | jq '[.. | objects | select(.status? == "Open" and .theorem_id? != null) |
+                    {theorem_id,theorem_name,theorem_title,status}] | unique_by(.theorem_id)'
+
+          for ID in             1e19be36-a9fb-45e5-aa4e-464aba65dfe9             ce554eab-1088-4764-861f-e2e862916365             37803710-70c6-47a6-8d9a-1fb406a91f30
+          do
+            echo "===== LEAF $ID ====="
+            curl --fail-with-body --silent --show-error "$API/theorems/$ID"               -H "Authorization: Bearer $TOKEN"               | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,preamble,source,tags,mathlib_rev,created_at}'
+
+            echo "===== SUBMISSIONS $ID ====="
+            curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"               -H "Authorization: Bearer $TOKEN"               | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] |
+                    {id,status,proof_type,username,accepted_at,error_message,explanation}]}'
+
+            echo "===== DECOMPOSITIONS $ID ====="
+            curl --fail-with-body --silent --show-error "$API/theorems/$ID/decompositions"               -H "Authorization: Bearer $TOKEN"               | jq '.'
           done
-          test -n "$MISSION"
-          ROOT=$(jq -r '.main_theorem.theorem_id' <<<"$MISSION")
-
-          echo "===== MISSION ====="
-          jq '{id,name,description,mission_type,fields,creator,main_theorem}' <<<"$MISSION"
-
-          echo "===== MILESTONES ====="
-          curl --fail-with-body --silent --show-error "$API/missions/$MISSION_ID/milestones?limit=100&offset=0"             -H "Authorization: Bearer $TOKEN"             | jq '{pagination,milestones}'
-
-          echo "===== FRONTIER ====="
-          OFFSET=0
-          LIMIT=100
-          ALL='[]'
-          while true; do
-            PAGE=$(curl --fail-with-body --silent --show-error               "$API/theorems/$ROOT/open-leaves?limit=$LIMIT&offset=$OFFSET"               -H "Authorization: Bearer $TOKEN")
-            ITEMS=$(jq '.open_leaves' <<<"$PAGE")
-            ALL=$(jq -cn --argjson a "$ALL" --argjson b "$ITEMS" '$a + $b')
-            TOTAL=$(jq -r '.total' <<<"$PAGE")
-            COUNT=$(jq 'length' <<<"$ALL")
-            if (( COUNT >= TOTAL )); then break; fi
-            OFFSET=$((OFFSET + LIMIT))
-          done
-          jq -n --arg root "$ROOT" --argjson leaves "$ALL" '{root_id:$root,total:($leaves|length),open_leaves:$leaves}'
