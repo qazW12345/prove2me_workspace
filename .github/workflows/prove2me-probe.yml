@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/prove2me-probe.yml"
       - "scripts/agent_probe.py"
+      - "scripts/agent_discover.py"
   workflow_dispatch:
 
 permissions:
@@ -23,7 +24,7 @@ jobs:
       - name: Check out workspace
         uses: actions/checkout@v4
 
-      - name: Run read-only Prove2Me probe
+      - name: Run read-only Prove2Me collectors
         shell: bash
         run: |
           set -euo pipefail
@@ -32,18 +33,17 @@ jobs:
             exit 2
           fi
           python3 scripts/agent_probe.py
+          python3 scripts/agent_discover.py
 
       - name: Commit sanitized live state
         shell: bash
         run: |
           set -euo pipefail
-          if [[ ! -f agent-state/probe-result.json ]]; then
-            echo "No sanitized state file was produced." >&2
-            exit 3
-          fi
+          test -f agent-state/probe-result.json
+          test -f agent-state/discovery.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add agent-state/probe-result.json
+          git add agent-state/probe-result.json agent-state/discovery.json
           if git diff --cached --quiet; then
             echo "Live state is unchanged."
           else
@@ -51,11 +51,11 @@ jobs:
             git push
           fi
 
-      - name: Upload sanitized probe report
+      - name: Upload sanitized state
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: prove2me-probe-result
-          path: agent-state/probe-result.json
+          name: prove2me-agent-state
+          path: agent-state/
           if-no-files-found: ignore
           retention-days: 7
