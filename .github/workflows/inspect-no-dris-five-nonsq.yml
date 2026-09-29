@@ -17,7 +17,7 @@ jobs:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
 
     steps:
-      - name: Inspect nearby five-case nodes only
+      - name: Inspect five-case family and cyclotomic child only
         shell: bash
         run: |
           set -euo pipefail
@@ -28,11 +28,14 @@ jobs:
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          for Q in             'OddPerfectNumber no_dris_five'             'OddPerfectNumber five cyclotomic'             'OddPerfectNumber p^5 divisor sum'             'OddPerfectNumber s square five'
+          for NAME in             'OddPerfectNumber.no_dris_five_s_ge_two_not_even'             'OddPerfectNumber.no_dris_five_s_ge_two_not_even_sq'             'OddPerfectNumber.no_dris_five_s_ge_two_not_even_square'             'OddPerfectNumber.no_dris_five_s_ge_two'             'OddPerfectNumber.no_dris_five'
           do
-            echo "===== SEARCH: $Q ====="
-            ENC=$(printf '%s' "$Q" | jq -sRr @uri)
-            curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=200"               -H "Authorization: Bearer $TOKEN"               | jq '(.theorems // .items // .results // .) |
-                    map(select((.theorem_name // "") | startswith("OddPerfectNumber"))) |
+            echo "===== LOOKUP: $NAME ====="
+            ENC=$(printf '%s' "$NAME" | jq -sRr @uri)
+            curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=100"               -H "Authorization: Bearer $TOKEN"               | jq --arg n "$NAME" '(.theorems // .items // .results // .) |
+                    map(select(.theorem_name == $n)) |
                     map({theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,source,tags})'
           done
+
+          echo "===== KNOWN K=5 CYCLOTOMIC CHILD ====="
+          curl --fail-with-body --silent --show-error "$API/theorems/648a7dc4-9710-4052-8b9c-50b2d545ffbb"             -H "Authorization: Bearer $TOKEN"             | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,source,tags}'
