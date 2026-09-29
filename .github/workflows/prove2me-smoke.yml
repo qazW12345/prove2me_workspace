@@ -15,13 +15,6 @@ jobs:
     timeout-minutes: 10
     env:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
-      P2M_API_KEY: ${{ secrets.P2M_API_KEY }}
-      PROVE2ME_ACCESS_TOKEN: ${{ secrets.PROVE2ME_ACCESS_TOKEN }}
-      P2M_ACCESS_TOKEN: ${{ secrets.P2M_ACCESS_TOKEN }}
-      PROVE2ME_EMAIL: ${{ secrets.PROVE2ME_EMAIL }}
-      PROVE2ME_PASSWORD: ${{ secrets.PROVE2ME_PASSWORD }}
-      P2M_EMAIL: ${{ secrets.P2M_EMAIL }}
-      P2M_PASSWORD: ${{ secrets.P2M_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v4
@@ -32,89 +25,99 @@ jobs:
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
-          ACCESS=''
-          KEY=''
-          MODE=''
+          test -n "$PROVE2ME_API_KEY" || { echo 'PROVE2ME_API_KEY is not configured.' >&2; exit 2; }
 
-          if [[ -n "$PROVE2ME_API_KEY" ]]; then
-            KEY="$PROVE2ME_API_KEY"
-            MODE='PROVE2ME_API_KEY'
-          elif [[ -n "$P2M_API_KEY" ]]; then
-            KEY="$P2M_API_KEY"
-            MODE='P2M_API_KEY'
-          fi
-
-          if [[ -n "$KEY" ]]; then
-            BODY=$(jq -nc --arg k "$KEY" '{api_key:$k}')
-            RESPONSE=$(curl --fail-with-body --silent --show-error -X POST "$API/agent/refresh" -H 'Content-Type: application/json' -d "$BODY")
-            ACCESS=$(jq -r '.access_token // empty' <<<"$RESPONSE")
-            VERSION=$(jq -r '.version // empty' <<<"$RESPONSE")
-          elif [[ -n "$PROVE2ME_ACCESS_TOKEN" ]]; then
-            ACCESS="$PROVE2ME_ACCESS_TOKEN"
-            MODE='PROVE2ME_ACCESS_TOKEN'
-            VERSION='unknown'
-          elif [[ -n "$P2M_ACCESS_TOKEN" ]]; then
-            ACCESS="$P2M_ACCESS_TOKEN"
-            MODE='P2M_ACCESS_TOKEN'
-            VERSION='unknown'
-          else
-            EMAIL=''
-            PASSWORD=''
-            if [[ -n "$PROVE2ME_EMAIL" && -n "$PROVE2ME_PASSWORD" ]]; then
-              EMAIL="$PROVE2ME_EMAIL"
-              PASSWORD="$PROVE2ME_PASSWORD"
-              MODE='PROVE2ME_EMAIL+PROVE2ME_PASSWORD'
-            elif [[ -n "$P2M_EMAIL" && -n "$P2M_PASSWORD" ]]; then
-              EMAIL="$P2M_EMAIL"
-              PASSWORD="$P2M_PASSWORD"
-              MODE='P2M_EMAIL+P2M_PASSWORD'
-            else
-              echo 'No supported Prove2Me credential secret names were found.' >&2
-              exit 2
-            fi
-            BODY=$(jq -nc --arg e "$EMAIL" --arg p "$PASSWORD" '{email:$e,password:$p}')
-            RESPONSE=$(curl --fail-with-body --silent --show-error -X POST "$API/login" -H 'Content-Type: application/json' -d "$BODY")
-            ACCESS=$(jq -r '.access_token // empty' <<<"$RESPONSE")
-            VERSION=$(jq -r '.version // empty' <<<"$RESPONSE")
-          fi
-
+          BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
+          RESPONSE=$(curl --fail-with-body --silent --show-error \
+            -X POST "$API/agent/refresh" \
+            -H 'Content-Type: application/json' \
+            -d "$BODY")
+          ACCESS=$(jq -r '.access_token // empty' <<<"$RESPONSE")
+          VERSION=$(jq -r '.version // empty' <<<"$RESPONSE")
           test -n "$ACCESS" || { echo 'Authentication returned no access token.' >&2; exit 3; }
+
           echo "::add-mask::$ACCESS"
           echo "token=$ACCESS" >> "$GITHUB_OUTPUT"
-          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "Authenticated via $MODE; platform version: $VERSION"
+          echo "Authenticated; platform version: $VERSION"
 
-      - name: Query tiny GF(3) target
+      - name: Search every environment for a tiny standalone target
         shell: bash
         env:
           ACCESS_TOKEN: ${{ steps.auth.outputs.token }}
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
-          curl --fail-with-body --silent --show-error --get "$API/theorems" \
-            -H "Authorization: Bearer $ACCESS_TOKEN" \
-            --data-urlencode 'status=Open' \
-            --data-urlencode 'q=Characteristic 3 of GF(3)' \
-            --data-urlencode 'limit=20' \
-            -o target-search.json
 
-          if [[ $(jq '.theorems | length' target-search.json) -eq 0 ]]; then
-            curl --fail-with-body --silent --show-error --get "$API/theorems" \
-              -H "Authorization: Bearer $ACCESS_TOKEN" \
-              --data-urlencode 'status=Open' \
-              --data-urlencode 'q=additive order dividing 3' \
-              --data-urlencode 'limit=20' \
-              -o target-search.json
+          curl --fail-with-body --silent --show-error "$API/environments" \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -o environments.json
+
+          jq -e '.environments | length > 0' environments.json >/dev/null
+          : > hits.ndjson
+
+          for REV in $(jq -r '.environments[].mathlib_rev' environments.json); do
+            echo "Searching environment $REV"
+            for Q in 'GF(3)' 'ZMod 3' 'Characteristic 3' 'char3'; do
+              TMP=$(mktemp)
+              curl --fail-with-body --silent --show-error --get "$API/theorems" \
+                -H "Authorization: Bearer $ACCESS_TOKEN" \
+                --data-urlencode 'status=Open' \
+                --data-urlencode "q=$Q" \
+                --data-urlencode 'limit=200' \
+                --data-urlencode "env=$REV" \
+                -o "$TMP"
+              jq -c '.theorems[]?' "$TMP" >> hits.ndjson
+              rm -f "$TMP"
+            done
+          done
+
+          if [[ ! -s hits.ndjson ]]; then
+            echo 'Keyword search returned no hits. Scanning newest open theorems in each environment.'
+            for REV in $(jq -r '.environments[].mathlib_rev' environments.json); do
+              TMP=$(mktemp)
+              curl --fail-with-body --silent --show-error --get "$API/theorems" \
+                -H "Authorization: Bearer $ACCESS_TOKEN" \
+                --data-urlencode 'status=Open' \
+                --data-urlencode 'sort=newest' \
+                --data-urlencode 'limit=200' \
+                --data-urlencode "env=$REV" \
+                -o "$TMP"
+              jq -c '.theorems[]? | select(
+                ((.theorem_title // "") + " " + (.theorem_name // "") + " " + (.natural_language_statement // ""))
+                | test("GF\\(3\\)|ZMod 3|Characteristic 3|char3"; "i")
+              )' "$TMP" >> hits.ndjson
+              rm -f "$TMP"
+            done
           fi
 
-          jq '{total, theorems: [.theorems[] | {theorem_id, theorem_name, theorem_title, status, formal_statement, preamble, source, mathlib_rev}]}' target-search.json
+          if [[ -s hits.ndjson ]]; then
+            jq -s 'unique_by(.theorem_id) | map({
+              theorem_id, theorem_name, theorem_title, status,
+              formal_statement, natural_language_statement,
+              preamble, source, mathlib_rev, created_by_username, created_at
+            })' hits.ndjson > candidates.json
+          else
+            echo '[]' > candidates.json
+          fi
+
+          echo 'Supported environments:'
+          jq '.environments' environments.json
+          echo 'Candidate records:'
+          jq '.' candidates.json
 
           {
             echo '## Prove2Me smoke target discovery'
             echo
-            echo '### Open candidates'
+            echo "- Platform version: `${{ steps.auth.outputs.version }}`"
+            echo
+            echo '### Candidates'
             echo '~~~json'
-            jq '{total, theorems: [.theorems[] | {theorem_id, theorem_name, theorem_title, status, formal_statement, preamble, source, mathlib_rev}]}' target-search.json
+            jq '.' candidates.json
             echo '~~~'
           } >> "$GITHUB_STEP_SUMMARY"
+
+          test "$(jq 'length' candidates.json)" -gt 0 || {
+            echo 'No matching tiny GF(3) theorem found across supported environments.' >&2
+            exit 4
+          }
