@@ -12,7 +12,7 @@ from pathlib import Path
 
 BASE = "https://prove2.me/api/v1"
 OUT = Path("agent-state/discovery.json")
-MAX_OPEN_MISSIONS = 140
+MAX_OPEN_MISSIONS = 30
 MAX_LEAVES_PER_MISSION = 4
 
 
