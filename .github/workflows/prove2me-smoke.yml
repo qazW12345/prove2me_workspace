@@ -25,8 +25,6 @@ jobs:
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
-          test -n "$PROVE2ME_API_KEY" || { echo 'PROVE2ME_API_KEY is not configured.' >&2; exit 2; }
-
           BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
           RESPONSE=$(curl --fail-with-body --silent --show-error \
             -X POST "$API/agent/refresh" \
@@ -34,90 +32,72 @@ jobs:
             -d "$BODY")
           ACCESS=$(jq -r '.access_token // empty' <<<"$RESPONSE")
           VERSION=$(jq -r '.version // empty' <<<"$RESPONSE")
-          test -n "$ACCESS" || { echo 'Authentication returned no access token.' >&2; exit 3; }
-
+          test -n "$ACCESS"
           echo "::add-mask::$ACCESS"
           echo "token=$ACCESS" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Authenticated; platform version: $VERSION"
 
-      - name: Search every environment for a tiny standalone target
+      - name: Rank standalone Open theorems for smoke testing
         shell: bash
         env:
           ACCESS_TOKEN: ${{ steps.auth.outputs.token }}
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
-
           curl --fail-with-body --silent --show-error "$API/environments" \
-            -H "Authorization: Bearer $ACCESS_TOKEN" \
-            -o environments.json
+            -H "Authorization: Bearer $ACCESS_TOKEN" -o environments.json
 
-          jq -e '.environments | length > 0' environments.json >/dev/null
-          : > hits.ndjson
-
+          : > pool.ndjson
           for REV in $(jq -r '.environments[].mathlib_rev' environments.json); do
-            echo "Searching environment $REV"
-            for Q in 'GF(3)' 'ZMod 3' 'Characteristic 3' 'char3'; do
-              TMP=$(mktemp)
-              curl --fail-with-body --silent --show-error --get "$API/theorems" \
-                -H "Authorization: Bearer $ACCESS_TOKEN" \
-                --data-urlencode 'status=Open' \
-                --data-urlencode "q=$Q" \
-                --data-urlencode 'limit=200' \
-                --data-urlencode "env=$REV" \
-                -o "$TMP"
-              jq -c '.theorems[]?' "$TMP" >> hits.ndjson
-              rm -f "$TMP"
-            done
-          done
-
-          if [[ ! -s hits.ndjson ]]; then
-            echo 'Keyword search returned no hits. Scanning newest open theorems in each environment.'
-            for REV in $(jq -r '.environments[].mathlib_rev' environments.json); do
+            for OFFSET in 0 200 400; do
               TMP=$(mktemp)
               curl --fail-with-body --silent --show-error --get "$API/theorems" \
                 -H "Authorization: Bearer $ACCESS_TOKEN" \
                 --data-urlencode 'status=Open' \
                 --data-urlencode 'sort=newest' \
                 --data-urlencode 'limit=200' \
+                --data-urlencode "offset=$OFFSET" \
                 --data-urlencode "env=$REV" \
                 -o "$TMP"
-              jq -c '.theorems[]? | select(
-                ((.theorem_title // "") + " " + (.theorem_name // "") + " " + (.natural_language_statement // ""))
-                | test("GF\\(3\\)|ZMod 3|Characteristic 3|char3"; "i")
-              )' "$TMP" >> hits.ndjson
+              jq -c '.theorems[]?' "$TMP" >> pool.ndjson
               rm -f "$TMP"
             done
-          fi
+          done
 
-          if [[ -s hits.ndjson ]]; then
-            jq -s 'unique_by(.theorem_id) | map({
-              theorem_id, theorem_name, theorem_title, status,
-              formal_statement, natural_language_statement,
-              preamble, source, mathlib_rev, created_by_username, created_at
-            })' hits.ndjson > candidates.json
-          else
-            echo '[]' > candidates.json
-          fi
+          jq -s '
+            unique_by(.theorem_id)
+            | map(select(
+                (.deprecated_at == null)
+                and ((.preamble // "") | (contains("Definitions.Def_") or contains("Theorems.Thm_")) | not)
+                and ((.formal_statement // "") | length < 700)
+              )
+              | . + {
+                  statement_len: ((.formal_statement // "") | length),
+                  import_len: ((.preamble // "") | length)
+                })
+            | sort_by(.statement_len, .import_len)
+            | .[:50]
+            | map({
+                theorem_id, theorem_name, theorem_title, status,
+                formal_statement, natural_language_statement,
+                preamble, source, tags, mathlib_rev,
+                created_by_username, created_at, statement_len
+              })
+          ' pool.ndjson > shortlist.json
 
-          echo 'Supported environments:'
-          jq '.environments' environments.json
-          echo 'Candidate records:'
-          jq '.' candidates.json
+          echo 'Shortest standalone Open theorem candidates:'
+          jq '.' shortlist.json
 
           {
-            echo '## Prove2Me smoke target discovery'
+            echo '## Prove2Me standalone smoke-test candidates'
             echo
-            echo "- Platform version: `${{ steps.auth.outputs.version }}`"
+            echo "- Platform version: ${{ steps.auth.outputs.version }}"
+            echo "- Candidate pool sampled: $(wc -l < pool.ndjson) Open records"
             echo
-            echo '### Candidates'
             echo '~~~json'
-            jq '.' candidates.json
+            jq '.' shortlist.json
             echo '~~~'
           } >> "$GITHUB_STEP_SUMMARY"
 
-          test "$(jq 'length' candidates.json)" -gt 0 || {
-            echo 'No matching tiny GF(3) theorem found across supported environments.' >&2
-            exit 4
-          }
+          test "$(jq 'length' shortlist.json)" -gt 0
