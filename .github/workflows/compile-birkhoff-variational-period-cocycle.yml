@@ -63,7 +63,7 @@ jobs:
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          for NAME in             BirkhoffGlobalSection_AmbientRotation             BirkhoffGlobalSection_DynamicalConvexity             BirkhoffGlobalSection_TangentialHessian
+          for NAME in BirkhoffGlobalSection BirkhoffGlobalSection_TangentialHessian BirkhoffGlobalSection_DynamicalConvexity BirkhoffGlobalSection_AmbientRotation
           do
             ENC=$(printf '%s' "$NAME" | jq -sRr @uri)
             RESP=$(curl --fail-with-body --silent --show-error               "$API/theorems?q=$ENC&status=Definition&limit=100"               -H "Authorization: Bearer $TOKEN")
