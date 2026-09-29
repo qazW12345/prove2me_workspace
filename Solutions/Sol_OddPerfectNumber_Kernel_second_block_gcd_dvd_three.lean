@@ -2,8 +2,6 @@ import Mathlib
 
 set_option autoImplicit false
 
-namespace OddPerfectNumber.Kernel
-
 theorem solution (p : Nat) (hp4 : p % 4 = 1) :
     Nat.gcd ((p + 1) / 2) (p ^ 2 - p + 1) ∣ 3 := by
   by_cases hp1 : p = 1
@@ -46,5 +44,3 @@ theorem solution (p : Nat) (hp4 : p % 4 = 1) :
     exact Nat.dvd_sub hdB hprod
   rw [hdiff] at hdivdiff
   exact hdivdiff
-
-end OddPerfectNumber.Kernel
