@@ -1,4 +1,4 @@
-name: Submit Prove2Me second block gcd
+name: Compile Prove2Me second block gcd
 
 on:
   push:
@@ -10,70 +10,49 @@ permissions:
   contents: read
 
 jobs:
-  submit:
+  compile:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
-      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
-      TARGET_ID: 0e45b51d-915a-4c31-bec6-b2f945374870
-      TARGET_NAME: OddPerfectNumber.Kernel.second_block_gcd_dvd_three
       TARGET_MATHLIB_REV: 0df444a360eaa60ab8c11dca51a86af692955474
-
+      TARGET_TOOLCHAIN: leanprover/lean4:v4.33.1
     steps:
       - uses: actions/checkout@v4
-
-      - name: Authenticate, recheck target, submit compiled proof
+      - name: Install elan
         shell: bash
         run: |
           set -euo pipefail
-          API='https://prove2.me/api/v1'
-          FILE='Solutions/Sol_OddPerfectNumber_Kernel_second_block_gcd_dvd_three.lean'
-
-          ! grep -nE '(^|[^[:alpha:]])sorry([^[:alpha:]]|$)' "$FILE"
-
-          BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
-          AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
-          TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
-          test -n "$TOKEN"
-          echo "::add-mask::$TOKEN"
-
-          TARGET=$(curl --fail-with-body --silent --show-error "$API/theorems/$TARGET_ID"             -H "Authorization: Bearer $TOKEN")
-          STATUS=$(jq -r '.status' <<<"$TARGET")
-          NAME=$(jq -r '.theorem_name' <<<"$TARGET")
-          REV=$(jq -r '.mathlib_rev' <<<"$TARGET")
-          test "$NAME" = "$TARGET_NAME"
-          test "$REV" = "$TARGET_MATHLIB_REV"
-
-          if [[ "$STATUS" = 'Proved' ]]; then
-            echo 'Target is already Proved; skipping duplicate submission.'
-            exit 0
+          if ! command -v elan >/dev/null 2>&1; then
+            curl --fail --silent --show-error https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
           fi
-          test "$STATUS" = 'Open'
-
-          EXPLANATION='Let d be the gcd. Since p ≡ 1 (mod 4), either p=1 (handled directly) or p≥5. The congruence also makes p+1 even, so 2*((p+1)/2)=p+1; hence d divides p+1. Since d also divides p^2-p+1, it divides (p-2)(p+1). For p≥5, natural subtraction is exact and p^2-p+1 - (p-2)(p+1) = 3, so d divides 3. The Lean proof implements exactly this Euclidean-algorithm argument, with omega/nlinarith only for the Nat division/subtraction bookkeeping.'
-
-          SUBMIT=$(curl --fail-with-body --silent --show-error             -X POST "$API/verify"             -H "Authorization: Bearer $TOKEN"             -F "theorem_id=$TARGET_ID"             -F "file=@$FILE"             -F "proof_type=prove"             --form-string "explanation=$EXPLANATION")
-          SID=$(jq -r '.submission_id // empty' <<<"$SUBMIT")
-          VSTATUS=$(jq -r '.status // empty' <<<"$SUBMIT")
-          test -n "$SID"
-          echo "submission_id=$SID"
-
-          for _ in $(seq 1 120); do
-            if [[ "$VSTATUS" != 'PENDING' ]]; then
-              break
-            fi
-            sleep 5
-            VERDICT=$(curl --fail-with-body --silent --show-error --get "$API/verify"               -H "Authorization: Bearer $TOKEN"               --data-urlencode "submission_id=$SID")
-            VSTATUS=$(jq -r '.status // empty' <<<"$VERDICT")
-            TSTATUS=$(curl --fail-with-body --silent --show-error "$API/theorems/$TARGET_ID"               -H "Authorization: Bearer $TOKEN" | jq -r '.status')
-            echo "verifier=$VSTATUS theorem=$TSTATUS"
-            if [[ "$TSTATUS" = 'Proved' ]]; then
-              exit 0
-            fi
-            if [[ "$TSTATUS" != 'Open' ]]; then
-              echo "Unexpected theorem status: $TSTATUS" >&2
-              exit 32
-            fi
-          done
-
-          [[ "$VSTATUS" = 'ACCEPTED' || "$VSTATUS" = 'SKETCH_ACCEPTED' ]]
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Pin exact Prove2Me environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' "$TARGET_TOOLCHAIN" > lean-toolchain
+          cat > lakefile.lean <<'EOF'
+          import Lake
+          open Lake DSL
+          package «prove2me» where
+            leanOptions := #[⟨`autoImplicit, false⟩]
+          require mathlib from git
+            "https://github.com/leanprover-community/mathlib4.git" @
+            "__MATHLIB_REV__"
+          @[default_target]
+          lean_lib «Solutions» where
+          EOF
+          sed -i "s/__MATHLIB_REV__/$TARGET_MATHLIB_REV/" lakefile.lean
+      - name: Fetch Mathlib cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake update
+          lake exe cache get
+          test "$(git -C .lake/packages/mathlib rev-parse HEAD)" = "$TARGET_MATHLIB_REV"
+      - name: Compile exact solution
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build Solutions.Sol_OddPerfectNumber_Kernel_second_block_gcd_dvd_three
+          ! grep -nE '(^|[^[:alpha:]])sorry([^[:alpha:]]|$)' Solutions/Sol_OddPerfectNumber_Kernel_second_block_gcd_dvd_three.lean
