@@ -17,22 +17,20 @@ jobs:
       PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
 
     steps:
-      - name: Inspect claimed dependency theorems only
+      - name: Inspect open packaged core history only
         shell: bash
         run: |
           set -euo pipefail
           API='https://prove2.me/api/v1'
+          ID='914c5936-f2f6-4861-930b-c4fc62dc19f4'
           BODY=$(jq -nc --arg k "$PROVE2ME_API_KEY" '{api_key:$k}')
           AUTH=$(curl --fail-with-body --silent --show-error             -X POST "$API/agent/refresh"             -H 'Content-Type: application/json'             -d "$BODY")
           TOKEN=$(jq -r '.access_token // empty' <<<"$AUTH")
           test -n "$TOKEN"
           echo "::add-mask::$TOKEN"
 
-          for Q in sigma_prime_pow_even dris_packaged_absurd
-          do
-            echo "===== $Q ====="
-            ENC=$(printf '%s' "$Q" | jq -sRr @uri)
-            curl --fail-with-body --silent --show-error "$API/theorems?q=$ENC&limit=100"               -H "Authorization: Bearer $TOKEN"               | jq '(.theorems // .items // .results // .) |
-                    map(select((.theorem_name // "") | contains("'"$Q"'"))) |
-                    map({theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,preamble,source,tags,mathlib_rev})'
-          done
+          echo "===== CORE ====="
+          curl --fail-with-body --silent --show-error "$API/theorems/$ID"             -H "Authorization: Bearer $TOKEN"             | jq '{theorem_id,theorem_name,theorem_title,status,formal_statement,natural_language_statement,source,tags}'
+
+          echo "===== CORE SUBMISSIONS ====="
+          curl --fail-with-body --silent --show-error "$API/theorems/$ID/submissions"             -H "Authorization: Bearer $TOKEN"             | jq '{total:(.total // null), submissions:[(.submissions // .items // .results // [])[] | {id,status,proof_type,username,accepted_at,error_message,explanation}]}'
