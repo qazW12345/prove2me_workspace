@@ -33,7 +33,10 @@ def main():
         "definition": api(f"/theorems/{DEF_ID}", token),
         "target": api(f"/theorems/{THM_ID}", token),
         "decompositions": api(f"/theorems/{THM_ID}/decompositions", token),
-        "submissions": api(f"/theorems/{THM_ID}/submissions?limit=20&offset=0", token),
+        "submissions": api(f"/theorems/{THM_ID}/submissions?limit=20&offset=0",
+      "/theorems?status=Proved&q=PolyTimeComputable&limit=100&offset=0",
+      "/theorems?status=Open&q=CookPvsNP&limit=100&offset=0",
+      "/theorems?status=Proved&q=CookPvsNP&limit=100&offset=0", token),
         "searches": {},
     }
     for q in ["CookPvsNP", "PolyTimeComputable", "TM simulation", "machine composition", "HaltsWithin"]:
