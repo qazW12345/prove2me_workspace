@@ -29,7 +29,7 @@ def main():
       "source":"Cook, The P versus NP problem, Clay Mathematics Institute (2000), Definition 3; standard sequential simulation of one-tape deterministic transducers.",
       "tags":["complexity-theory","turing-machines","polynomial-time","composition"]})
     print("QUEUED",json.dumps(pub))
-    jid=pub["jobs"][0]["job_id"]
+    jid=pub.get("job_id") or pub["jobs"][0]["job_id"]
     for _ in range(180):
         time.sleep(5)
         st=api("GET",f"/publish-jobs/{jid}",token)
