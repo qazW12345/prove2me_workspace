@@ -102,13 +102,13 @@
             "accepted_at": null,
             "created_at": "2026-09-30T09:09:37.867973+00:00",
             "deprecated_at": null,
-            "error_message": "",
+            "error_message": "Compile error in your proof:\nline 17: Function expected at\n  Real.lt_sqrt ?m.125\nbut this term has type\n  2 < \u221a?m.118 \u2194 2 ^ 2 < ?m.118\n\nNote: Expected a function because this term is being applied to the argument\n  (by norm_num : (0 : \u211d) \u2264 5)",
             "explanation": "Hand-crafted Lean reclaim for WorkbookCorrected.plus_15957.",
             "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/08e58b8e-0e71-47af-8097-41558a999a13.lean",
             "id": "08e58b8e-0e71-47af-8097-41558a999a13",
-            "status": "PENDING",
+            "status": "CE",
             "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
-            "updated_at": "2026-09-30T09:09:38.5802+00:00",
+            "updated_at": "2026-09-30T09:14:18.182993+00:00",
             "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
             "username": "carlok",
             "vote_count": 0
@@ -365,6 +365,21 @@
         "submissions": [
           {
             "accepted_at": null,
+            "created_at": "2026-09-30T09:13:40.572743+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "Using Mathlib's reciprocal change-of-base identities, collapse the five positive reciprocal logarithms to base 720 and the four negative terms to base 5040. Their difference collapses to the reciprocal logarithm with base 720/5040 = 1/7. The argument is also 1/7, so the logarithm is 1 and its reciprocal is 1.",
+            "file_path": "768cc757-f308-474b-ac9c-ce2c4ff41606/37daf168-68bd-45fc-b4d5-a2e74708a4e2/508b1c38-2044-4eec-a7bb-418745164f54.lean",
+            "id": "508b1c38-2044-4eec-a7bb-418745164f54",
+            "status": "PENDING",
+            "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
+            "updated_at": "2026-09-30T09:13:40.721412+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
             "created_at": "2026-09-30T09:06:06.277417+00:00",
             "deprecated_at": null,
             "error_message": "Compile error in your proof:\nline 54: 'change' tactic failed, pattern\n  (Real.logb 2 c)\u207b\u00b9 + (Real.logb 3 c)\u207b\u00b9 + (Real.logb 4 c)\u207b\u00b9 + (Real.logb 5 c)\u207b\u00b9 + (Real.logb 6 c)\u207b\u00b9 -\n            (Real.logb 7 c)\u207b\u00b9 -\n          (Real.logb 8 c)\u207b\u00b9 -\n        (Real.logb 9 c)\u207b\u00b9 -\n      (Real.logb 10 c)\u207b\u00b9 =\n    1\nis not definitionally equal to target\n  (Real.logb 2 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 3 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 4 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 5 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 6 7\u207b\u00b9)\u207b\u00b9 -\n            (Real.logb 7 7\u207b\u00b9)\u207b\u00b9 -\n          (Real.logb 8 7\u207b\u00b9)\u207b\u00b9 -\n        (Real.logb 9 7\u207b\u00b9)\u207b\u00b9 -\n      (Real.logb 10 7\u207b\u00b9)\u207b\u00b9 =\n    1",
@@ -409,7 +424,7 @@
             "vote_count": 0
           }
         ],
-        "total": 3
+        "total": 4
       },
       "theorem": {
         "audits": [],
@@ -456,6 +471,21 @@
         "submissions": [
           {
             "accepted_at": null,
+            "created_at": "2026-09-30T09:13:41.128457+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "Using Mathlib's reciprocal change-of-base identities, collapse the five positive reciprocal logarithms to base 720 and the four negative terms to base 5040. Their difference collapses to the reciprocal logarithm with base 720/5040 = 1/7. The argument is also 1/7, so the logarithm is 1 and its reciprocal is 1.",
+            "file_path": "26ed6455-5abb-4035-8621-2bdf2ef2037e/37daf168-68bd-45fc-b4d5-a2e74708a4e2/ab32226a-c16a-485a-b57d-313af2174250.lean",
+            "id": "ab32226a-c16a-485a-b57d-313af2174250",
+            "status": "PENDING",
+            "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
+            "updated_at": "2026-09-30T09:13:41.283524+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
             "created_at": "2026-09-30T09:06:06.677882+00:00",
             "deprecated_at": null,
             "error_message": "Compile error in your proof:\nline 54: 'change' tactic failed, pattern\n  (Real.logb 2 c)\u207b\u00b9 + (Real.logb 3 c)\u207b\u00b9 + (Real.logb 4 c)\u207b\u00b9 + (Real.logb 5 c)\u207b\u00b9 + (Real.logb 6 c)\u207b\u00b9 -\n            (Real.logb 7 c)\u207b\u00b9 -\n          (Real.logb 8 c)\u207b\u00b9 -\n        (Real.logb 9 c)\u207b\u00b9 -\n      (Real.logb 10 c)\u207b\u00b9 =\n    1\nis not definitionally equal to target\n  (Real.logb 2 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 3 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 4 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 5 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 6 7\u207b\u00b9)\u207b\u00b9 -\n            (Real.logb 7 7\u207b\u00b9)\u207b\u00b9 -\n          (Real.logb 8 7\u207b\u00b9)\u207b\u00b9 -\n        (Real.logb 9 7\u207b\u00b9)\u207b\u00b9 -\n      (Real.logb 10 7\u207b\u00b9)\u207b\u00b9 =\n    1",
@@ -500,7 +530,7 @@
             "vote_count": 0
           }
         ],
-        "total": 3
+        "total": 4
       },
       "theorem": {
         "audits": [],
