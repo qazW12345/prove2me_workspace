@@ -23,11 +23,12 @@ OUT = Path("agent-state/probe-result.json")
 MAX_SOLUTION_SOURCES = 30
 
 BATCH_TARGET_IDS = [
-    "ab77e0f7-db88-4aac-9254-3de0b553da69",
-    "028ccdb8-1f42-4651-94d3-63758b6500fd",
-    "ba6139c4-bd0f-4309-b801-c0616888efa6",
-    "91b9fb19-c30f-45b5-bd69-7149a0c355c2",
-    "7ea4df14-514b-4fc5-8932-c9568a7ab7ad",
+    "a2fe970c-5365-4531-a4e8-02fdad93d41d",
+    "302d389e-fa90-43b6-be8b-7a842e015905",
+    "44f1044a-4d20-4789-b9ef-84fb4e7c9dc5",
+    "e804b5c8-b56b-4d6a-9a1c-47a62fd5fddf",
+    "6c3c30d7-a398-41fb-9a14-83eec69c5fef",
+    "d5ea0cc1-81b1-41f3-98e3-5667e7e64606"
 ]
 
 
