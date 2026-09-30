@@ -115,5 +115,12 @@ def main():
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n",encoding="utf-8")
-    print(json.dumps({"count":len(ranked),"top":[{"score":x["score"],"id":x["theorem_id"],"name":x["theorem_name"],"statement":x["formal_statement"]} for x in ranked[:30]]},indent=2))
+    print(json.dumps({
+        "count":len(ranked),
+        "top":[{"score":x["score"],"id":x["theorem_id"],"name":x["theorem_name"],"statement":x["formal_statement"]} for x in ranked[:30]],
+        "easy_text_candidates":[
+            {"clues":x["_clues"],"id":x["theorem_id"],"name":x["theorem_name"],"title":x.get("theorem_title"),"statement":x.get("formal_statement"),"created_at":x.get("created_at")}
+            for x in report["easy_text_candidates"][:50]
+        ]
+    },indent=2))
 if __name__=="__main__": main()
