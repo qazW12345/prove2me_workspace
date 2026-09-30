@@ -1,1523 +1,447 @@
 {
-  "frontier_details": [
-    {
-      "detail": {
-        "decompositions": {
-          "decompositions": [
-            {
-              "children": [
-                {
-                  "definition_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-                  "definition_name": "Erdos592_Defs",
-                  "deprecated_at": null,
-                  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-                  "ordinal": 0,
-                  "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals"
-                }
-              ],
-              "created_at": null,
-              "created_by": null,
-              "deprecated_at": null,
-              "deprecated_by": null,
-              "submission_id": null
-            }
-          ]
-        },
-        "mentions": {
-          "mentions": [],
-          "pagination": {
-            "limit": 20,
-            "offset": 0,
-            "total": 0
-          },
-          "theorem_id": "c79cbe94-e34d-4ebc-82b9-375564c28f85"
-        },
-        "missions": {
-          "complete": true,
-          "missions": [
-            {
-              "id": "1df7f85a-02d0-496e-8d49-f5ada37b5708",
-              "name": "Erd\u0151s Problem 592: which \u03c9^\u03b2 are partition ordinals?"
-            }
-          ]
-        },
-        "submissions": {
-          "submissions": [],
-          "total": 0
-        },
-        "theorem": {
-          "audits": [
-            {
-              "audit_id": "e305c4de-6ac0-4c84-84c4-301dd3bdc472",
-              "comment": "Confirmed by the moderator at approval.",
-              "created_at": "2026-09-26T01:29:17.035619+00:00",
-              "decision": "confirm",
-              "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-              "reviewer_username": "Shuze Chen"
-            },
-            {
-              "audit_id": "ccaecd40-c6be-41dc-8e7b-799f7830a9ca",
-              "comment": "Confirmed by the mission captain (proposal self-audit).",
-              "created_at": "2026-09-26T01:29:17.219227+00:00",
-              "decision": "confirm",
-              "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-              "reviewer_username": "Lucas"
-            }
-          ],
-          "created_at": "2026-09-25T18:02:01.148991+00:00",
-          "deprecated_at": null,
-          "deprecated_by": null,
-          "formal_statement": "namespace Erdos592\ntheorem erdos_592_three_indecomposables (\u03b3 : Ordinal.{u}) (h\u03b3 : \u03b3.card \u2264 \u2135\u2080)\n    (h3 : IsSumOfIndecomposables 3 \u03b3) :\n    OrdinalCardinalRamsey (\u03c9 ^ \u03c9 ^ \u03b3) (\u03c9 ^ \u03c9 ^ \u03b3) 3 := by sorry\nend Erdos592",
-          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-          "natural_language_statement": "Let $\\gamma$ be a countable ordinal which is the sum of exactly three indecomposable ordinals, i.e.\n$$\\gamma = \\omega^{\\delta_1}+\\omega^{\\delta_2}+\\omega^{\\delta_3},\\qquad \\delta_1\\ge\\delta_2\\ge\\delta_3 .$$\nThen $\\alpha=\\omega^{\\omega^{\\gamma}}$ is a partition ordinal:\n$$\n\\omega^{\\omega^{\\gamma}} \\to \\left(\\omega^{\\omega^{\\gamma}},\\, 3\\right)^2 ,\n$$\nthat is, every red/blue colouring of the edges of $K_\\alpha$ contains a red $K_\\alpha$ or a blue triangle.\n\nErd\u0151s Problem 592 asks for exactly which countable $\\beta$ the ordinal $\\omega^\\beta$ is a partition ordinal. By Galvin\u2013Larson, for $\\beta\\ge 3$ this forces $\\beta=\\omega^\\gamma$; Schipperus settled the cases where $\\gamma$ is a sum of one or two indecomposables (positively) and of four or more (negatively). The case of three indecomposables is the one that remains open, and this statement is its positive resolution, as predicted by the Galvin\u2013Larson conjecture. A formal **disproof** of this statement (exhibiting such a $\\gamma$ for which the partition relation fails) would be an equally significant resolution.",
-          "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-          "readback": {
-            "created_at": "2026-09-25T18:06:59.762384+00:00",
-            "model": "Aristotle (Harmonic) \u2014 non-blind, same agent as the drafter",
-            "readback": "> **Non-blind read-back \u2014 not independent testimony.** This read-back was written by the same agent (Aristotle, by Harmonic) that drafted the Lean statements in this proposal, with full knowledge of the source and of the intended meaning. It is **not** a blind, independent audit, and no reviewer should treat it as one. Please compare it against the Lean code directly.\n\nFor every universe level $u$ and every ordinal $\\gamma$ (of level $u$) such that\n\n1. the cardinality of $\\gamma$ is at most $\\aleph_0$ (i.e. $\\gamma$ is finite or countably infinite), and\n2. $\\gamma$ is the sum of exactly three indecomposables: there are ordinals $\\delta_1\\ge\\delta_2\\ge\\delta_3$ with $\\gamma=\\omega^{\\delta_1}+\\omega^{\\delta_2}+\\omega^{\\delta_3}$,\n\nthe ordinal Ramsey property $\\alpha\\to(\\alpha,3)^2$ holds for $\\alpha=\\omega^{(\\omega^{\\gamma})}$ (exponentiation associates to the right). Unfolded: for every red/blue edge colouring of the complete graph on the well-ordered set of type $\\alpha$ (red and blue complementary simple graphs), there is a red clique whose inherited order type is exactly $\\alpha$, or a blue clique of cardinality exactly $3$.\n\nHypothesis 2 already implies $\\gamma\\ge 3$ (the smallest such $\\gamma$ is $1+1+1=3$, taking all $\\delta_i=0$), so the conclusion includes, e.g., $\\alpha=\\omega^{\\omega^3}$ and $\\alpha=\\omega^{\\omega^{\\omega+2}}$. Hypothesis 1 is not implied by 2 (e.g. $\\delta_1=\\omega_1$ gives uncountable $\\gamma$)."
-          },
-          "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; open case as described in the remarks on that page (Galvin\u2013Larson conjecture restricted to \u03b3 a sum of three indecomposables)",
-          "status": "Open",
-          "tags": [
-            "erdos-problems",
-            "open-problem",
-            "ordinals",
-            "ramsey-theory",
-            "set-theory"
-          ],
-          "theorem_id": "c79cbe94-e34d-4ebc-82b9-375564c28f85",
-          "theorem_name": "Erdos592.erdos_592_three_indecomposables",
-          "theorem_title": "Erd\u0151s 592, open case: $\\omega^{\\omega^\\gamma}$ is a partition ordinal when $\\gamma$ is a sum of three indecomposables",
-          "visibility": "public",
-          "vote_count": 0
-        }
-      },
-      "frontier": {
-        "closability": 0,
-        "status": "Open",
-        "theorem_id": "c79cbe94-e34d-4ebc-82b9-375564c28f85",
-        "theorem_name": "Erdos592.erdos_592_three_indecomposables"
-      }
-    }
-  ],
-  "licensing_status": "accepted",
-  "milestone_details": [
-    {
-      "decompositions": {
-        "decompositions": [
-          {
-            "children": [
-              {
-                "definition_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-                "definition_name": "Erdos592_Defs",
-                "deprecated_at": null,
-                "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-                "ordinal": 0,
-                "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals"
-              }
-            ],
-            "created_at": null,
-            "created_by": null,
-            "deprecated_at": null,
-            "deprecated_by": null,
-            "submission_id": null
-          }
-        ]
-      },
-      "graph": {
-        "edges": [
-          {
-            "kind": "structural",
-            "source": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "target": "636ffb31-f940-4d5e-8262-ba55cf7c866d"
-          }
-        ],
-        "has_hidden_deprecated_sketches": false,
-        "nodes": [
-          {
-            "audits": [
-              {
-                "audit_id": "70d4ace9-4918-486e-97cd-e2b5e213221a",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "be4a18d3-0420-44c8-8373-2724ef2eac40",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:07:35.06999+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "namespace Erdos592\ntheorem specker_omega_sq : OrdinalCardinalRamsey.{u} (\u03c9 ^ 2) (\u03c9 ^ 2) 3 := by sorry\nend Erdos592",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "The ordinal $\\omega^2$ is a partition ordinal:\n$$\\omega^2 \\to (\\omega^2, 3)^2 .$$\nThat is, for every red/blue colouring of the edges of the complete graph on a well-ordered set of order type $\\omega^2$, there is either a set of vertices of order type $\\omega^2$ all of whose pairs are red, or three vertices all of whose pairs are blue.\n\nThis is the case $\\beta=2$ of Erd\u0151s Problem 592, due to Specker (1957).",
-            "node_type": "theorem",
-            "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Specker [Sp57], E. Specker, Teilmengen von Mengen mit Relationen, Comment. Math. Helv. (1957), 302\u2013314",
-            "status": "Open",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "636ffb31-f940-4d5e-8262-ba55cf7c866d",
-            "theorem_name": "Erdos592.specker_omega_sq",
-            "theorem_title": "Specker: $\\omega^2\\to(\\omega^2,3)^2$",
-            "vote_count": 0
-          },
-          {
-            "audits": [
-              {
-                "audit_id": "a65c5cef-e2b4-4648-8bc7-45f94d1a3e33",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "187a9948-b370-42da-b0ff-e6f5d5c2199f",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:00:53.675333+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "definition": "import Mathlib\n\nopen Cardinal Ordinal\n\nuniverse u\n\nnamespace Erdos592\n\n/-- The ordinal Ramsey property `\u03b1 \u2192 (\u03b2, c)\u00b2`: for every red/blue colouring of the edges of the\ncomplete graph on (the well-order of type) `\u03b1`, there is a red clique of order type `\u03b2` or a blue\nclique of cardinality `c`. -/\ndef OrdinalCardinalRamsey (\u03b1 \u03b2 : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=\n  \u2200 red blue : SimpleGraph \u03b1.ToType, IsCompl red blue \u2192\n    (\u2203 s, red.IsClique s \u2227 typeLT s = \u03b2) \u2228\n    \u2203 s, blue.IsClique s \u2227 #s = c\n\n/-- `\u03b3` is the sum of exactly `k` additively indecomposable ordinals, written in non-increasing\norder: `\u03b3 = \u03c9^\u03b4\u2081 + \u22ef + \u03c9^\u03b4\u2096` with `\u03b4\u2081 \u2265 \u22ef \u2265 \u03b4\u2096` (i.e. the Cantor normal form of `\u03b3` has exactly\n`k` terms, counted with multiplicity). -/\ndef IsSumOfIndecomposables (k : \u2115) (\u03b3 : Ordinal.{u}) : Prop :=\n  \u2203 l : List Ordinal.{u}, l.length = k \u2227 l.Pairwise (\u00b7 \u2265 \u00b7) \u2227 \u03b3 = (l.map (\u03c9 ^ \u00b7)).sum\n\nend Erdos592\n",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "This file introduces the two notions in which the Erd\u0151s Problem 592 mission is stated.\n\n1. **The ordinal Ramsey property** $\\alpha \\to (\\beta, c)^2$. Let $\\alpha,\\beta$ be ordinals and $c$ a cardinal. Identify $\\alpha$ with a well-ordered set of order type $\\alpha$, and consider the complete graph $K_\\alpha$ on it. We say $\\alpha \\to (\\beta, c)^2$ if for every colouring of the edges of $K_\\alpha$ in red and blue (every pair of distinct vertices receives exactly one colour), at least one of the following holds:\n   - there is a set $S$ of vertices, all of whose pairs are red, such that $S$ with the induced order has order type exactly $\\beta$ (a *red $K_\\beta$*); or\n   - there is a set $T$ of vertices, all of whose pairs are blue, with $|T| = c$ (a *blue $K_c$*).\n\n   An ordinal $\\alpha$ with $\\alpha \\to (\\alpha, 3)^2$ is called a **partition ordinal**.\n\n2. **Sums of $k$ indecomposable ordinals.** An ordinal is *additively indecomposable* when it has the form $\\omega^{\\delta}$. For $k\\in\\mathbb N$, we say $\\gamma$ is **the sum of $k$ indecomposable ordinals** if\n$$\n\\gamma = \\omega^{\\delta_1} + \\omega^{\\delta_2} + \\cdots + \\omega^{\\delta_k}, \\qquad \\delta_1 \\ge \\delta_2 \\ge \\cdots \\ge \\delta_k .\n$$\nEquivalently, the Cantor normal form of $\\gamma$ has exactly $k$ terms when coefficients are counted with multiplicity (for example $\\omega\\cdot 2 = \\omega+\\omega$ is a sum of two, and $\\omega^2+\\omega+1$ is a sum of three).\n\nThese notions are used to state the known results of Specker, Chang, Galvin\u2013Larson and Schipperus, and the remaining open case of the problem.\n\n**Formalization Note** The graph lives on the canonical well-ordered type of order type $\\alpha$; a red/blue colouring is a pair of complementary simple graphs. \"Order type exactly $\\beta$\" is the order type of the subset with the inherited order. The non-increasing requirement on the exponents is what makes \"sum of exactly $k$\" well defined (without it, $\\omega+\\omega^2=\\omega^2$ would count as a sum of two).",
-            "node_type": "theorem",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures",
-            "status": "Definition",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "theorem_name": "Erdos592_Defs",
-            "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals",
-            "vote_count": 0
-          }
-        ],
-        "root_id": "636ffb31-f940-4d5e-8262-ba55cf7c866d"
-      },
-      "milestone": {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "e8ad9024-d9d6-465b-85d7-a71e985a70c1",
-        "milestone_description": "Specker [Sp57] proved that the property holds for $\\beta=2$: in any red/blue colouring of the edges of $K_\\alpha$ with $\\alpha=\\omega^2$ there is either a red $K_\\alpha$ or a blue $K_3$, i.e. $\\omega^2\\to(\\omega^2,3)^2$.",
-        "sort_order": 0,
-        "theorem": {
-          "id": "636ffb31-f940-4d5e-8262-ba55cf7c866d",
-          "status": "Open",
-          "theorem_name": "Erdos592.specker_omega_sq"
-        },
-        "title": "Specker (1957) \u2014 \u03b2 = 2: \u03c9\u00b2 is a partition ordinal"
-      },
-      "open_leaves": {
-        "open_leaves": [
-          {
-            "closability": 0,
-            "status": "Open",
-            "theorem_id": "636ffb31-f940-4d5e-8262-ba55cf7c866d",
-            "theorem_name": "Erdos592.specker_omega_sq"
-          }
-        ],
-        "root_id": "636ffb31-f940-4d5e-8262-ba55cf7c866d",
-        "total": 1
-      },
-      "theorem": {
-        "audits": [
-          {
-            "audit_id": "70d4ace9-4918-486e-97cd-e2b5e213221a",
-            "comment": "Confirmed by the moderator at approval.",
-            "created_at": "2026-09-26T01:29:17.035619+00:00",
-            "decision": "confirm",
-            "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-            "reviewer_username": "Shuze Chen"
-          },
-          {
-            "audit_id": "be4a18d3-0420-44c8-8373-2724ef2eac40",
-            "comment": "Confirmed by the mission captain (proposal self-audit).",
-            "created_at": "2026-09-26T01:29:17.219227+00:00",
-            "decision": "confirm",
-            "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "reviewer_username": "Lucas"
-          }
-        ],
-        "created_at": "2026-09-25T18:07:35.06999+00:00",
-        "deprecated_at": null,
-        "deprecated_by": null,
-        "formal_statement": "namespace Erdos592\ntheorem specker_omega_sq : OrdinalCardinalRamsey.{u} (\u03c9 ^ 2) (\u03c9 ^ 2) 3 := by sorry\nend Erdos592",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "The ordinal $\\omega^2$ is a partition ordinal:\n$$\\omega^2 \\to (\\omega^2, 3)^2 .$$\nThat is, for every red/blue colouring of the edges of the complete graph on a well-ordered set of order type $\\omega^2$, there is either a set of vertices of order type $\\omega^2$ all of whose pairs are red, or three vertices all of whose pairs are blue.\n\nThis is the case $\\beta=2$ of Erd\u0151s Problem 592, due to Specker (1957).",
-        "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-        "readback": {
-          "created_at": "2026-09-25T18:07:40.398985+00:00",
-          "model": "Aristotle (Harmonic) \u2014 non-blind, same agent as the drafter",
-          "readback": "> **Non-blind read-back \u2014 not independent testimony.** This read-back was written by the same agent (Aristotle, by Harmonic) that drafted the Lean statements in this proposal, with full knowledge of the source and of the intended meaning. It is **not** a blind, independent audit, and no reviewer should treat it as one. Please compare it against the Lean code directly.\n\nFor every universe level $u$: the ordinal Ramsey property $\\alpha\\to(\\alpha,3)^2$ holds for $\\alpha=\\omega^2$ (here $\\omega^2=\\omega\\cdot\\omega$, the exponent being the natural number $2$). Unfolded: for every pair of complementary simple graphs (red, blue) on the canonical well-ordered set of order type $\\omega^2$, there is a red clique whose inherited order type is exactly $\\omega^2$, or a blue clique with exactly $3$ elements. No hypotheses."
-        },
-        "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Specker [Sp57], E. Specker, Teilmengen von Mengen mit Relationen, Comment. Math. Helv. (1957), 302\u2013314",
-        "status": "Open",
-        "tags": [
-          "erdos-problems",
-          "ordinals",
-          "ramsey-theory",
-          "set-theory"
-        ],
-        "theorem_id": "636ffb31-f940-4d5e-8262-ba55cf7c866d",
-        "theorem_name": "Erdos592.specker_omega_sq",
-        "theorem_title": "Specker: $\\omega^2\\to(\\omega^2,3)^2$",
-        "visibility": "public",
-        "vote_count": 0
-      }
-    },
-    {
-      "decompositions": {
-        "decompositions": [
-          {
-            "children": [
-              {
-                "definition_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-                "definition_name": "Erdos592_Defs",
-                "deprecated_at": null,
-                "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-                "ordinal": 0,
-                "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals"
-              }
-            ],
-            "created_at": null,
-            "created_by": null,
-            "deprecated_at": null,
-            "deprecated_by": null,
-            "submission_id": null
-          }
-        ]
-      },
-      "graph": {
-        "edges": [
-          {
-            "kind": "structural",
-            "source": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "target": "bc75f480-8ac4-41ca-b46e-29d43876f7a2"
-          }
-        ],
-        "has_hidden_deprecated_sketches": false,
-        "nodes": [
-          {
-            "audits": [
-              {
-                "audit_id": "4bf09e14-3109-4f30-8a9d-26aaa58e3ce7",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "4e8bb460-6150-4ddc-bbd5-142e8bc3c991",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:08:07.814241+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "namespace Erdos592\ntheorem specker_omega_pow_nat_not (n : \u2115) (hn : 3 \u2264 n) :\n    \u00ac OrdinalCardinalRamsey (\u03c9 ^ (n : Ordinal.{u})) (\u03c9 ^ (n : Ordinal.{u})) 3 := by sorry\nend Erdos592",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "Let $n$ be a natural number with $n\\ge 3$. Then $\\omega^n$ is **not** a partition ordinal:\n$$\\omega^n \\not\\to (\\omega^n, 3)^2 .$$\nThat is, there is a red/blue colouring of the edges of the complete graph on a well-ordered set of order type $\\omega^n$ with no red set of order type $\\omega^n$ and no blue triangle.\n\nThis is the negative half of Specker's 1957 theorem: the property of Erd\u0151s Problem 592 fails for every finite $\\beta\\ge 3$.",
-            "node_type": "theorem",
-            "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Specker [Sp57], E. Specker, Teilmengen von Mengen mit Relationen, Comment. Math. Helv. (1957), 302\u2013314",
-            "status": "Open",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "bc75f480-8ac4-41ca-b46e-29d43876f7a2",
-            "theorem_name": "Erdos592.specker_omega_pow_nat_not",
-            "theorem_title": "Specker: $\\omega^n\\not\\to(\\omega^n,3)^2$ for $3\\le n<\\omega$",
-            "vote_count": 0
-          },
-          {
-            "audits": [
-              {
-                "audit_id": "a65c5cef-e2b4-4648-8bc7-45f94d1a3e33",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "187a9948-b370-42da-b0ff-e6f5d5c2199f",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:00:53.675333+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "definition": "import Mathlib\n\nopen Cardinal Ordinal\n\nuniverse u\n\nnamespace Erdos592\n\n/-- The ordinal Ramsey property `\u03b1 \u2192 (\u03b2, c)\u00b2`: for every red/blue colouring of the edges of the\ncomplete graph on (the well-order of type) `\u03b1`, there is a red clique of order type `\u03b2` or a blue\nclique of cardinality `c`. -/\ndef OrdinalCardinalRamsey (\u03b1 \u03b2 : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=\n  \u2200 red blue : SimpleGraph \u03b1.ToType, IsCompl red blue \u2192\n    (\u2203 s, red.IsClique s \u2227 typeLT s = \u03b2) \u2228\n    \u2203 s, blue.IsClique s \u2227 #s = c\n\n/-- `\u03b3` is the sum of exactly `k` additively indecomposable ordinals, written in non-increasing\norder: `\u03b3 = \u03c9^\u03b4\u2081 + \u22ef + \u03c9^\u03b4\u2096` with `\u03b4\u2081 \u2265 \u22ef \u2265 \u03b4\u2096` (i.e. the Cantor normal form of `\u03b3` has exactly\n`k` terms, counted with multiplicity). -/\ndef IsSumOfIndecomposables (k : \u2115) (\u03b3 : Ordinal.{u}) : Prop :=\n  \u2203 l : List Ordinal.{u}, l.length = k \u2227 l.Pairwise (\u00b7 \u2265 \u00b7) \u2227 \u03b3 = (l.map (\u03c9 ^ \u00b7)).sum\n\nend Erdos592\n",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "This file introduces the two notions in which the Erd\u0151s Problem 592 mission is stated.\n\n1. **The ordinal Ramsey property** $\\alpha \\to (\\beta, c)^2$. Let $\\alpha,\\beta$ be ordinals and $c$ a cardinal. Identify $\\alpha$ with a well-ordered set of order type $\\alpha$, and consider the complete graph $K_\\alpha$ on it. We say $\\alpha \\to (\\beta, c)^2$ if for every colouring of the edges of $K_\\alpha$ in red and blue (every pair of distinct vertices receives exactly one colour), at least one of the following holds:\n   - there is a set $S$ of vertices, all of whose pairs are red, such that $S$ with the induced order has order type exactly $\\beta$ (a *red $K_\\beta$*); or\n   - there is a set $T$ of vertices, all of whose pairs are blue, with $|T| = c$ (a *blue $K_c$*).\n\n   An ordinal $\\alpha$ with $\\alpha \\to (\\alpha, 3)^2$ is called a **partition ordinal**.\n\n2. **Sums of $k$ indecomposable ordinals.** An ordinal is *additively indecomposable* when it has the form $\\omega^{\\delta}$. For $k\\in\\mathbb N$, we say $\\gamma$ is **the sum of $k$ indecomposable ordinals** if\n$$\n\\gamma = \\omega^{\\delta_1} + \\omega^{\\delta_2} + \\cdots + \\omega^{\\delta_k}, \\qquad \\delta_1 \\ge \\delta_2 \\ge \\cdots \\ge \\delta_k .\n$$\nEquivalently, the Cantor normal form of $\\gamma$ has exactly $k$ terms when coefficients are counted with multiplicity (for example $\\omega\\cdot 2 = \\omega+\\omega$ is a sum of two, and $\\omega^2+\\omega+1$ is a sum of three).\n\nThese notions are used to state the known results of Specker, Chang, Galvin\u2013Larson and Schipperus, and the remaining open case of the problem.\n\n**Formalization Note** The graph lives on the canonical well-ordered type of order type $\\alpha$; a red/blue colouring is a pair of complementary simple graphs. \"Order type exactly $\\beta$\" is the order type of the subset with the inherited order. The non-increasing requirement on the exponents is what makes \"sum of exactly $k$\" well defined (without it, $\\omega+\\omega^2=\\omega^2$ would count as a sum of two).",
-            "node_type": "theorem",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures",
-            "status": "Definition",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "theorem_name": "Erdos592_Defs",
-            "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals",
-            "vote_count": 0
-          }
-        ],
-        "root_id": "bc75f480-8ac4-41ca-b46e-29d43876f7a2"
-      },
-      "milestone": {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "a75cd284-343c-4ebe-9d89-90e121ec01f4",
-        "milestone_description": "Specker [Sp57] proved that the property does not hold for $3\\le\\beta<\\omega$: for every natural number $n\\ge 3$ there is a red/blue colouring of the edges of $K_{\\omega^n}$ with neither a red $K_{\\omega^n}$ nor a blue $K_3$, i.e. $\\omega^n\\not\\to(\\omega^n,3)^2$.",
-        "sort_order": 1,
-        "theorem": {
-          "id": "bc75f480-8ac4-41ca-b46e-29d43876f7a2",
-          "status": "Open",
-          "theorem_name": "Erdos592.specker_omega_pow_nat_not"
-        },
-        "title": "Specker (1957) \u2014 3 \u2264 \u03b2 < \u03c9: \u03c9\u207f is not a partition ordinal"
-      },
-      "open_leaves": {
-        "open_leaves": [
-          {
-            "closability": 0,
-            "status": "Open",
-            "theorem_id": "bc75f480-8ac4-41ca-b46e-29d43876f7a2",
-            "theorem_name": "Erdos592.specker_omega_pow_nat_not"
-          }
-        ],
-        "root_id": "bc75f480-8ac4-41ca-b46e-29d43876f7a2",
-        "total": 1
-      },
-      "theorem": {
-        "audits": [
-          {
-            "audit_id": "4bf09e14-3109-4f30-8a9d-26aaa58e3ce7",
-            "comment": "Confirmed by the moderator at approval.",
-            "created_at": "2026-09-26T01:29:17.035619+00:00",
-            "decision": "confirm",
-            "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-            "reviewer_username": "Shuze Chen"
-          },
-          {
-            "audit_id": "4e8bb460-6150-4ddc-bbd5-142e8bc3c991",
-            "comment": "Confirmed by the mission captain (proposal self-audit).",
-            "created_at": "2026-09-26T01:29:17.219227+00:00",
-            "decision": "confirm",
-            "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "reviewer_username": "Lucas"
-          }
-        ],
-        "created_at": "2026-09-25T18:08:07.814241+00:00",
-        "deprecated_at": null,
-        "deprecated_by": null,
-        "formal_statement": "namespace Erdos592\ntheorem specker_omega_pow_nat_not (n : \u2115) (hn : 3 \u2264 n) :\n    \u00ac OrdinalCardinalRamsey (\u03c9 ^ (n : Ordinal.{u})) (\u03c9 ^ (n : Ordinal.{u})) 3 := by sorry\nend Erdos592",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "Let $n$ be a natural number with $n\\ge 3$. Then $\\omega^n$ is **not** a partition ordinal:\n$$\\omega^n \\not\\to (\\omega^n, 3)^2 .$$\nThat is, there is a red/blue colouring of the edges of the complete graph on a well-ordered set of order type $\\omega^n$ with no red set of order type $\\omega^n$ and no blue triangle.\n\nThis is the negative half of Specker's 1957 theorem: the property of Erd\u0151s Problem 592 fails for every finite $\\beta\\ge 3$.",
-        "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-        "readback": {
-          "created_at": "2026-09-25T18:08:10.85223+00:00",
-          "model": "Aristotle (Harmonic) \u2014 non-blind, same agent as the drafter",
-          "readback": "> **Non-blind read-back \u2014 not independent testimony.** This read-back was written by the same agent (Aristotle, by Harmonic) that drafted the Lean statements in this proposal, with full knowledge of the source and of the intended meaning. It is **not** a blind, independent audit, and no reviewer should treat it as one. Please compare it against the Lean code directly.\n\nFor every universe level $u$ and every natural number $n$ with $n\\ge 3$: the ordinal Ramsey property $\\alpha\\to(\\alpha,3)^2$ **fails** for $\\alpha=\\omega^{n}$, where $n$ is regarded as a (finite) ordinal and $\\omega^n$ is ordinal exponentiation. Unfolded: there exist complementary simple graphs (red, blue) on the canonical well-ordered set of order type $\\omega^n$ such that no red clique has inherited order type exactly $\\omega^n$ and no blue clique has exactly $3$ elements."
-        },
-        "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Specker [Sp57], E. Specker, Teilmengen von Mengen mit Relationen, Comment. Math. Helv. (1957), 302\u2013314",
-        "status": "Open",
-        "tags": [
-          "erdos-problems",
-          "ordinals",
-          "ramsey-theory",
-          "set-theory"
-        ],
-        "theorem_id": "bc75f480-8ac4-41ca-b46e-29d43876f7a2",
-        "theorem_name": "Erdos592.specker_omega_pow_nat_not",
-        "theorem_title": "Specker: $\\omega^n\\not\\to(\\omega^n,3)^2$ for $3\\le n<\\omega$",
-        "visibility": "public",
-        "vote_count": 0
-      }
-    },
-    {
-      "decompositions": {
-        "decompositions": [
-          {
-            "children": [
-              {
-                "definition_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-                "definition_name": "Erdos592_Defs",
-                "deprecated_at": null,
-                "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-                "ordinal": 0,
-                "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals"
-              }
-            ],
-            "created_at": null,
-            "created_by": null,
-            "deprecated_at": null,
-            "deprecated_by": null,
-            "submission_id": null
-          }
-        ]
-      },
-      "graph": {
-        "edges": [
-          {
-            "kind": "structural",
-            "source": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "target": "4466c913-1d4b-46fa-b330-db123925d95f"
-          }
-        ],
-        "has_hidden_deprecated_sketches": false,
-        "nodes": [
-          {
-            "audits": [
-              {
-                "audit_id": "b720080e-e159-4fde-8c29-e1e867490f84",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "0b7b3334-7b56-45b1-b484-6978ce94ab44",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:08:38.242996+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "namespace Erdos592\ntheorem chang_omega_pow_omega : OrdinalCardinalRamsey.{u} (\u03c9 ^ \u03c9) (\u03c9 ^ \u03c9) 3 := by sorry\nend Erdos592",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "The ordinal $\\omega^\\omega$ is a partition ordinal:\n$$\\omega^\\omega \\to (\\omega^\\omega, 3)^2 .$$\nThat is, for every red/blue colouring of the edges of the complete graph on a well-ordered set of order type $\\omega^\\omega$, there is either a set of vertices of order type $\\omega^\\omega$ all of whose pairs are red, or a blue triangle.\n\nThis is the case $\\beta=\\omega$ of Erd\u0151s Problem 592, due to Chang (1972); it is also Erd\u0151s Problem 590.",
-            "node_type": "theorem",
-            "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Chang [Ch72], C. C. Chang, A partition theorem for the complete graph on \u03c9^\u03c9, J. Combinatorial Theory Ser. A (1972), 396\u2013452",
-            "status": "Open",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "4466c913-1d4b-46fa-b330-db123925d95f",
-            "theorem_name": "Erdos592.chang_omega_pow_omega",
-            "theorem_title": "Chang: $\\omega^\\omega\\to(\\omega^\\omega,3)^2$",
-            "vote_count": 0
-          },
-          {
-            "audits": [
-              {
-                "audit_id": "a65c5cef-e2b4-4648-8bc7-45f94d1a3e33",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "187a9948-b370-42da-b0ff-e6f5d5c2199f",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:00:53.675333+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "definition": "import Mathlib\n\nopen Cardinal Ordinal\n\nuniverse u\n\nnamespace Erdos592\n\n/-- The ordinal Ramsey property `\u03b1 \u2192 (\u03b2, c)\u00b2`: for every red/blue colouring of the edges of the\ncomplete graph on (the well-order of type) `\u03b1`, there is a red clique of order type `\u03b2` or a blue\nclique of cardinality `c`. -/\ndef OrdinalCardinalRamsey (\u03b1 \u03b2 : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=\n  \u2200 red blue : SimpleGraph \u03b1.ToType, IsCompl red blue \u2192\n    (\u2203 s, red.IsClique s \u2227 typeLT s = \u03b2) \u2228\n    \u2203 s, blue.IsClique s \u2227 #s = c\n\n/-- `\u03b3` is the sum of exactly `k` additively indecomposable ordinals, written in non-increasing\norder: `\u03b3 = \u03c9^\u03b4\u2081 + \u22ef + \u03c9^\u03b4\u2096` with `\u03b4\u2081 \u2265 \u22ef \u2265 \u03b4\u2096` (i.e. the Cantor normal form of `\u03b3` has exactly\n`k` terms, counted with multiplicity). -/\ndef IsSumOfIndecomposables (k : \u2115) (\u03b3 : Ordinal.{u}) : Prop :=\n  \u2203 l : List Ordinal.{u}, l.length = k \u2227 l.Pairwise (\u00b7 \u2265 \u00b7) \u2227 \u03b3 = (l.map (\u03c9 ^ \u00b7)).sum\n\nend Erdos592\n",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "This file introduces the two notions in which the Erd\u0151s Problem 592 mission is stated.\n\n1. **The ordinal Ramsey property** $\\alpha \\to (\\beta, c)^2$. Let $\\alpha,\\beta$ be ordinals and $c$ a cardinal. Identify $\\alpha$ with a well-ordered set of order type $\\alpha$, and consider the complete graph $K_\\alpha$ on it. We say $\\alpha \\to (\\beta, c)^2$ if for every colouring of the edges of $K_\\alpha$ in red and blue (every pair of distinct vertices receives exactly one colour), at least one of the following holds:\n   - there is a set $S$ of vertices, all of whose pairs are red, such that $S$ with the induced order has order type exactly $\\beta$ (a *red $K_\\beta$*); or\n   - there is a set $T$ of vertices, all of whose pairs are blue, with $|T| = c$ (a *blue $K_c$*).\n\n   An ordinal $\\alpha$ with $\\alpha \\to (\\alpha, 3)^2$ is called a **partition ordinal**.\n\n2. **Sums of $k$ indecomposable ordinals.** An ordinal is *additively indecomposable* when it has the form $\\omega^{\\delta}$. For $k\\in\\mathbb N$, we say $\\gamma$ is **the sum of $k$ indecomposable ordinals** if\n$$\n\\gamma = \\omega^{\\delta_1} + \\omega^{\\delta_2} + \\cdots + \\omega^{\\delta_k}, \\qquad \\delta_1 \\ge \\delta_2 \\ge \\cdots \\ge \\delta_k .\n$$\nEquivalently, the Cantor normal form of $\\gamma$ has exactly $k$ terms when coefficients are counted with multiplicity (for example $\\omega\\cdot 2 = \\omega+\\omega$ is a sum of two, and $\\omega^2+\\omega+1$ is a sum of three).\n\nThese notions are used to state the known results of Specker, Chang, Galvin\u2013Larson and Schipperus, and the remaining open case of the problem.\n\n**Formalization Note** The graph lives on the canonical well-ordered type of order type $\\alpha$; a red/blue colouring is a pair of complementary simple graphs. \"Order type exactly $\\beta$\" is the order type of the subset with the inherited order. The non-increasing requirement on the exponents is what makes \"sum of exactly $k$\" well defined (without it, $\\omega+\\omega^2=\\omega^2$ would count as a sum of two).",
-            "node_type": "theorem",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures",
-            "status": "Definition",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "theorem_name": "Erdos592_Defs",
-            "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals",
-            "vote_count": 0
-          }
-        ],
-        "root_id": "4466c913-1d4b-46fa-b330-db123925d95f"
-      },
-      "milestone": {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "fd63e508-4e55-474d-8c04-fab9f1782f09",
-        "milestone_description": "Chang [Ch72] proved that the property holds for $\\beta=\\omega$: in any red/blue colouring of the edges of $K_\\alpha$ with $\\alpha=\\omega^\\omega$ there is either a red $K_\\alpha$ or a blue $K_3$, i.e. $\\omega^\\omega\\to(\\omega^\\omega,3)^2$.",
-        "sort_order": 2,
-        "theorem": {
-          "id": "4466c913-1d4b-46fa-b330-db123925d95f",
-          "status": "Open",
-          "theorem_name": "Erdos592.chang_omega_pow_omega"
-        },
-        "title": "Chang (1972) \u2014 \u03b2 = \u03c9: \u03c9^\u03c9 is a partition ordinal"
-      },
-      "open_leaves": {
-        "open_leaves": [
-          {
-            "closability": 0,
-            "status": "Open",
-            "theorem_id": "4466c913-1d4b-46fa-b330-db123925d95f",
-            "theorem_name": "Erdos592.chang_omega_pow_omega"
-          }
-        ],
-        "root_id": "4466c913-1d4b-46fa-b330-db123925d95f",
-        "total": 1
-      },
-      "theorem": {
-        "audits": [
-          {
-            "audit_id": "b720080e-e159-4fde-8c29-e1e867490f84",
-            "comment": "Confirmed by the moderator at approval.",
-            "created_at": "2026-09-26T01:29:17.035619+00:00",
-            "decision": "confirm",
-            "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-            "reviewer_username": "Shuze Chen"
-          },
-          {
-            "audit_id": "0b7b3334-7b56-45b1-b484-6978ce94ab44",
-            "comment": "Confirmed by the mission captain (proposal self-audit).",
-            "created_at": "2026-09-26T01:29:17.219227+00:00",
-            "decision": "confirm",
-            "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "reviewer_username": "Lucas"
-          }
-        ],
-        "created_at": "2026-09-25T18:08:38.242996+00:00",
-        "deprecated_at": null,
-        "deprecated_by": null,
-        "formal_statement": "namespace Erdos592\ntheorem chang_omega_pow_omega : OrdinalCardinalRamsey.{u} (\u03c9 ^ \u03c9) (\u03c9 ^ \u03c9) 3 := by sorry\nend Erdos592",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "The ordinal $\\omega^\\omega$ is a partition ordinal:\n$$\\omega^\\omega \\to (\\omega^\\omega, 3)^2 .$$\nThat is, for every red/blue colouring of the edges of the complete graph on a well-ordered set of order type $\\omega^\\omega$, there is either a set of vertices of order type $\\omega^\\omega$ all of whose pairs are red, or a blue triangle.\n\nThis is the case $\\beta=\\omega$ of Erd\u0151s Problem 592, due to Chang (1972); it is also Erd\u0151s Problem 590.",
-        "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-        "readback": {
-          "created_at": "2026-09-25T18:08:41.660573+00:00",
-          "model": "Aristotle (Harmonic) \u2014 non-blind, same agent as the drafter",
-          "readback": "> **Non-blind read-back \u2014 not independent testimony.** This read-back was written by the same agent (Aristotle, by Harmonic) that drafted the Lean statements in this proposal, with full knowledge of the source and of the intended meaning. It is **not** a blind, independent audit, and no reviewer should treat it as one. Please compare it against the Lean code directly.\n\nFor every universe level $u$: the ordinal Ramsey property $\\alpha\\to(\\alpha,3)^2$ holds for $\\alpha=\\omega^{\\omega}$ (ordinal exponentiation). Unfolded: for every pair of complementary simple graphs (red, blue) on the canonical well-ordered set of order type $\\omega^\\omega$, there is a red clique whose inherited order type is exactly $\\omega^\\omega$, or a blue clique with exactly $3$ elements. No hypotheses."
-        },
-        "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Chang [Ch72], C. C. Chang, A partition theorem for the complete graph on \u03c9^\u03c9, J. Combinatorial Theory Ser. A (1972), 396\u2013452",
-        "status": "Open",
-        "tags": [
-          "erdos-problems",
-          "ordinals",
-          "ramsey-theory",
-          "set-theory"
-        ],
-        "theorem_id": "4466c913-1d4b-46fa-b330-db123925d95f",
-        "theorem_name": "Erdos592.chang_omega_pow_omega",
-        "theorem_title": "Chang: $\\omega^\\omega\\to(\\omega^\\omega,3)^2$",
-        "visibility": "public",
-        "vote_count": 0
-      }
-    },
-    {
-      "decompositions": {
-        "decompositions": [
-          {
-            "children": [
-              {
-                "definition_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-                "definition_name": "Erdos592_Defs",
-                "deprecated_at": null,
-                "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-                "ordinal": 0,
-                "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals"
-              }
-            ],
-            "created_at": null,
-            "created_by": null,
-            "deprecated_at": null,
-            "deprecated_by": null,
-            "submission_id": null
-          }
-        ]
-      },
-      "graph": {
-        "edges": [
-          {
-            "kind": "structural",
-            "source": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "target": "56b5df78-f26f-4c29-b7d2-41c230f9188a"
-          }
-        ],
-        "has_hidden_deprecated_sketches": false,
-        "nodes": [
-          {
-            "audits": [
-              {
-                "audit_id": "c2632814-8ac4-4aaa-9c02-e4736dd12894",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "32fd0f12-74f7-4b8e-99d4-69a3a13197a8",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:09:09.131846+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "namespace Erdos592\ntheorem galvin_larson_indecomposable (\u03b2 : Ordinal.{u}) (h\u03b2 : \u03b2.card \u2264 \u2135\u2080) (h3 : 3 \u2264 \u03b2)\n    (h : OrdinalCardinalRamsey (\u03c9 ^ \u03b2) (\u03c9 ^ \u03b2) 3) :\n    \u2200 a < \u03b2, \u2200 b < \u03b2, a + b < \u03b2 := by sorry\nend Erdos592",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "Let $\\beta$ be a countable ordinal with $\\beta\\ge 3$. If $\\omega^\\beta$ is a partition ordinal,\n$$\\omega^\\beta \\to (\\omega^\\beta, 3)^2,$$\nthen $\\beta$ is **additively indecomposable**: for all ordinals $a,b<\\beta$ one has $a+b<\\beta$. In particular (as $\\beta\\neq0$), $\\beta=\\omega^\\gamma$ for some countable ordinal $\\gamma$.\n\nThis necessary condition, due to Galvin and Larson (1974), reduces Erd\u0151s Problem 592 for $\\beta\\ge3$ to ordinals of the form $\\omega^{\\omega^\\gamma}$.",
-            "node_type": "theorem",
-            "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Galvin and Larson [GaLa74] (F. Galvin, J. Larson, Pinning countable ordinals, Fund. Math., 1974/75)",
-            "status": "Open",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "56b5df78-f26f-4c29-b7d2-41c230f9188a",
-            "theorem_name": "Erdos592.galvin_larson_indecomposable",
-            "theorem_title": "Galvin\u2013Larson: if $\\beta\\ge3$ and $\\omega^\\beta\\to(\\omega^\\beta,3)^2$ then $\\beta$ is additively indecomposable",
-            "vote_count": 0
-          },
-          {
-            "audits": [
-              {
-                "audit_id": "a65c5cef-e2b4-4648-8bc7-45f94d1a3e33",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "187a9948-b370-42da-b0ff-e6f5d5c2199f",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:00:53.675333+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "definition": "import Mathlib\n\nopen Cardinal Ordinal\n\nuniverse u\n\nnamespace Erdos592\n\n/-- The ordinal Ramsey property `\u03b1 \u2192 (\u03b2, c)\u00b2`: for every red/blue colouring of the edges of the\ncomplete graph on (the well-order of type) `\u03b1`, there is a red clique of order type `\u03b2` or a blue\nclique of cardinality `c`. -/\ndef OrdinalCardinalRamsey (\u03b1 \u03b2 : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=\n  \u2200 red blue : SimpleGraph \u03b1.ToType, IsCompl red blue \u2192\n    (\u2203 s, red.IsClique s \u2227 typeLT s = \u03b2) \u2228\n    \u2203 s, blue.IsClique s \u2227 #s = c\n\n/-- `\u03b3` is the sum of exactly `k` additively indecomposable ordinals, written in non-increasing\norder: `\u03b3 = \u03c9^\u03b4\u2081 + \u22ef + \u03c9^\u03b4\u2096` with `\u03b4\u2081 \u2265 \u22ef \u2265 \u03b4\u2096` (i.e. the Cantor normal form of `\u03b3` has exactly\n`k` terms, counted with multiplicity). -/\ndef IsSumOfIndecomposables (k : \u2115) (\u03b3 : Ordinal.{u}) : Prop :=\n  \u2203 l : List Ordinal.{u}, l.length = k \u2227 l.Pairwise (\u00b7 \u2265 \u00b7) \u2227 \u03b3 = (l.map (\u03c9 ^ \u00b7)).sum\n\nend Erdos592\n",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "This file introduces the two notions in which the Erd\u0151s Problem 592 mission is stated.\n\n1. **The ordinal Ramsey property** $\\alpha \\to (\\beta, c)^2$. Let $\\alpha,\\beta$ be ordinals and $c$ a cardinal. Identify $\\alpha$ with a well-ordered set of order type $\\alpha$, and consider the complete graph $K_\\alpha$ on it. We say $\\alpha \\to (\\beta, c)^2$ if for every colouring of the edges of $K_\\alpha$ in red and blue (every pair of distinct vertices receives exactly one colour), at least one of the following holds:\n   - there is a set $S$ of vertices, all of whose pairs are red, such that $S$ with the induced order has order type exactly $\\beta$ (a *red $K_\\beta$*); or\n   - there is a set $T$ of vertices, all of whose pairs are blue, with $|T| = c$ (a *blue $K_c$*).\n\n   An ordinal $\\alpha$ with $\\alpha \\to (\\alpha, 3)^2$ is called a **partition ordinal**.\n\n2. **Sums of $k$ indecomposable ordinals.** An ordinal is *additively indecomposable* when it has the form $\\omega^{\\delta}$. For $k\\in\\mathbb N$, we say $\\gamma$ is **the sum of $k$ indecomposable ordinals** if\n$$\n\\gamma = \\omega^{\\delta_1} + \\omega^{\\delta_2} + \\cdots + \\omega^{\\delta_k}, \\qquad \\delta_1 \\ge \\delta_2 \\ge \\cdots \\ge \\delta_k .\n$$\nEquivalently, the Cantor normal form of $\\gamma$ has exactly $k$ terms when coefficients are counted with multiplicity (for example $\\omega\\cdot 2 = \\omega+\\omega$ is a sum of two, and $\\omega^2+\\omega+1$ is a sum of three).\n\nThese notions are used to state the known results of Specker, Chang, Galvin\u2013Larson and Schipperus, and the remaining open case of the problem.\n\n**Formalization Note** The graph lives on the canonical well-ordered type of order type $\\alpha$; a red/blue colouring is a pair of complementary simple graphs. \"Order type exactly $\\beta$\" is the order type of the subset with the inherited order. The non-increasing requirement on the exponents is what makes \"sum of exactly $k$\" well defined (without it, $\\omega+\\omega^2=\\omega^2$ would count as a sum of two).",
-            "node_type": "theorem",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures",
-            "status": "Definition",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "theorem_name": "Erdos592_Defs",
-            "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals",
-            "vote_count": 0
-          }
-        ],
-        "root_id": "56b5df78-f26f-4c29-b7d2-41c230f9188a"
-      },
-      "milestone": {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "50dbd6e6-c960-40cd-be0d-b9620afc7661",
-        "milestone_description": "Galvin and Larson [GaLa74] have shown that if a countable ordinal $\\beta\\ge 3$ has the property ($\\omega^\\beta\\to(\\omega^\\beta,3)^2$), then $\\beta$ must be additively indecomposable, so that in particular $\\beta=\\omega^\\gamma$ for some countable ordinal $\\gamma$.",
-        "sort_order": 3,
-        "theorem": {
-          "id": "56b5df78-f26f-4c29-b7d2-41c230f9188a",
-          "status": "Open",
-          "theorem_name": "Erdos592.galvin_larson_indecomposable"
-        },
-        "title": "Galvin\u2013Larson (1974) \u2014 \u03b2 \u2265 3 with the property must be additively indecomposable"
-      },
-      "open_leaves": {
-        "open_leaves": [
-          {
-            "closability": 0,
-            "status": "Open",
-            "theorem_id": "56b5df78-f26f-4c29-b7d2-41c230f9188a",
-            "theorem_name": "Erdos592.galvin_larson_indecomposable"
-          }
-        ],
-        "root_id": "56b5df78-f26f-4c29-b7d2-41c230f9188a",
-        "total": 1
-      },
-      "theorem": {
-        "audits": [
-          {
-            "audit_id": "c2632814-8ac4-4aaa-9c02-e4736dd12894",
-            "comment": "Confirmed by the moderator at approval.",
-            "created_at": "2026-09-26T01:29:17.035619+00:00",
-            "decision": "confirm",
-            "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-            "reviewer_username": "Shuze Chen"
-          },
-          {
-            "audit_id": "32fd0f12-74f7-4b8e-99d4-69a3a13197a8",
-            "comment": "Confirmed by the mission captain (proposal self-audit).",
-            "created_at": "2026-09-26T01:29:17.219227+00:00",
-            "decision": "confirm",
-            "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "reviewer_username": "Lucas"
-          }
-        ],
-        "created_at": "2026-09-25T18:09:09.131846+00:00",
-        "deprecated_at": null,
-        "deprecated_by": null,
-        "formal_statement": "namespace Erdos592\ntheorem galvin_larson_indecomposable (\u03b2 : Ordinal.{u}) (h\u03b2 : \u03b2.card \u2264 \u2135\u2080) (h3 : 3 \u2264 \u03b2)\n    (h : OrdinalCardinalRamsey (\u03c9 ^ \u03b2) (\u03c9 ^ \u03b2) 3) :\n    \u2200 a < \u03b2, \u2200 b < \u03b2, a + b < \u03b2 := by sorry\nend Erdos592",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "Let $\\beta$ be a countable ordinal with $\\beta\\ge 3$. If $\\omega^\\beta$ is a partition ordinal,\n$$\\omega^\\beta \\to (\\omega^\\beta, 3)^2,$$\nthen $\\beta$ is **additively indecomposable**: for all ordinals $a,b<\\beta$ one has $a+b<\\beta$. In particular (as $\\beta\\neq0$), $\\beta=\\omega^\\gamma$ for some countable ordinal $\\gamma$.\n\nThis necessary condition, due to Galvin and Larson (1974), reduces Erd\u0151s Problem 592 for $\\beta\\ge3$ to ordinals of the form $\\omega^{\\omega^\\gamma}$.",
-        "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-        "readback": {
-          "created_at": "2026-09-25T18:09:35.214161+00:00",
-          "model": "Aristotle (Harmonic) \u2014 non-blind, same agent as the drafter",
-          "readback": "> **Non-blind read-back \u2014 not independent testimony.** This read-back was written by the same agent (Aristotle, by Harmonic) that drafted the Lean statements in this proposal, with full knowledge of the source and of the intended meaning. It is **not** a blind, independent audit, and no reviewer should treat it as one. Please compare it against the Lean code directly.\n\nFor every universe level $u$ and every ordinal $\\beta$ such that\n\n1. the cardinality of $\\beta$ is at most $\\aleph_0$,\n2. $3\\le\\beta$, and\n3. the ordinal Ramsey property $\\alpha\\to(\\alpha,3)^2$ holds for $\\alpha=\\omega^\\beta$ (every red/blue colouring of the complete graph on the well-ordered set of type $\\omega^\\beta$ has a red clique of inherited order type exactly $\\omega^\\beta$ or a blue clique of exactly $3$ elements),\n\nthe ordinal $\\beta$ is closed under ordinal addition in the sense: for all ordinals $a<\\beta$ and $b<\\beta$, $a+b<\\beta$. (For nonzero $\\beta$ this is equivalent to $\\beta=\\omega^\\gamma$ for some ordinal $\\gamma$; the statement itself only asserts the closure property.)"
-        },
-        "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Galvin and Larson [GaLa74] (F. Galvin, J. Larson, Pinning countable ordinals, Fund. Math., 1974/75)",
-        "status": "Open",
-        "tags": [
-          "erdos-problems",
-          "ordinals",
-          "ramsey-theory",
-          "set-theory"
-        ],
-        "theorem_id": "56b5df78-f26f-4c29-b7d2-41c230f9188a",
-        "theorem_name": "Erdos592.galvin_larson_indecomposable",
-        "theorem_title": "Galvin\u2013Larson: if $\\beta\\ge3$ and $\\omega^\\beta\\to(\\omega^\\beta,3)^2$ then $\\beta$ is additively indecomposable",
-        "visibility": "public",
-        "vote_count": 0
-      }
-    },
-    {
-      "decompositions": {
-        "decompositions": [
-          {
-            "children": [
-              {
-                "definition_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-                "definition_name": "Erdos592_Defs",
-                "deprecated_at": null,
-                "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-                "ordinal": 0,
-                "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals"
-              }
-            ],
-            "created_at": null,
-            "created_by": null,
-            "deprecated_at": null,
-            "deprecated_by": null,
-            "submission_id": null
-          }
-        ]
-      },
-      "graph": {
-        "edges": [
-          {
-            "kind": "structural",
-            "source": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "target": "31c75db8-058f-4f87-87fa-c2bb7b52f75e"
-          }
-        ],
-        "has_hidden_deprecated_sketches": false,
-        "nodes": [
-          {
-            "audits": [
-              {
-                "audit_id": "b80b4186-cfc9-4b7d-8154-120991497a4d",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "318d9400-6b47-476c-ba49-6dae155c0e95",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:10:07.924886+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "namespace Erdos592\ntheorem schipperus_one_or_two (\u03b3 : Ordinal.{u}) (h\u03b3 : \u03b3.card \u2264 \u2135\u2080)\n    (h : IsSumOfIndecomposables 1 \u03b3 \u2228 IsSumOfIndecomposables 2 \u03b3) :\n    OrdinalCardinalRamsey (\u03c9 ^ \u03c9 ^ \u03b3) (\u03c9 ^ \u03c9 ^ \u03b3) 3 := by sorry\nend Erdos592",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "Let $\\gamma$ be a countable ordinal which is the sum of one or two indecomposable ordinals, i.e. $\\gamma=\\omega^{\\delta_1}$, or $\\gamma=\\omega^{\\delta_1}+\\omega^{\\delta_2}$ with $\\delta_1\\ge\\delta_2$. Then\n$$\\omega^{\\omega^{\\gamma}} \\to \\left(\\omega^{\\omega^{\\gamma}}, 3\\right)^2 .$$\n\nThis is the positive part of Schipperus's 2010 theorem on countable partition ordinals. It contains Chang's theorem ($\\gamma=1$, giving $\\omega^\\omega$) and Erd\u0151s Problem 591 ($\\gamma=2$, giving $\\omega^{\\omega^2}$).",
-            "node_type": "theorem",
-            "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Schipperus [Sc10] (R. Schipperus, Countable partition ordinals, Ann. Pure Appl. Logic, 2010)",
-            "status": "Open",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "31c75db8-058f-4f87-87fa-c2bb7b52f75e",
-            "theorem_name": "Erdos592.schipperus_one_or_two",
-            "theorem_title": "Schipperus: $\\omega^{\\omega^\\gamma}$ is a partition ordinal when $\\gamma$ is a sum of one or two indecomposables",
-            "vote_count": 0
-          },
-          {
-            "audits": [
-              {
-                "audit_id": "a65c5cef-e2b4-4648-8bc7-45f94d1a3e33",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "187a9948-b370-42da-b0ff-e6f5d5c2199f",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:00:53.675333+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "definition": "import Mathlib\n\nopen Cardinal Ordinal\n\nuniverse u\n\nnamespace Erdos592\n\n/-- The ordinal Ramsey property `\u03b1 \u2192 (\u03b2, c)\u00b2`: for every red/blue colouring of the edges of the\ncomplete graph on (the well-order of type) `\u03b1`, there is a red clique of order type `\u03b2` or a blue\nclique of cardinality `c`. -/\ndef OrdinalCardinalRamsey (\u03b1 \u03b2 : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=\n  \u2200 red blue : SimpleGraph \u03b1.ToType, IsCompl red blue \u2192\n    (\u2203 s, red.IsClique s \u2227 typeLT s = \u03b2) \u2228\n    \u2203 s, blue.IsClique s \u2227 #s = c\n\n/-- `\u03b3` is the sum of exactly `k` additively indecomposable ordinals, written in non-increasing\norder: `\u03b3 = \u03c9^\u03b4\u2081 + \u22ef + \u03c9^\u03b4\u2096` with `\u03b4\u2081 \u2265 \u22ef \u2265 \u03b4\u2096` (i.e. the Cantor normal form of `\u03b3` has exactly\n`k` terms, counted with multiplicity). -/\ndef IsSumOfIndecomposables (k : \u2115) (\u03b3 : Ordinal.{u}) : Prop :=\n  \u2203 l : List Ordinal.{u}, l.length = k \u2227 l.Pairwise (\u00b7 \u2265 \u00b7) \u2227 \u03b3 = (l.map (\u03c9 ^ \u00b7)).sum\n\nend Erdos592\n",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "This file introduces the two notions in which the Erd\u0151s Problem 592 mission is stated.\n\n1. **The ordinal Ramsey property** $\\alpha \\to (\\beta, c)^2$. Let $\\alpha,\\beta$ be ordinals and $c$ a cardinal. Identify $\\alpha$ with a well-ordered set of order type $\\alpha$, and consider the complete graph $K_\\alpha$ on it. We say $\\alpha \\to (\\beta, c)^2$ if for every colouring of the edges of $K_\\alpha$ in red and blue (every pair of distinct vertices receives exactly one colour), at least one of the following holds:\n   - there is a set $S$ of vertices, all of whose pairs are red, such that $S$ with the induced order has order type exactly $\\beta$ (a *red $K_\\beta$*); or\n   - there is a set $T$ of vertices, all of whose pairs are blue, with $|T| = c$ (a *blue $K_c$*).\n\n   An ordinal $\\alpha$ with $\\alpha \\to (\\alpha, 3)^2$ is called a **partition ordinal**.\n\n2. **Sums of $k$ indecomposable ordinals.** An ordinal is *additively indecomposable* when it has the form $\\omega^{\\delta}$. For $k\\in\\mathbb N$, we say $\\gamma$ is **the sum of $k$ indecomposable ordinals** if\n$$\n\\gamma = \\omega^{\\delta_1} + \\omega^{\\delta_2} + \\cdots + \\omega^{\\delta_k}, \\qquad \\delta_1 \\ge \\delta_2 \\ge \\cdots \\ge \\delta_k .\n$$\nEquivalently, the Cantor normal form of $\\gamma$ has exactly $k$ terms when coefficients are counted with multiplicity (for example $\\omega\\cdot 2 = \\omega+\\omega$ is a sum of two, and $\\omega^2+\\omega+1$ is a sum of three).\n\nThese notions are used to state the known results of Specker, Chang, Galvin\u2013Larson and Schipperus, and the remaining open case of the problem.\n\n**Formalization Note** The graph lives on the canonical well-ordered type of order type $\\alpha$; a red/blue colouring is a pair of complementary simple graphs. \"Order type exactly $\\beta$\" is the order type of the subset with the inherited order. The non-increasing requirement on the exponents is what makes \"sum of exactly $k$\" well defined (without it, $\\omega+\\omega^2=\\omega^2$ would count as a sum of two).",
-            "node_type": "theorem",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures",
-            "status": "Definition",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "theorem_name": "Erdos592_Defs",
-            "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals",
-            "vote_count": 0
-          }
-        ],
-        "root_id": "31c75db8-058f-4f87-87fa-c2bb7b52f75e"
-      },
-      "milestone": {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "a422d7c6-936a-413b-8785-38874f47fcfc",
-        "milestone_description": "Schipperus [Sc10] proved that the property holds if $\\beta=\\omega^\\gamma$ in which $\\gamma$ is a countable ordinal which is the sum of one or two indecomposable ordinals.",
-        "sort_order": 4,
-        "theorem": {
-          "id": "31c75db8-058f-4f87-87fa-c2bb7b52f75e",
-          "status": "Open",
-          "theorem_name": "Erdos592.schipperus_one_or_two"
-        },
-        "title": "Schipperus (2010) \u2014 \u03b3 a sum of one or two indecomposables: positive"
-      },
-      "open_leaves": {
-        "open_leaves": [
-          {
-            "closability": 0,
-            "status": "Open",
-            "theorem_id": "31c75db8-058f-4f87-87fa-c2bb7b52f75e",
-            "theorem_name": "Erdos592.schipperus_one_or_two"
-          }
-        ],
-        "root_id": "31c75db8-058f-4f87-87fa-c2bb7b52f75e",
-        "total": 1
-      },
-      "theorem": {
-        "audits": [
-          {
-            "audit_id": "b80b4186-cfc9-4b7d-8154-120991497a4d",
-            "comment": "Confirmed by the moderator at approval.",
-            "created_at": "2026-09-26T01:29:17.035619+00:00",
-            "decision": "confirm",
-            "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-            "reviewer_username": "Shuze Chen"
-          },
-          {
-            "audit_id": "318d9400-6b47-476c-ba49-6dae155c0e95",
-            "comment": "Confirmed by the mission captain (proposal self-audit).",
-            "created_at": "2026-09-26T01:29:17.219227+00:00",
-            "decision": "confirm",
-            "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "reviewer_username": "Lucas"
-          }
-        ],
-        "created_at": "2026-09-25T18:10:07.924886+00:00",
-        "deprecated_at": null,
-        "deprecated_by": null,
-        "formal_statement": "namespace Erdos592\ntheorem schipperus_one_or_two (\u03b3 : Ordinal.{u}) (h\u03b3 : \u03b3.card \u2264 \u2135\u2080)\n    (h : IsSumOfIndecomposables 1 \u03b3 \u2228 IsSumOfIndecomposables 2 \u03b3) :\n    OrdinalCardinalRamsey (\u03c9 ^ \u03c9 ^ \u03b3) (\u03c9 ^ \u03c9 ^ \u03b3) 3 := by sorry\nend Erdos592",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "Let $\\gamma$ be a countable ordinal which is the sum of one or two indecomposable ordinals, i.e. $\\gamma=\\omega^{\\delta_1}$, or $\\gamma=\\omega^{\\delta_1}+\\omega^{\\delta_2}$ with $\\delta_1\\ge\\delta_2$. Then\n$$\\omega^{\\omega^{\\gamma}} \\to \\left(\\omega^{\\omega^{\\gamma}}, 3\\right)^2 .$$\n\nThis is the positive part of Schipperus's 2010 theorem on countable partition ordinals. It contains Chang's theorem ($\\gamma=1$, giving $\\omega^\\omega$) and Erd\u0151s Problem 591 ($\\gamma=2$, giving $\\omega^{\\omega^2}$).",
-        "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-        "readback": {
-          "created_at": "2026-09-25T18:10:46.152994+00:00",
-          "model": "Aristotle (Harmonic) \u2014 non-blind, same agent as the drafter",
-          "readback": "> **Non-blind read-back \u2014 not independent testimony.** This read-back was written by the same agent (Aristotle, by Harmonic) that drafted the Lean statements in this proposal, with full knowledge of the source and of the intended meaning. It is **not** a blind, independent audit, and no reviewer should treat it as one. Please compare it against the Lean code directly.\n\nFor every universe level $u$ and every ordinal $\\gamma$ such that\n\n1. the cardinality of $\\gamma$ is at most $\\aleph_0$, and\n2. $\\gamma$ is the sum of exactly one indecomposable ($\\gamma=\\omega^{\\delta_1}$ for some ordinal $\\delta_1$) **or** of exactly two ($\\gamma=\\omega^{\\delta_1}+\\omega^{\\delta_2}$ with $\\delta_1\\ge\\delta_2$),\n\nthe ordinal Ramsey property $\\alpha\\to(\\alpha,3)^2$ holds for $\\alpha=\\omega^{(\\omega^\\gamma)}$: every red/blue colouring of the complete graph on the well-ordered set of type $\\alpha$ has a red clique of inherited order type exactly $\\alpha$ or a blue clique of exactly $3$ elements. Hypothesis 2 forces $\\gamma\\ge1$; the cases include $\\gamma=1$ ($\\alpha=\\omega^\\omega$) and $\\gamma=2=1+1$ ($\\alpha=\\omega^{\\omega^2}$)."
-        },
-        "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Schipperus [Sc10] (R. Schipperus, Countable partition ordinals, Ann. Pure Appl. Logic, 2010)",
-        "status": "Open",
-        "tags": [
-          "erdos-problems",
-          "ordinals",
-          "ramsey-theory",
-          "set-theory"
-        ],
-        "theorem_id": "31c75db8-058f-4f87-87fa-c2bb7b52f75e",
-        "theorem_name": "Erdos592.schipperus_one_or_two",
-        "theorem_title": "Schipperus: $\\omega^{\\omega^\\gamma}$ is a partition ordinal when $\\gamma$ is a sum of one or two indecomposables",
-        "visibility": "public",
-        "vote_count": 0
-      }
-    },
-    {
-      "decompositions": {
-        "decompositions": [
-          {
-            "children": [
-              {
-                "definition_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-                "definition_name": "Erdos592_Defs",
-                "deprecated_at": null,
-                "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-                "ordinal": 0,
-                "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals"
-              }
-            ],
-            "created_at": null,
-            "created_by": null,
-            "deprecated_at": null,
-            "deprecated_by": null,
-            "submission_id": null
-          }
-        ]
-      },
-      "graph": {
-        "edges": [
-          {
-            "kind": "structural",
-            "source": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "target": "9b632d32-a698-49f8-8bcb-5493f5b5fee1"
-          }
-        ],
-        "has_hidden_deprecated_sketches": false,
-        "nodes": [
-          {
-            "audits": [
-              {
-                "audit_id": "3ab1915d-061f-466a-9017-94d673c21065",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "35c919be-afe6-41ec-a7a4-48189c1d20e2",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:11:09.206493+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "namespace Erdos592\ntheorem schipperus_four_or_more (\u03b3 : Ordinal.{u}) (h\u03b3 : \u03b3.card \u2264 \u2135\u2080) (k : \u2115) (hk : 4 \u2264 k)\n    (h : IsSumOfIndecomposables k \u03b3) :\n    \u00ac OrdinalCardinalRamsey (\u03c9 ^ \u03c9 ^ \u03b3) (\u03c9 ^ \u03c9 ^ \u03b3) 3 := by sorry\nend Erdos592",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "Let $k\\ge 4$ be a natural number and let $\\gamma$ be a countable ordinal which is the sum of exactly $k$ indecomposable ordinals, $\\gamma=\\omega^{\\delta_1}+\\cdots+\\omega^{\\delta_k}$ with $\\delta_1\\ge\\cdots\\ge\\delta_k$. Then\n$$\\omega^{\\omega^{\\gamma}} \\not\\to \\left(\\omega^{\\omega^{\\gamma}}, 3\\right)^2 .$$\n\nThis is the negative part of Schipperus's 2010 theorem. It shows in particular that the Galvin\u2013Larson conjecture (every $\\beta=\\omega^\\gamma\\ge3$ has the property) fails, e.g. for $\\gamma=4$.",
-            "node_type": "theorem",
-            "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Schipperus [Sc10] (R. Schipperus, Countable partition ordinals, Ann. Pure Appl. Logic, 2010)",
-            "status": "Open",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "9b632d32-a698-49f8-8bcb-5493f5b5fee1",
-            "theorem_name": "Erdos592.schipperus_four_or_more",
-            "theorem_title": "Schipperus: $\\omega^{\\omega^\\gamma}$ is not a partition ordinal when $\\gamma$ is a sum of four or more indecomposables",
-            "vote_count": 0
-          },
-          {
-            "audits": [
-              {
-                "audit_id": "a65c5cef-e2b4-4648-8bc7-45f94d1a3e33",
-                "comment": "Confirmed by the moderator at approval.",
-                "created_at": "2026-09-26T01:29:17.035619+00:00",
-                "decision": "confirm",
-                "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-                "reviewer_username": "Shuze Chen"
-              },
-              {
-                "audit_id": "187a9948-b370-42da-b0ff-e6f5d5c2199f",
-                "comment": "Confirmed by the mission captain (proposal self-audit).",
-                "created_at": "2026-09-26T01:29:17.219227+00:00",
-                "decision": "confirm",
-                "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-                "reviewer_username": "Lucas"
-              }
-            ],
-            "created_at": "2026-09-25T18:00:53.675333+00:00",
-            "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "created_by_username": "Lucas",
-            "definition": "import Mathlib\n\nopen Cardinal Ordinal\n\nuniverse u\n\nnamespace Erdos592\n\n/-- The ordinal Ramsey property `\u03b1 \u2192 (\u03b2, c)\u00b2`: for every red/blue colouring of the edges of the\ncomplete graph on (the well-order of type) `\u03b1`, there is a red clique of order type `\u03b2` or a blue\nclique of cardinality `c`. -/\ndef OrdinalCardinalRamsey (\u03b1 \u03b2 : Ordinal.{u}) (c : Cardinal.{u}) : Prop :=\n  \u2200 red blue : SimpleGraph \u03b1.ToType, IsCompl red blue \u2192\n    (\u2203 s, red.IsClique s \u2227 typeLT s = \u03b2) \u2228\n    \u2203 s, blue.IsClique s \u2227 #s = c\n\n/-- `\u03b3` is the sum of exactly `k` additively indecomposable ordinals, written in non-increasing\norder: `\u03b3 = \u03c9^\u03b4\u2081 + \u22ef + \u03c9^\u03b4\u2096` with `\u03b4\u2081 \u2265 \u22ef \u2265 \u03b4\u2096` (i.e. the Cantor normal form of `\u03b3` has exactly\n`k` terms, counted with multiplicity). -/\ndef IsSumOfIndecomposables (k : \u2115) (\u03b3 : Ordinal.{u}) : Prop :=\n  \u2203 l : List Ordinal.{u}, l.length = k \u2227 l.Pairwise (\u00b7 \u2265 \u00b7) \u2227 \u03b3 = (l.map (\u03c9 ^ \u00b7)).sum\n\nend Erdos592\n",
-            "deprecated_at": null,
-            "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
-            "formal_statement": "",
-            "has_more_children": false,
-            "has_more_parents": false,
-            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-            "natural_language_statement": "This file introduces the two notions in which the Erd\u0151s Problem 592 mission is stated.\n\n1. **The ordinal Ramsey property** $\\alpha \\to (\\beta, c)^2$. Let $\\alpha,\\beta$ be ordinals and $c$ a cardinal. Identify $\\alpha$ with a well-ordered set of order type $\\alpha$, and consider the complete graph $K_\\alpha$ on it. We say $\\alpha \\to (\\beta, c)^2$ if for every colouring of the edges of $K_\\alpha$ in red and blue (every pair of distinct vertices receives exactly one colour), at least one of the following holds:\n   - there is a set $S$ of vertices, all of whose pairs are red, such that $S$ with the induced order has order type exactly $\\beta$ (a *red $K_\\beta$*); or\n   - there is a set $T$ of vertices, all of whose pairs are blue, with $|T| = c$ (a *blue $K_c$*).\n\n   An ordinal $\\alpha$ with $\\alpha \\to (\\alpha, 3)^2$ is called a **partition ordinal**.\n\n2. **Sums of $k$ indecomposable ordinals.** An ordinal is *additively indecomposable* when it has the form $\\omega^{\\delta}$. For $k\\in\\mathbb N$, we say $\\gamma$ is **the sum of $k$ indecomposable ordinals** if\n$$\n\\gamma = \\omega^{\\delta_1} + \\omega^{\\delta_2} + \\cdots + \\omega^{\\delta_k}, \\qquad \\delta_1 \\ge \\delta_2 \\ge \\cdots \\ge \\delta_k .\n$$\nEquivalently, the Cantor normal form of $\\gamma$ has exactly $k$ terms when coefficients are counted with multiplicity (for example $\\omega\\cdot 2 = \\omega+\\omega$ is a sum of two, and $\\omega^2+\\omega+1$ is a sum of three).\n\nThese notions are used to state the known results of Specker, Chang, Galvin\u2013Larson and Schipperus, and the remaining open case of the problem.\n\n**Formalization Note** The graph lives on the canonical well-ordered type of order type $\\alpha$; a red/blue colouring is a pair of complementary simple graphs. \"Order type exactly $\\beta$\" is the order type of the subset with the inherited order. The non-increasing requirement on the exponents is what makes \"sum of exactly $k$\" well defined (without it, $\\omega+\\omega^2=\\omega^2$ would count as a sum of two).",
-            "node_type": "theorem",
-            "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures",
-            "status": "Definition",
-            "tags": [
-              "erdos-problems",
-              "ordinals",
-              "ramsey-theory",
-              "set-theory"
-            ],
-            "theorem_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-            "theorem_name": "Erdos592_Defs",
-            "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals",
-            "vote_count": 0
-          }
-        ],
-        "root_id": "9b632d32-a698-49f8-8bcb-5493f5b5fee1"
-      },
-      "milestone": {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "6076270e-0be6-41a9-98b9-6424be45b9cf",
-        "milestone_description": "Schipperus [Sc10] proved that the property fails to hold if $\\beta=\\omega^\\gamma$ where $\\gamma$ is a countable ordinal which is the sum of four or more indecomposable ordinals.",
-        "sort_order": 5,
-        "theorem": {
-          "id": "9b632d32-a698-49f8-8bcb-5493f5b5fee1",
-          "status": "Open",
-          "theorem_name": "Erdos592.schipperus_four_or_more"
-        },
-        "title": "Schipperus (2010) \u2014 \u03b3 a sum of four or more indecomposables: negative"
-      },
-      "open_leaves": {
-        "open_leaves": [
-          {
-            "closability": 0,
-            "status": "Open",
-            "theorem_id": "9b632d32-a698-49f8-8bcb-5493f5b5fee1",
-            "theorem_name": "Erdos592.schipperus_four_or_more"
-          }
-        ],
-        "root_id": "9b632d32-a698-49f8-8bcb-5493f5b5fee1",
-        "total": 1
-      },
-      "theorem": {
-        "audits": [
-          {
-            "audit_id": "3ab1915d-061f-466a-9017-94d673c21065",
-            "comment": "Confirmed by the moderator at approval.",
-            "created_at": "2026-09-26T01:29:17.035619+00:00",
-            "decision": "confirm",
-            "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-            "reviewer_username": "Shuze Chen"
-          },
-          {
-            "audit_id": "35c919be-afe6-41ec-a7a4-48189c1d20e2",
-            "comment": "Confirmed by the mission captain (proposal self-audit).",
-            "created_at": "2026-09-26T01:29:17.219227+00:00",
-            "decision": "confirm",
-            "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-            "reviewer_username": "Lucas"
-          }
-        ],
-        "created_at": "2026-09-25T18:11:09.206493+00:00",
-        "deprecated_at": null,
-        "deprecated_by": null,
-        "formal_statement": "namespace Erdos592\ntheorem schipperus_four_or_more (\u03b3 : Ordinal.{u}) (h\u03b3 : \u03b3.card \u2264 \u2135\u2080) (k : \u2115) (hk : 4 \u2264 k)\n    (h : IsSumOfIndecomposables k \u03b3) :\n    \u00ac OrdinalCardinalRamsey (\u03c9 ^ \u03c9 ^ \u03b3) (\u03c9 ^ \u03c9 ^ \u03b3) 3 := by sorry\nend Erdos592",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "Let $k\\ge 4$ be a natural number and let $\\gamma$ be a countable ordinal which is the sum of exactly $k$ indecomposable ordinals, $\\gamma=\\omega^{\\delta_1}+\\cdots+\\omega^{\\delta_k}$ with $\\delta_1\\ge\\cdots\\ge\\delta_k$. Then\n$$\\omega^{\\omega^{\\gamma}} \\not\\to \\left(\\omega^{\\omega^{\\gamma}}, 3\\right)^2 .$$\n\nThis is the negative part of Schipperus's 2010 theorem. It shows in particular that the Galvin\u2013Larson conjecture (every $\\beta=\\omega^\\gamma\\ge3$ has the property) fails, e.g. for $\\gamma=4$.",
-        "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-        "readback": {
-          "created_at": "2026-09-25T18:11:12.487906+00:00",
-          "model": "Aristotle (Harmonic) \u2014 non-blind, same agent as the drafter",
-          "readback": "> **Non-blind read-back \u2014 not independent testimony.** This read-back was written by the same agent (Aristotle, by Harmonic) that drafted the Lean statements in this proposal, with full knowledge of the source and of the intended meaning. It is **not** a blind, independent audit, and no reviewer should treat it as one. Please compare it against the Lean code directly.\n\nFor every universe level $u$, every ordinal $\\gamma$ and every natural number $k$ such that\n\n1. the cardinality of $\\gamma$ is at most $\\aleph_0$,\n2. $k\\ge 4$, and\n3. $\\gamma$ is the sum of exactly $k$ indecomposables: $\\gamma=\\omega^{\\delta_1}+\\cdots+\\omega^{\\delta_k}$ for some ordinals $\\delta_1\\ge\\cdots\\ge\\delta_k$,\n\nthe ordinal Ramsey property $\\alpha\\to(\\alpha,3)^2$ **fails** for $\\alpha=\\omega^{(\\omega^\\gamma)}$: there is a red/blue colouring (complementary simple graphs) of the complete graph on the well-ordered set of type $\\alpha$ with no red clique of inherited order type exactly $\\alpha$ and no blue clique of exactly $3$ elements. Hypothesis 3 forces $\\gamma\\ge k\\ge4$; e.g. $\\gamma=4$ ($\\alpha=\\omega^{\\omega^4}$) and $\\gamma=\\omega\\cdot 4$ are covered."
-        },
-        "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; Schipperus [Sc10] (R. Schipperus, Countable partition ordinals, Ann. Pure Appl. Logic, 2010)",
-        "status": "Open",
-        "tags": [
-          "erdos-problems",
-          "ordinals",
-          "ramsey-theory",
-          "set-theory"
-        ],
-        "theorem_id": "9b632d32-a698-49f8-8bcb-5493f5b5fee1",
-        "theorem_name": "Erdos592.schipperus_four_or_more",
-        "theorem_title": "Schipperus: $\\omega^{\\omega^\\gamma}$ is not a partition ordinal when $\\gamma$ is a sum of four or more indecomposables",
-        "visibility": "public",
-        "vote_count": 0
-      }
-    }
-  ],
-  "milestones": {
-    "milestones": [
-      {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "e8ad9024-d9d6-465b-85d7-a71e985a70c1",
-        "milestone_description": "Specker [Sp57] proved that the property holds for $\\beta=2$: in any red/blue colouring of the edges of $K_\\alpha$ with $\\alpha=\\omega^2$ there is either a red $K_\\alpha$ or a blue $K_3$, i.e. $\\omega^2\\to(\\omega^2,3)^2$.",
-        "sort_order": 0,
-        "theorem": {
-          "id": "636ffb31-f940-4d5e-8262-ba55cf7c866d",
-          "status": "Open",
-          "theorem_name": "Erdos592.specker_omega_sq"
-        },
-        "title": "Specker (1957) \u2014 \u03b2 = 2: \u03c9\u00b2 is a partition ordinal"
-      },
-      {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "a75cd284-343c-4ebe-9d89-90e121ec01f4",
-        "milestone_description": "Specker [Sp57] proved that the property does not hold for $3\\le\\beta<\\omega$: for every natural number $n\\ge 3$ there is a red/blue colouring of the edges of $K_{\\omega^n}$ with neither a red $K_{\\omega^n}$ nor a blue $K_3$, i.e. $\\omega^n\\not\\to(\\omega^n,3)^2$.",
-        "sort_order": 1,
-        "theorem": {
-          "id": "bc75f480-8ac4-41ca-b46e-29d43876f7a2",
-          "status": "Open",
-          "theorem_name": "Erdos592.specker_omega_pow_nat_not"
-        },
-        "title": "Specker (1957) \u2014 3 \u2264 \u03b2 < \u03c9: \u03c9\u207f is not a partition ordinal"
-      },
-      {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "fd63e508-4e55-474d-8c04-fab9f1782f09",
-        "milestone_description": "Chang [Ch72] proved that the property holds for $\\beta=\\omega$: in any red/blue colouring of the edges of $K_\\alpha$ with $\\alpha=\\omega^\\omega$ there is either a red $K_\\alpha$ or a blue $K_3$, i.e. $\\omega^\\omega\\to(\\omega^\\omega,3)^2$.",
-        "sort_order": 2,
-        "theorem": {
-          "id": "4466c913-1d4b-46fa-b330-db123925d95f",
-          "status": "Open",
-          "theorem_name": "Erdos592.chang_omega_pow_omega"
-        },
-        "title": "Chang (1972) \u2014 \u03b2 = \u03c9: \u03c9^\u03c9 is a partition ordinal"
-      },
-      {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "50dbd6e6-c960-40cd-be0d-b9620afc7661",
-        "milestone_description": "Galvin and Larson [GaLa74] have shown that if a countable ordinal $\\beta\\ge 3$ has the property ($\\omega^\\beta\\to(\\omega^\\beta,3)^2$), then $\\beta$ must be additively indecomposable, so that in particular $\\beta=\\omega^\\gamma$ for some countable ordinal $\\gamma$.",
-        "sort_order": 3,
-        "theorem": {
-          "id": "56b5df78-f26f-4c29-b7d2-41c230f9188a",
-          "status": "Open",
-          "theorem_name": "Erdos592.galvin_larson_indecomposable"
-        },
-        "title": "Galvin\u2013Larson (1974) \u2014 \u03b2 \u2265 3 with the property must be additively indecomposable"
-      },
-      {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "a422d7c6-936a-413b-8785-38874f47fcfc",
-        "milestone_description": "Schipperus [Sc10] proved that the property holds if $\\beta=\\omega^\\gamma$ in which $\\gamma$ is a countable ordinal which is the sum of one or two indecomposable ordinals.",
-        "sort_order": 4,
-        "theorem": {
-          "id": "31c75db8-058f-4f87-87fa-c2bb7b52f75e",
-          "status": "Open",
-          "theorem_name": "Erdos592.schipperus_one_or_two"
-        },
-        "title": "Schipperus (2010) \u2014 \u03b3 a sum of one or two indecomposables: positive"
-      },
-      {
-        "completed": false,
-        "created_at": "2026-09-26T01:29:17.13159+00:00",
-        "created_by": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-        "id": "6076270e-0be6-41a9-98b9-6424be45b9cf",
-        "milestone_description": "Schipperus [Sc10] proved that the property fails to hold if $\\beta=\\omega^\\gamma$ where $\\gamma$ is a countable ordinal which is the sum of four or more indecomposable ordinals.",
-        "sort_order": 5,
-        "theorem": {
-          "id": "9b632d32-a698-49f8-8bcb-5493f5b5fee1",
-          "status": "Open",
-          "theorem_name": "Erdos592.schipperus_four_or_more"
-        },
-        "title": "Schipperus (2010) \u2014 \u03b3 a sum of four or more indecomposables: negative"
-      }
-    ],
-    "mission_id": "1df7f85a-02d0-496e-8d49-f5ada37b5708",
-    "pagination": {
-      "limit": 100,
-      "offset": 0,
-      "total": 6
-    }
-  },
-  "mission_comments": {
-    "comments": [],
-    "mission_id": "1df7f85a-02d0-496e-8d49-f5ada37b5708",
-    "mission_name": "Erd\u0151s Problem 592: which \u03c9^\u03b2 are partition ordinals?",
-    "pagination": {
-      "limit": 20,
-      "offset": 0,
-      "total": 0
-    }
-  },
-  "mission_count": 954,
-  "open_leaves": {
-    "open_leaves": [
-      {
-        "closability": 0,
-        "status": "Open",
-        "theorem_id": "c79cbe94-e34d-4ebc-82b9-375564c28f85",
-        "theorem_name": "Erdos592.erdos_592_three_indecomposables"
-      }
-    ],
-    "root_id": "c79cbe94-e34d-4ebc-82b9-375564c28f85",
-    "total": 1
-  },
   "platform_version": "0.11.5",
-  "probe_kind": "read-only",
-  "root": {
-    "decompositions": {
-      "decompositions": [
-        {
-          "children": [
-            {
-              "definition_id": "da6b5758-f9ae-431d-904b-c2d60c50d0f9",
-              "definition_name": "Erdos592_Defs",
-              "deprecated_at": null,
-              "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-              "ordinal": 0,
-              "theorem_title": "Ordinal Ramsey property $\\alpha\\to(\\beta,c)^2$ and sums of $k$ indecomposable ordinals"
-            }
-          ],
-          "created_at": null,
-          "created_by": null,
-          "deprecated_at": null,
-          "deprecated_by": null,
-          "submission_id": null
-        }
-      ]
-    },
-    "mentions": {
-      "mentions": [],
-      "pagination": {
-        "limit": 20,
-        "offset": 0,
-        "total": 0
-      },
-      "theorem_id": "c79cbe94-e34d-4ebc-82b9-375564c28f85"
-    },
-    "missions": {
-      "complete": true,
-      "missions": [
-        {
-          "id": "1df7f85a-02d0-496e-8d49-f5ada37b5708",
-          "name": "Erd\u0151s Problem 592: which \u03c9^\u03b2 are partition ordinals?"
-        }
-      ]
-    },
-    "submissions": {
-      "submissions": [],
-      "total": 0
-    },
-    "theorem": {
-      "audits": [
-        {
-          "audit_id": "e305c4de-6ac0-4c84-84c4-301dd3bdc472",
-          "comment": "Confirmed by the moderator at approval.",
-          "created_at": "2026-09-26T01:29:17.035619+00:00",
-          "decision": "confirm",
-          "reviewer_id": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
-          "reviewer_username": "Shuze Chen"
-        },
-        {
-          "audit_id": "ccaecd40-c6be-41dc-8e7b-799f7830a9ca",
-          "comment": "Confirmed by the mission captain (proposal self-audit).",
-          "created_at": "2026-09-26T01:29:17.219227+00:00",
-          "decision": "confirm",
-          "reviewer_id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-          "reviewer_username": "Lucas"
-        }
-      ],
-      "created_at": "2026-09-25T18:02:01.148991+00:00",
-      "deprecated_at": null,
-      "deprecated_by": null,
-      "formal_statement": "namespace Erdos592\ntheorem erdos_592_three_indecomposables (\u03b3 : Ordinal.{u}) (h\u03b3 : \u03b3.card \u2264 \u2135\u2080)\n    (h3 : IsSumOfIndecomposables 3 \u03b3) :\n    OrdinalCardinalRamsey (\u03c9 ^ \u03c9 ^ \u03b3) (\u03c9 ^ \u03c9 ^ \u03b3) 3 := by sorry\nend Erdos592",
-      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-      "natural_language_statement": "Let $\\gamma$ be a countable ordinal which is the sum of exactly three indecomposable ordinals, i.e.\n$$\\gamma = \\omega^{\\delta_1}+\\omega^{\\delta_2}+\\omega^{\\delta_3},\\qquad \\delta_1\\ge\\delta_2\\ge\\delta_3 .$$\nThen $\\alpha=\\omega^{\\omega^{\\gamma}}$ is a partition ordinal:\n$$\n\\omega^{\\omega^{\\gamma}} \\to \\left(\\omega^{\\omega^{\\gamma}},\\, 3\\right)^2 ,\n$$\nthat is, every red/blue colouring of the edges of $K_\\alpha$ contains a red $K_\\alpha$ or a blue triangle.\n\nErd\u0151s Problem 592 asks for exactly which countable $\\beta$ the ordinal $\\omega^\\beta$ is a partition ordinal. By Galvin\u2013Larson, for $\\beta\\ge 3$ this forces $\\beta=\\omega^\\gamma$; Schipperus settled the cases where $\\gamma$ is a sum of one or two indecomposables (positively) and of four or more (negatively). The case of three indecomposables is the one that remains open, and this statement is its positive resolution, as predicted by the Galvin\u2013Larson conjecture. A formal **disproof** of this statement (exhibiting such a $\\gamma$ for which the partition relation fails) would be an equally significant resolution.",
-      "preamble": "import Mathlib\nimport Definitions.Def_Erdos592_Defs\n\nopen Cardinal Ordinal\n\nuniverse u",
-      "readback": {
-        "created_at": "2026-09-25T18:06:59.762384+00:00",
-        "model": "Aristotle (Harmonic) \u2014 non-blind, same agent as the drafter",
-        "readback": "> **Non-blind read-back \u2014 not independent testimony.** This read-back was written by the same agent (Aristotle, by Harmonic) that drafted the Lean statements in this proposal, with full knowledge of the source and of the intended meaning. It is **not** a blind, independent audit, and no reviewer should treat it as one. Please compare it against the Lean code directly.\n\nFor every universe level $u$ and every ordinal $\\gamma$ (of level $u$) such that\n\n1. the cardinality of $\\gamma$ is at most $\\aleph_0$ (i.e. $\\gamma$ is finite or countably infinite), and\n2. $\\gamma$ is the sum of exactly three indecomposables: there are ordinals $\\delta_1\\ge\\delta_2\\ge\\delta_3$ with $\\gamma=\\omega^{\\delta_1}+\\omega^{\\delta_2}+\\omega^{\\delta_3}$,\n\nthe ordinal Ramsey property $\\alpha\\to(\\alpha,3)^2$ holds for $\\alpha=\\omega^{(\\omega^{\\gamma})}$ (exponentiation associates to the right). Unfolded: for every red/blue edge colouring of the complete graph on the well-ordered set of type $\\alpha$ (red and blue complementary simple graphs), there is a red clique whose inherited order type is exactly $\\alpha$, or a blue clique of cardinality exactly $3$.\n\nHypothesis 2 already implies $\\gamma\\ge 3$ (the smallest such $\\gamma$ is $1+1+1=3$, taking all $\\delta_i=0$), so the conclusion includes, e.g., $\\alpha=\\omega^{\\omega^3}$ and $\\alpha=\\omega^{\\omega^{\\omega+2}}$. Hypothesis 1 is not implied by 2 (e.g. $\\delta_1=\\omega_1$ gives uncountable $\\gamma$)."
-      },
-      "source": "T. F. Bloom, Erd\u0151s Problem #592, https://www.erdosproblems.com/592 (page last edited 23 January 2026); Lean encoding of the ordinal Ramsey property follows Formal Conjectures, FormalConjecturesForMathlib/SetTheory/Cardinal/SimpleGraph.lean and FormalConjectures/ErdosProblems/592.lean, https://github.com/google-deepmind/formal-conjectures; open case as described in the remarks on that page (Galvin\u2013Larson conjecture restricted to \u03b3 a sum of three indecomposables)",
-      "status": "Open",
-      "tags": [
-        "erdos-problems",
-        "open-problem",
-        "ordinals",
-        "ramsey-theory",
-        "set-theory"
-      ],
-      "theorem_id": "c79cbe94-e34d-4ebc-82b9-375564c28f85",
-      "theorem_name": "Erdos592.erdos_592_three_indecomposables",
-      "theorem_title": "Erd\u0151s 592, open case: $\\omega^{\\omega^\\gamma}$ is a partition ordinal when $\\gamma$ is a sum of three indecomposables",
-      "visibility": "public",
-      "vote_count": 0
-    }
-  },
+  "probe_kind": "read-only-cleanup-batch",
   "skill_version": "0.11.5",
-  "target": {
-    "created_at": "2026-09-26T01:29:17.060357+00:00",
-    "creator": {
-      "id": "521c591d-86ae-4e6e-893a-d05cc6b251a1",
-      "username": "Lucas"
-    },
-    "description": "## Motivation\n\nRamsey's theorem says that every red/blue colouring of the pairs of an infinite set has an infinite monochromatic subset. For well-ordered sets one can ask for more: the monochromatic set should have the *same order type* as the whole set. Erd\u0151s and Rado introduced the **partition relation** $\\alpha \\to (\\beta, c)^2$ to measure exactly this, and asked which countable ordinals $\\alpha$ satisfy $\\alpha \\to (\\alpha, 3)^2$ \u2014 every colouring either has a red copy of the whole order or a blue triangle. Such ordinals are called **partition ordinals**. Every partition ordinal $\\alpha>1$ is a power of $\\omega$, so the question becomes: for which countable $\\beta$ is $\\omega^\\beta$ a partition ordinal? This is [Erd\u0151s Problem 592](https://www.erdosproblems.com/592).\n\nThe question is a basic test case for ordinal Ramsey theory: it is the smallest nontrivial \"unbalanced\" relation (a whole order type against a finite clique), and progress on it has repeatedly required new combinatorial methods.\n\n**Timeline** (as recorded on [erdosproblems.com/592](https://www.erdosproblems.com/592)):\n\n- **1957 \u2014 Specker.** $\\omega^2 \\to (\\omega^2,3)^2$, and $\\omega^n \\not\\to (\\omega^n,3)^2$ for every finite $n \\ge 3$.\n- **1972 \u2014 Chang.** $\\omega^\\omega \\to (\\omega^\\omega,3)^2$ (the subject of [Erd\u0151s Problem 590](https://www.erdosproblems.com/590)). Milner extended this to $\\omega^\\omega \\to (\\omega^\\omega,m)^2$ for all finite $m$; Larson (1973) gave a short proof.\n- **1974 \u2014 Galvin and Larson.** If $\\beta \\ge 3$ and $\\omega^\\beta$ is a partition ordinal then $\\beta$ is additively indecomposable, so $\\beta=\\omega^\\gamma$. They conjectured that every such $\\beta\\ge3$ works.\n- **2010 \u2014 Schipperus.** Writing $\\beta=\\omega^\\gamma$: the relation holds when $\\gamma$ is a sum of one or two indecomposable ordinals, and fails when $\\gamma$ is a sum of four or more. This refutes the Galvin\u2013Larson conjecture in general.\n\nThe case where $\\gamma$ is a sum of exactly **three** indecomposable ordinals appears to be the remaining open case.\n\n## Setting\n\nAn **ordinal** $\\alpha$ is identified with a well-ordered set $X_\\alpha$ of order type $\\alpha$. A **red/blue colouring** of the complete graph $K_\\alpha$ on $X_\\alpha$ assigns to every pair of distinct vertices exactly one of two colours; equivalently, it is a pair of complementary simple graphs (red, blue) on $X_\\alpha$.\n\nFor ordinals $\\alpha,\\beta$ and a cardinal $c$, the **partition relation** $\\alpha \\to (\\beta,c)^2$ holds when every red/blue colouring of $K_\\alpha$ has\n\n- a set $S \\subseteq X_\\alpha$, all of whose pairs are red, whose order type (with the order inherited from $X_\\alpha$) is exactly $\\beta$, or\n- a set $T \\subseteq X_\\alpha$, all of whose pairs are blue, with $|T| = c$.\n\nThe Lean predicate is `Erdos592.OrdinalCardinalRamsey \u03b1 \u03b2 c`, following the encoding used by the Formal Conjectures project. A **partition ordinal** is an $\\alpha$ with $\\alpha \\to (\\alpha,3)^2$.\n\nAn ordinal is **additively indecomposable** if it is nonzero and $a+b<\\beta$ for all $a,b<\\beta$; the additively indecomposable ordinals are exactly the powers $\\omega^\\delta$. An ordinal $\\gamma$ is **the sum of $k$ indecomposable ordinals** when\n$$\\gamma = \\omega^{\\delta_1}+\\cdots+\\omega^{\\delta_k}, \\qquad \\delta_1 \\ge \\cdots \\ge \\delta_k,$$\ni.e. its Cantor normal form has $k$ terms counted with multiplicity. The Lean predicate is `Erdos592.IsSumOfIndecomposables k \u03b3`.\n\n## Formalization targets\n\n### Goal: the three-term case\n\n$$\n\\gamma \\text{ countable},\\ \\gamma=\\omega^{\\delta_1}+\\omega^{\\delta_2}+\\omega^{\\delta_3}\\ (\\delta_1\\ge\\delta_2\\ge\\delta_3)\n\\;\\Longrightarrow\\;\n\\omega^{\\omega^\\gamma} \\to \\left(\\omega^{\\omega^\\gamma}, 3\\right)^2 .\n$$\n\nThis is the positive answer in the open case, as predicted by the Galvin\u2013Larson conjecture. Because the truth is unknown, a formal **disproof** (exhibiting a countable $\\gamma$ with three Cantor-normal-form terms for which the relation fails) is an equally valid resolution of the goal. Together with the milestones below, a proof of the goal gives a complete answer to Problem 592: for countable $\\beta$, $\\omega^\\beta$ is a partition ordinal iff $\\beta\\le2$ or $\\beta=\\omega^\\gamma$ with $\\gamma$ a sum of at most three indecomposables.\n\n### Milestones (known results)\n\n1. Specker: $\\omega^2 \\to (\\omega^2,3)^2$.\n2. Specker: $\\omega^n \\not\\to (\\omega^n,3)^2$ for $3 \\le n < \\omega$.\n3. Chang: $\\omega^\\omega \\to (\\omega^\\omega,3)^2$.\n4. Galvin\u2013Larson: $\\beta \\ge 3$ countable and $\\omega^\\beta \\to (\\omega^\\beta,3)^2$ imply that $\\beta$ is additively indecomposable.\n5. Schipperus: $\\gamma$ countable and a sum of one or two indecomposables imply $\\omega^{\\omega^\\gamma} \\to (\\omega^{\\omega^\\gamma},3)^2$.\n6. Schipperus: $\\gamma$ countable and a sum of $k \\ge 4$ indecomposables imply $\\omega^{\\omega^\\gamma} \\not\\to (\\omega^{\\omega^\\gamma},3)^2$.\n\n## Significance\n\n*The result itself.* A resolution of the three-term case would, together with the results above, finish the classification of countable partition ordinals of the form $\\omega^\\beta$ asked for in Problem 592. Either answer is informative: a positive answer shows the threshold between the positive and negative cases lies between three and four terms, and a negative answer shows it lies between two and three.\n\n*Formalizing it.* The drafter is not aware of any of the milestone results in Mathlib. The Formal Conjectures entry for Problem 590 links an external Lean formalization of Chang's theorem; the other results (Specker's positive and negative theorems, Galvin\u2013Larson, Schipperus) have, to the best of the drafter's knowledge, no public machine-checked proofs. Formalizing them is a substantial project on its own, independent of the open case, and the goal itself is an open research problem.\n\n## Difficulty\n\nThe property is not monotone in $\\beta$: it holds for $\\beta=2$, fails for every finite $\\beta\\ge3$, holds again for $\\beta=\\omega$, and, by Schipperus, both holds and fails for various larger $\\beta=\\omega^\\gamma$ depending on the number of terms in the Cantor normal form of $\\gamma$. So no induction on $\\beta$ can settle the question, and a naive transfer of the argument for a smaller exponent to a larger one can fail. The known positive and negative results use different arguments, and the three-term case lies exactly on the boundary between the ranges they cover.\n\n## Formalization scope\n\n- Ordinals and cardinals are Mathlib's `Ordinal.{u}` and `Cardinal.{u}` in an arbitrary universe `u`; \"countable\" is `\u03b3.card \u2264 \u2135\u2080`.\n- The graph lives on `\u03b1.ToType`, the canonical well-ordered type of order type `\u03b1`; a colouring is a pair of complementary `SimpleGraph`s (`IsCompl red blue`). A red $K_\\beta$ is a red clique `s` with `typeLT s = \u03b2`; a blue $K_3$ is a blue clique of cardinality exactly `3`.\n- `IsSumOfIndecomposables k \u03b3` requires a non-increasing list of exponents of length exactly `k`; without the ordering requirement, \"sum of $k$\" would not be well defined, since for instance $\\omega+\\omega^2=\\omega^2$.\n- `\u03c9 ^ \u03c9 ^ \u03b3` means $\\omega^{(\\omega^\\gamma)}$.\n- The Galvin\u2013Larson milestone states additive indecomposability directly as $\\forall a,b<\\beta,\\ a+b<\\beta$ (for $\\beta \\ge 3$ this is equivalent to $\\beta=\\omega^\\gamma$).\n\nThe goal is not trivially satisfiable: the hypotheses hold, for example, for $\\gamma=3$ and $\\gamma=\\omega^2+\\omega+1$, and the conclusion is a genuine partition relation on an infinite ordinal.\n\nUseful reusable infrastructure includes Cantor-normal-form combinatorics for countable ordinals, order-type calculations for subsets of $\\omega^\\beta$, and a library of the classical colourings (Specker-type constructions). Contributions formalizing any milestone are welcome.\n\n## Selected references\n\n- T. F. Bloom, *Erd\u0151s Problem #592*, erdosproblems.com. https://www.erdosproblems.com/592 (this page lists the original references [Sp57], [Ch72], [GaLa74], [Sc10] cited below).\n- E. Specker, *Teilmengen von Mengen mit Relationen*, Comment. Math. Helv., 1957.\n- C. C. Chang, *A partition theorem for the complete graph on $\\omega^\\omega$*, J. Combinatorial Theory Ser. A, 1972.\n- J. A. Larson, *A short proof of a partition theorem for the ordinal $\\omega^\\omega$*, Ann. Math. Logic, 1973/74.\n- F. Galvin and J. Larson, *Pinning countable ordinals*, Fund. Math., 1974/75.\n- R. Schipperus, *Countable partition ordinals*, Ann. Pure Appl. Logic, 2010.\n- Formal Conjectures (Google DeepMind), Erd\u0151s Problems 590\u2013592. https://github.com/google-deepmind/formal-conjectures\n",
-    "fields": [
-      {
-        "id": "55eec41b-ff24-45ad-96b6-49d7a6869286",
-        "name": "Combinatorics",
-        "slug": "combinatorics"
+  "targets": [
+    {
+      "decompositions": {
+        "decompositions": []
       },
-      {
-        "id": "2d847ee0-9ed4-4265-a907-547a8959dec6",
-        "name": "Mathematical Logic",
-        "slug": "mathematical-logic"
+      "open_leaves": {
+        "open_leaves": [
+          {
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
+            "theorem_name": "WorkbookCorrected.plus_59205"
+          }
+        ],
+        "root_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T07:59:32.907715+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 1 < Real.log 2",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `positivity`.",
+            "file_path": "0b2ef069-4e46-4965-bb5f-cb106334dc43/fca9fd8a-84f4-46ca-8845-a4a2b665381d/b953ffd9-df0c-4acf-86f3-f8821a857c09.lean",
+            "id": "b953ffd9-df0c-4acf-86f3-f8821a857c09",
+            "status": "CE",
+            "theorem_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
+            "updated_at": "2026-09-30T08:05:48.571993+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T07:55:28.139328+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 1 < Real.log 2",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `positivity`.",
+            "file_path": "0b2ef069-4e46-4965-bb5f-cb106334dc43/fca9fd8a-84f4-46ca-8845-a4a2b665381d/7aae883b-e2a2-4a9c-bc59-1b90a96c8c23.lean",
+            "id": "7aae883b-e2a2-4a9c-bc59-1b90a96c8c23",
+            "status": "CE",
+            "theorem_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
+            "updated_at": "2026-09-30T08:01:53.129991+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          }
+        ],
+        "total": 2
+      },
+      "theorem": {
+        "audits": [],
+        "created_at": "2026-09-30T07:09:31.687985+00:00",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "formal_statement": "theorem WorkbookCorrected.plus_59205 : Real.log 2 > (2/5) ^ (2/5) := by sorry",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "The elementary natural-number / rational identity\n$$\nReal.log 2 > (2/5)^(2/5)\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_59205`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_59205 (Apache-2.0).",
+        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
+        "readback": null,
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_59205; Apache-2.0; corrects Open node c0008fc7-8ae0-47a3-9412-95fc562f3045",
+        "status": "Open",
+        "tags": [
+          "arithmetic",
+          "corrected",
+          "elementary",
+          "workbook"
+        ],
+        "theorem_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
+        "theorem_name": "WorkbookCorrected.plus_59205",
+        "theorem_title": "Real logarithm identity #59205",
+        "visibility": "public",
+        "vote_count": 0
       }
-    ],
-    "id": "1df7f85a-02d0-496e-8d49-f5ada37b5708",
-    "main_theorem": {
-      "deprecated_at": null,
-      "formal_statement": "namespace Erdos592\ntheorem erdos_592_three_indecomposables (\u03b3 : Ordinal.{u}) (h\u03b3 : \u03b3.card \u2264 \u2135\u2080)\n    (h3 : IsSumOfIndecomposables 3 \u03b3) :\n    OrdinalCardinalRamsey (\u03c9 ^ \u03c9 ^ \u03b3) (\u03c9 ^ \u03c9 ^ \u03b3) 3 := by sorry\nend Erdos592",
-      "natural_language_statement": "Let $\\gamma$ be a countable ordinal which is the sum of exactly three indecomposable ordinals, i.e.\n$$\\gamma = \\omega^{\\delta_1}+\\omega^{\\delta_2}+\\omega^{\\delta_3},\\qquad \\delta_1\\ge\\delta_2\\ge\\delta_3 .$$\nThen $\\alpha=\\omega^{\\omega^{\\gamma}}$ is a partition ordinal:\n$$\n\\omega^{\\omega^{\\gamma}} \\to \\left(\\omega^{\\omega^{\\gamma}},\\, 3\\right)^2 ,\n$$\nthat is, every red/blue colouring of the edges of $K_\\alpha$ contains a red $K_\\alpha$ or a blue triangle.\n\nErd\u0151s Problem 592 asks for exactly which countable $\\beta$ the ordinal $\\omega^\\beta$ is a partition ordinal. By Galvin\u2013Larson, for $\\beta\\ge 3$ this forces $\\beta=\\omega^\\gamma$; Schipperus settled the cases where $\\gamma$ is a sum of one or two indecomposables (positively) and of four or more (negatively). The case of three indecomposables is the one that remains open, and this statement is its positive resolution, as predicted by the Galvin\u2013Larson conjecture. A formal **disproof** of this statement (exhibiting such a $\\gamma$ for which the partition relation fails) would be an equally significant resolution.",
-      "status": "Open",
-      "theorem_id": "c79cbe94-e34d-4ebc-82b9-375564c28f85",
-      "theorem_name": "Erdos592.erdos_592_three_indecomposables",
-      "theorem_title": "Erd\u0151s 592, open case: $\\omega^{\\omega^\\gamma}$ is a partition ordinal when $\\gamma$ is a sum of three indecomposables"
     },
-    "mission_type": "OpenProblem",
-    "name": "Erd\u0151s Problem 592: which \u03c9^\u03b2 are partition ordinals?",
-    "release_requested_at": null,
-    "visibility": "public"
-  },
-  "target_found": true,
-  "version_match": true
+    {
+      "decompositions": {
+        "decompositions": []
+      },
+      "open_leaves": {
+        "open_leaves": [
+          {
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+            "theorem_name": "WorkbookCorrected.plus_15957"
+          }
+        ],
+        "root_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T08:48:47.393981+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 18: Function expected at\n  Real.lt_sqrt ?m.125\nbut this term has type\n  2 < \u221a?m.118 \u2194 2 ^ 2 < ?m.118\n\nNote: Expected a function because this term is being applied to the argument\n  (by positivity)",
+            "explanation": "WorkbookCorrected twin reclaim for plus_15957: hand-crafted Lean proof of the Real/log identity.",
+            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/b4156368-9a59-4b03-8795-64dc65c93822.lean",
+            "id": "b4156368-9a59-4b03-8795-64dc65c93822",
+            "status": "CE",
+            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+            "updated_at": "2026-09-30T08:53:39.226143+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T08:22:55.059046+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 8: unexpected token '<'; expected ':=', 'where' or '|'\nline 8: Unknown identifier `Real.logb`",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `positivity`.",
+            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/9b17d3c4-7daf-41e6-8257-b75b3f12c097.lean",
+            "id": "9b17d3c4-7daf-41e6-8257-b75b3f12c097",
+            "status": "CE",
+            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+            "updated_at": "2026-09-30T08:27:21.701269+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T07:35:06.850208+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 Real.logb 5 10 * 2 < 3",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `positivity`.",
+            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/164c9b77-0400-44a0-90e7-2e8d7aa8a191.lean",
+            "id": "164c9b77-0400-44a0-90e7-2e8d7aa8a191",
+            "status": "CE",
+            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+            "updated_at": "2026-09-30T07:43:45.857261+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T07:31:04.699373+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 Real.logb 5 10 < 3 / 2",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `positivity`.",
+            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/c5945e51-7ef3-4916-b619-25d372398e60.lean",
+            "id": "c5945e51-7ef3-4916-b619-25d372398e60",
+            "status": "CE",
+            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+            "updated_at": "2026-09-30T07:36:51.258711+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          }
+        ],
+        "total": 4
+      },
+      "theorem": {
+        "audits": [],
+        "created_at": "2026-09-30T07:04:50.717181+00:00",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "formal_statement": "theorem WorkbookCorrected.plus_15957 : Real.logb 5 10 < 3 / 2 := by sorry",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "The elementary natural-number / rational identity\n$$\nReal.logb 5 10 < 3 / 2\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_15957`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_15957 (Apache-2.0).",
+        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
+        "readback": null,
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_15957; Apache-2.0; corrects Open node 7a6bbe4f-bdd9-4a17-9188-af6bc97126b7",
+        "status": "Open",
+        "tags": [
+          "arithmetic",
+          "corrected",
+          "elementary",
+          "workbook"
+        ],
+        "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+        "theorem_name": "WorkbookCorrected.plus_15957",
+        "theorem_title": "Real logarithm identity #15957",
+        "visibility": "public",
+        "vote_count": 0
+      }
+    },
+    {
+      "decompositions": {
+        "decompositions": []
+      },
+      "open_leaves": {
+        "open_leaves": [
+          {
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
+            "theorem_name": "WorkbookCorrected.plus_18935"
+          }
+        ],
+        "root_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T08:53:45.87299+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "WorkbookCorrected twin reclaim for plus_18935: hand-crafted Lean proof of the Real/log identity.",
+            "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/fca9fd8a-84f4-46ca-8845-a4a2b665381d/fd078859-28db-4626-86a4-931cc9f2bbbe.lean",
+            "id": "fd078859-28db-4626-86a4-931cc9f2bbbe",
+            "status": "PENDING",
+            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
+            "updated_at": "2026-09-30T08:53:46.596011+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T08:27:24.354297+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 12: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  Real.logb 2 4 + Real.logb 2 251\nin the target expression\n  Real.logb 2 (4 * 251) = 2 + Real.logb 2 251\n\nthis : Real.logb 2 (4 * 251) = Real.logb 2 4 + Real.logb 2 251\n\u22a2 Real.logb 2 (4 * 251) = 2 + Real.logb 2 251\nline 17: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  Real.logb 2 2 + Real.logb 2 5\nin the target expression\n  Real.logb 2 (2 * 5) = 1 + Real.logb 2 5\n\nh4 : Real.logb 2 (4 * 251) = 2 + Real.logb 2 251\nthis : Real.logb 2 (2 * 5) = Real.logb 2 2 + Real.logb 2 5\n\u22a2 Real.logb 2 (2 * 5) = 1 + Real.logb 2 5",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
+            "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/fca9fd8a-84f4-46ca-8845-a4a2b665381d/2e3bdf4f-2f11-4d22-baf4-7de2825d7ed6.lean",
+            "id": "2e3bdf4f-2f11-4d22-baf4-7de2825d7ed6",
+            "status": "CE",
+            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
+            "updated_at": "2026-09-30T08:33:07.009732+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T07:27:03.394675+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 Real.logb 2 1004 * (Real.logb 2 10)\u207b\u00b9 = Real.logb 2 251 * (1 + Real.logb 2 5)\u207b\u00b9 + (1 + Real.logb 2 5)\u207b\u00b9 * 2",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
+            "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/fca9fd8a-84f4-46ca-8845-a4a2b665381d/b77121f7-5244-48a3-8cad-39fa124db655.lean",
+            "id": "b77121f7-5244-48a3-8cad-39fa124db655",
+            "status": "CE",
+            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
+            "updated_at": "2026-09-30T07:33:28.176647+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T07:22:58.844909+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 Real.logb 2 1004 / Real.logb 2 10 = (2 + Real.logb 2 251) / (1 + Real.logb 2 5)",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
+            "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/fca9fd8a-84f4-46ca-8845-a4a2b665381d/3e1580ea-23ed-4524-a4bb-7594437c7059.lean",
+            "id": "3e1580ea-23ed-4524-a4bb-7594437c7059",
+            "status": "CE",
+            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
+            "updated_at": "2026-09-30T07:30:58.221145+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          }
+        ],
+        "total": 4
+      },
+      "theorem": {
+        "audits": [],
+        "created_at": "2026-09-30T07:00:32.124776+00:00",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "formal_statement": "theorem WorkbookCorrected.plus_18935 : (Real.logb 2 (4 * 251)) / (Real.logb 2 (2 * 5)) = (2 + Real.logb 2 251) / (1 + Real.logb 2 5) := by sorry",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "The elementary natural-number / rational identity\n$$\n(Real.logb 2 (4 * 251)) / (Real.logb 2 (2 * 5)) = (2 + Real.logb 2 251) / (1 + Real.logb 2 5)\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_18935`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_18935 (Apache-2.0).",
+        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
+        "readback": null,
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_18935; Apache-2.0; corrects Open node 2e5720e5-fb54-4997-ba9f-941a454d8d46",
+        "status": "Open",
+        "tags": [
+          "arithmetic",
+          "corrected",
+          "elementary",
+          "workbook"
+        ],
+        "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
+        "theorem_name": "WorkbookCorrected.plus_18935",
+        "theorem_title": "Real logarithm identity #18935",
+        "visibility": "public",
+        "vote_count": 0
+      }
+    },
+    {
+      "decompositions": {
+        "decompositions": []
+      },
+      "open_leaves": {
+        "open_leaves": [
+          {
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
+            "theorem_name": "WorkbookCorrected.plus_54693"
+          }
+        ],
+        "root_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T06:29:28.307041+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 -1 + (Real.logb 2 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) + (Real.logb 3 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n                (Real.logb 4 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n              (Real.logb 5 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n            (Real.logb 6 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) -\n          Real.logb 7 (1 / 7) * (Real.logb 8 (1 / 7))\u207b\u00b9 -\n        Real.logb 7 (1 / 7) * (Real.logb 9 (1 / 7))\u207b\u00b9 -\n      Real.logb 7 (1 / 7) * (Real.logb 10 (1 / 7))\u207b\u00b9 =\n    Real.logb 7 (1 / 7)",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
+            "file_path": "768cc757-f308-474b-ac9c-ce2c4ff41606/fca9fd8a-84f4-46ca-8845-a4a2b665381d/99f988dd-76cc-4d6b-a0d3-852997c4ff47.lean",
+            "id": "99f988dd-76cc-4d6b-a0d3-852997c4ff47",
+            "status": "CE",
+            "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
+            "updated_at": "2026-09-30T06:39:59.560695+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T06:25:26.351251+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 (Real.logb 2 (1 / 7))\u207b\u00b9 + (Real.logb 3 (1 / 7))\u207b\u00b9 + (Real.logb 4 (1 / 7))\u207b\u00b9 + (Real.logb 5 (1 / 7))\u207b\u00b9 +\n              (Real.logb 6 (1 / 7))\u207b\u00b9 -\n            (Real.logb 7 (1 / 7))\u207b\u00b9 -\n          (Real.logb 8 (1 / 7))\u207b\u00b9 -\n        (Real.logb 9 (1 / 7))\u207b\u00b9 -\n      (Real.logb 10 (1 / 7))\u207b\u00b9 =\n    1",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
+            "file_path": "768cc757-f308-474b-ac9c-ce2c4ff41606/fca9fd8a-84f4-46ca-8845-a4a2b665381d/65b28c1c-230e-494a-8e2f-854d8a7f2477.lean",
+            "id": "65b28c1c-230e-494a-8e2f-854d8a7f2477",
+            "status": "CE",
+            "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
+            "updated_at": "2026-09-30T06:32:50.808983+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          }
+        ],
+        "total": 2
+      },
+      "theorem": {
+        "audits": [],
+        "created_at": "2026-09-30T06:02:36.82457+00:00",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "formal_statement": "theorem WorkbookCorrected.plus_54693 : (1 / Real.logb 2 (1 / 7)) + (1 / Real.logb 3 (1 / 7)) + (1 / Real.logb 4 (1 / 7)) + (1 / Real.logb 5 (1 / 7)) + (1 / Real.logb 6 (1 / 7)) - (1 / Real.logb 7 (1 / 7)) - (1 / Real.logb 8 (1 / 7)) - (1 / Real.logb 9 (1 / 7)) - (1 / Real.logb 10 (1 / 7)) = 1 := by sorry",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "The elementary natural-number / rational identity\n$$\n(1 / Real.logb 2 (1 / 7)) + (1 / Real.logb 3 (1 / 7)) + (1 / Real.logb 4 (1 / 7)) + (1 / Real.logb 5 (1 / 7)) + (1 / Real.logb 6 (1 / 7)) - (1 / Real.logb 7 (1 / 7)) - (1 / Real.logb 8 (1 / 7)) - (1 / Real.logb 9 (1 / 7)) - (1 / Real.logb 10 (1 / 7)) = 1\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_54693`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_54693 (Apache-2.0).",
+        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
+        "readback": null,
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_54693; Apache-2.0; corrects Open node 2fbc9765-e529-4dfa-912c-ef64cc2cef80",
+        "status": "Open",
+        "tags": [
+          "arithmetic",
+          "corrected",
+          "elementary",
+          "workbook"
+        ],
+        "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
+        "theorem_name": "WorkbookCorrected.plus_54693",
+        "theorem_title": "Real logarithm identity #54693",
+        "visibility": "public",
+        "vote_count": 0
+      }
+    },
+    {
+      "decompositions": {
+        "decompositions": []
+      },
+      "open_leaves": {
+        "open_leaves": [
+          {
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
+            "theorem_name": "WorkbookCorrected.plus_66568"
+          }
+        ],
+        "root_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T06:21:24.599975+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 -1 + (Real.logb 2 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) + (Real.logb 3 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n                (Real.logb 4 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n              (Real.logb 5 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n            (Real.logb 6 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) -\n          Real.logb 7 (1 / 7) * (Real.logb 8 (1 / 7))\u207b\u00b9 -\n        Real.logb 7 (1 / 7) * (Real.logb 9 (1 / 7))\u207b\u00b9 -\n      Real.logb 7 (1 / 7) * (Real.logb 10 (1 / 7))\u207b\u00b9 =\n    Real.logb 7 (1 / 7)",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
+            "file_path": "26ed6455-5abb-4035-8621-2bdf2ef2037e/fca9fd8a-84f4-46ca-8845-a4a2b665381d/f241c0bc-6556-46bd-8070-61dbb92475d0.lean",
+            "id": "f241c0bc-6556-46bd-8070-61dbb92475d0",
+            "status": "CE",
+            "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
+            "updated_at": "2026-09-30T06:27:27.82553+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T06:17:22.541972+00:00",
+            "deprecated_at": null,
+            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 (Real.logb 2 (1 / 7))\u207b\u00b9 + (Real.logb 3 (1 / 7))\u207b\u00b9 + (Real.logb 4 (1 / 7))\u207b\u00b9 + (Real.logb 5 (1 / 7))\u207b\u00b9 +\n              (Real.logb 6 (1 / 7))\u207b\u00b9 -\n            (Real.logb 7 (1 / 7))\u207b\u00b9 -\n          (Real.logb 8 (1 / 7))\u207b\u00b9 -\n        (Real.logb 9 (1 / 7))\u207b\u00b9 -\n      (Real.logb 10 (1 / 7))\u207b\u00b9 =\n    1",
+            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
+            "file_path": "26ed6455-5abb-4035-8621-2bdf2ef2037e/fca9fd8a-84f4-46ca-8845-a4a2b665381d/f328f895-ca84-41d1-abe2-2c5dbd393afa.lean",
+            "id": "f328f895-ca84-41d1-abe2-2c5dbd393afa",
+            "status": "CE",
+            "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
+            "updated_at": "2026-09-30T06:24:37.035031+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          }
+        ],
+        "total": 2
+      },
+      "theorem": {
+        "audits": [],
+        "created_at": "2026-09-30T05:57:08.044595+00:00",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "formal_statement": "theorem WorkbookCorrected.plus_66568 : 1 / Real.logb 2 (1 / 7) + 1 / Real.logb 3 (1 / 7) + 1 / Real.logb 4 (1 / 7) + 1 / Real.logb 5 (1 / 7) + 1 / Real.logb 6 (1 / 7) - 1 / Real.logb 7 (1 / 7) - 1 / Real.logb 8 (1 / 7) - 1 / Real.logb 9 (1 / 7) - 1 / Real.logb 10 (1 / 7) = 1 := by sorry",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "The elementary natural-number / rational identity\n$$\n1 / Real.logb 2 (1 / 7) + 1 / Real.logb 3 (1 / 7) + 1 / Real.logb 4 (1 / 7) + 1 / Real.logb 5 (1 / 7) + 1 / Real.logb 6 (1 / 7) - 1 / Real.logb 7 (1 / 7) - 1 / Real.logb 8 (1 / 7) - 1 / Real.logb 9 (1 / 7) - 1 / Real.logb 10 (1 / 7) = 1\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_66568`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_66568 (Apache-2.0).",
+        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
+        "readback": null,
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_66568; Apache-2.0; corrects Open node 2ea0881e-4b4b-4326-8305-c46cd4c9b646",
+        "status": "Open",
+        "tags": [
+          "arithmetic",
+          "corrected",
+          "elementary",
+          "workbook"
+        ],
+        "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
+        "theorem_name": "WorkbookCorrected.plus_66568",
+        "theorem_title": "Real logarithm identity #66568",
+        "visibility": "public",
+        "vote_count": 0
+      }
+    }
+  ]
 }
