@@ -20,8 +20,24 @@
         "total": 1
       },
       "submissions": {
-        "submissions": [],
-        "total": 0
+        "submissions": [
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T09:36:51.065987+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "The statement is false. Since (25=5^2) and (125=5^3), the logarithm power law gives\n$$\n\\log_5 25 + \\log_5 125 = 2\\log_5 5 + 3\\log_5 5 = 2+3=5.\n$$\nThus the left-hand side is (5), not (4). The Lean proof computes the two logarithms from `Real.logb_pow` and `Real.logb_self_eq_one`, then derives the contradiction arithmetically.",
+            "file_path": "025d0490-fea5-40ba-8336-27d897bf3b62/37daf168-68bd-45fc-b4d5-a2e74708a4e2/cd214dcd-bd6d-4ad6-9b27-78495f3b63d2.lean",
+            "id": "cd214dcd-bd6d-4ad6-9b27-78495f3b63d2",
+            "status": "PENDING",
+            "theorem_id": "025d0490-fea5-40ba-8336-27d897bf3b62",
+            "updated_at": "2026-09-30T09:36:51.210711+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          }
+        ],
+        "total": 1
       },
       "theorem": {
         "audits": [],
@@ -65,8 +81,24 @@
         "total": 1
       },
       "submissions": {
-        "submissions": [],
-        "total": 0
+        "submissions": [
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T09:36:51.540988+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "The formal Lean statement is false because the inner exponent `1 / 2` is not annotated as a real number. In this ordinary power expression Lean interprets it as natural-number division, hence (1/2=0) and\n$$\n(4:\u211d)^{1/2}=4^0=1.\n$$\nThe right-hand side is therefore (1^{-sqrt2}=1). On the other hand (sqrt2>0), so (-sqrt2<0), and since (2>1), the real-power monotonicity theorem gives\n$$\n2^{-sqrt2}<1.\n$$\nTherefore the two sides cannot be equal.",
+            "file_path": "306ad1d3-54a4-4381-95a6-98a82e56e0fd/37daf168-68bd-45fc-b4d5-a2e74708a4e2/d8677c41-82e4-4d9b-86de-151a34669273.lean",
+            "id": "d8677c41-82e4-4d9b-86de-151a34669273",
+            "status": "PENDING",
+            "theorem_id": "306ad1d3-54a4-4381-95a6-98a82e56e0fd",
+            "updated_at": "2026-09-30T09:36:51.722987+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          }
+        ],
+        "total": 1
       },
       "theorem": {
         "audits": [],
