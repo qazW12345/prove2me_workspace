@@ -22,6 +22,14 @@ TARGET_HINTS = ("erdős problem 592", "partition ordinals", "schipperus")
 OUT = Path("agent-state/probe-result.json")
 MAX_SOLUTION_SOURCES = 30
 
+BATCH_TARGET_IDS = [
+    "0b2ef069-4e46-4965-bb5f-cb106334dc43",
+    "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+    "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
+    "768cc757-f308-474b-ac9c-ce2c4ff41606",
+    "26ed6455-5abb-4035-8621-2bdf2ef2037e",
+]
+
 
 def api(method: str, path: str, *, token: str | None = None, payload=None):
     headers = {
@@ -140,6 +148,13 @@ def main() -> int:
     ranked = sorted(missions, key=target_score, reverse=True)
     target = ranked[0] if ranked and target_score(ranked[0]) > 0 else None
 
+    batch_targets = []
+    for theorem_id in BATCH_TARGET_IDS:
+        try:
+            batch_targets.append(theorem_bundle(theorem_id, token))
+        except RuntimeError as exc:
+            batch_targets.append({"theorem_id": theorem_id, "probe_warning": str(exc)})
+
     report = {
         "probe_kind": "read-only",
         "skill_version": SKILL_VERSION,
@@ -154,6 +169,7 @@ def main() -> int:
         "open_leaves": None,
         "root": None,
         "frontier_details": [],
+        "batch_targets": batch_targets,
         "milestone_details": [],
     }
 
