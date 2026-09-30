@@ -12,9 +12,7 @@ structure CompCell (Γ₁ Γ₂ : Type) where
   rightB : Bool
   secondOrigin : Bool
   finalOrigin : Bool
-deriving DecidableEq
-
-deriving instance [Fintype Γ₁] [Fintype Γ₂] for CompCell Γ₁ Γ₂
+deriving DecidableEq, Fintype
 
 def CompCell.blank {Γ₁ Γ₂ : Type} : CompCell Γ₁ Γ₂ :=
   ⟨none, none, false, false, false, false, false⟩
@@ -74,9 +72,7 @@ inductive CompQ (Q₁ Q₂ : Type)
   | finalBounce
   | haltAccept
   | haltReject
-deriving DecidableEq
-
-deriving instance [Fintype Q₁] [Fintype Q₂] for CompQ Q₁ Q₂
+deriving DecidableEq, Fintype
 
 noncomputable def compTM
     {Sym₂ Γ₁ Γ₂ : Type} [Fintype Γ₁] [Fintype Γ₂]
@@ -206,8 +202,12 @@ noncomputable def compTM
           | none => (.finalClean true, none, .right)
           | some _ =>
               (.finalClean false,
-                CompCell.pack { c with one := none, setupOrigin := false,
-                  leftB := false, rightB := false, secondOrigin := false,
+                CompCell.pack { c with
+                  one := none
+                  setupOrigin := false
+                  leftB := false
+                  rightB := false
+                  secondOrigin := false
                   finalOrigin := false },
                 .right)
     | .finalReturn =>
