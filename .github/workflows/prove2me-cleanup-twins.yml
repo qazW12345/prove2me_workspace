@@ -1,0 +1,35 @@
+name: Prove2Me Cleanup Twins Retry
+
+on:
+  push:
+    branches:
+      - agent/prove2me-probe
+    paths:
+      - ".github/workflows/prove2me-cleanup-twins.yml"
+      - "scripts/agent_cleanup_twins_retry.py"
+
+permissions:
+  contents: write
+
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Submit and poll twin fixes
+        run: python3 scripts/agent_cleanup_twins_retry.py
+      - name: Commit verdicts
+        if: always()
+        run: |
+          if [[ -f agent-state/cleanup-twins-result.json ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add agent-state/cleanup-twins-result.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: record twin retry verdicts"
+              git push || true
+            fi
+          fi
