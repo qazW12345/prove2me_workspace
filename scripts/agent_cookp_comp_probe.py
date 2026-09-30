@@ -23,7 +23,10 @@ def main():
     ref=urllib.request.Request(BASE+"/agent/refresh",data=json.dumps({"api_key":key}).encode(),
       headers={"Content-Type":"application/json","Accept":"application/json"},method="POST")
     with urllib.request.urlopen(ref,timeout=60) as r: token=json.loads(r.read().decode())["access_token"]
-    paths=[
+    searches={}
+    for qv in ["CookPvsNP", "PolyTimeComputable", "TM simulation", "machine composition", "HaltsWithin"]:
+        searches[qv]=api("GET","/theorems?"+urllib.parse.urlencode({"q":qv,"limit":"100","offset":"0"}),token)
+paths=[
       f"/theorems/{DEF_ID}",
       f"/definitions/{DEF_ID}",
       "/definitions?"+urllib.parse.urlencode({"definition_name":"CookPvsNP_defs"}),
@@ -35,7 +38,7 @@ def main():
       "/theorems?"+urllib.parse.urlencode({"q":"simulation","limit":"200","offset":"0"}),
       "/theorems?"+urllib.parse.urlencode({"q":"Turing machine","limit":"200","offset":"0"}),
     ]
-    out={p:api("GET",p,token) for p in paths}
+    out={p:api("GET",p,token) for p in paths}\n    out["searches"]=searches
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(out,indent=2,sort_keys=True)+"\n")
     print(json.dumps(out,indent=2))
