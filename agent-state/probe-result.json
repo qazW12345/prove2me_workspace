@@ -23,6 +23,21 @@
         "submissions": [
           {
             "accepted_at": null,
+            "created_at": "2026-09-30T09:06:05.01305+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "The Lean statement is false because the exponent in `(2/5) ^ (2/5)` is inferred as a natural number. Hence `2 / 5 = 0` in the exponent and the right-hand side is (1). The target therefore asserts (1 < \\log 2). But the standard strict logarithm bound (\\log x < x-1) for positive (x \ne 1), applied at (x=2), gives (\\log 2 < 1). Thus the stated proposition is false.",
+            "file_path": "0b2ef069-4e46-4965-bb5f-cb106334dc43/37daf168-68bd-45fc-b4d5-a2e74708a4e2/d860d6bb-1c65-4791-9e4e-265f6a6fe127.lean",
+            "id": "d860d6bb-1c65-4791-9e4e-265f6a6fe127",
+            "status": "PENDING",
+            "theorem_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
+            "updated_at": "2026-09-30T09:06:05.180506+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
             "created_at": "2026-09-30T07:59:32.907715+00:00",
             "deprecated_at": null,
             "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 1 < Real.log 2",
@@ -52,7 +67,7 @@
             "vote_count": 0
           }
         ],
-        "total": 2
+        "total": 3
       },
       "theorem": {
         "audits": [],
@@ -97,6 +112,36 @@
       },
       "submissions": {
         "submissions": [
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T09:06:10.04467+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "logb 5 10 < 3/2 via logb_lt_iff_lt_rpow and sqrt comparison.",
+            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/c9d09377-b896-4ed2-bd06-6e1ffb464b6b.lean",
+            "id": "c9d09377-b896-4ed2-bd06-6e1ffb464b6b",
+            "status": "PENDING",
+            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+            "updated_at": "2026-09-30T09:06:11.287924+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T09:06:05.448232+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "Write the base-five logarithm as a quotient of natural logarithms. Since (\\log 5>0), the desired bound is equivalent to (\\log 10 < \tfrac32\\log 5). Using (10=2\\cdot5), this reduces to (2\\log 2<\\log 5). But (2\\log 2=\\log 4), and (\\log 4<\\log 5) by strict monotonicity of the logarithm on positive reals.",
+            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/37daf168-68bd-45fc-b4d5-a2e74708a4e2/96e4bb8e-e1fc-403f-9032-4c5e1461e50e.lean",
+            "id": "96e4bb8e-e1fc-403f-9032-4c5e1461e50e",
+            "status": "PENDING",
+            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+            "updated_at": "2026-09-30T09:06:05.608383+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          },
           {
             "accepted_at": null,
             "created_at": "2026-09-30T08:48:47.393981+00:00",
@@ -158,7 +203,7 @@
             "vote_count": 0
           }
         ],
-        "total": 4
+        "total": 6
       },
       "theorem": {
         "audits": [],
@@ -190,30 +235,38 @@
         "decompositions": []
       },
       "open_leaves": {
-        "open_leaves": [
-          {
-            "closability": 0,
-            "status": "Open",
-            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
-            "theorem_name": "WorkbookCorrected.plus_18935"
-          }
-        ],
+        "open_leaves": [],
         "root_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
-        "total": 1
+        "total": 0
       },
       "submissions": {
         "submissions": [
           {
             "accepted_at": null,
+            "created_at": "2026-09-30T09:06:05.838088+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "Use the product law for logarithms in base (2). We have (\\log_2 4=2) and (\\log_2 2=1). Therefore (\\log_2(4\\cdot251)=2+\\log_2 251) and (\\log_2(2\\cdot5)=1+\\log_2 5). Substituting these two identities makes the two sides definitionally identical.",
+            "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/37daf168-68bd-45fc-b4d5-a2e74708a4e2/f27f6f29-5ca7-4bff-9713-e7cedf9ea235.lean",
+            "id": "f27f6f29-5ca7-4bff-9713-e7cedf9ea235",
+            "status": "PENDING",
+            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
+            "updated_at": "2026-09-30T09:06:05.974796+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": "2026-09-30T09:02:17.326983+00:00",
             "created_at": "2026-09-30T08:53:45.87299+00:00",
             "deprecated_at": null,
             "error_message": "",
             "explanation": "WorkbookCorrected twin reclaim for plus_18935: hand-crafted Lean proof of the Real/log identity.",
             "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/fca9fd8a-84f4-46ca-8845-a4a2b665381d/fd078859-28db-4626-86a4-931cc9f2bbbe.lean",
             "id": "fd078859-28db-4626-86a4-931cc9f2bbbe",
-            "status": "PENDING",
+            "status": "ACCEPTED",
             "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
-            "updated_at": "2026-09-30T08:53:46.596011+00:00",
+            "updated_at": "2026-09-30T09:02:17.326983+00:00",
             "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
             "username": "carlok",
             "vote_count": 0
@@ -264,7 +317,7 @@
             "vote_count": 0
           }
         ],
-        "total": 4
+        "total": 5
       },
       "theorem": {
         "audits": [],
@@ -277,7 +330,7 @@
         "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
         "readback": null,
         "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_18935; Apache-2.0; corrects Open node 2e5720e5-fb54-4997-ba9f-941a454d8d46",
-        "status": "Open",
+        "status": "Proved",
         "tags": [
           "arithmetic",
           "corrected",
@@ -311,6 +364,21 @@
         "submissions": [
           {
             "accepted_at": null,
+            "created_at": "2026-09-30T09:06:06.277417+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "Use the reciprocal-change-of-base identity ((\\log_a c)^{-1}=\\log_c a), equivalently Mathlib's `inv_logb_mul_base` and `inv_logb_div_base`. The five positive terms combine to the reciprocal logarithm with base (2\\cdot3\\cdot4\\cdot5\\cdot6=720); the four negative terms combine to the reciprocal logarithm with base (7\\cdot8\\cdot9\\cdot10=5040). Their difference is therefore the reciprocal logarithm with base (720/5040=1/7). Since the argument is also (1/7), that logarithm equals (1), so its reciprocal is (1).",
+            "file_path": "768cc757-f308-474b-ac9c-ce2c4ff41606/37daf168-68bd-45fc-b4d5-a2e74708a4e2/635a05c8-4ff5-48c8-8fc1-39bdf6ffc34e.lean",
+            "id": "635a05c8-4ff5-48c8-8fc1-39bdf6ffc34e",
+            "status": "PENDING",
+            "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
+            "updated_at": "2026-09-30T09:06:06.440115+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
             "created_at": "2026-09-30T06:29:28.307041+00:00",
             "deprecated_at": null,
             "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 -1 + (Real.logb 2 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) + (Real.logb 3 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n                (Real.logb 4 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n              (Real.logb 5 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n            (Real.logb 6 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) -\n          Real.logb 7 (1 / 7) * (Real.logb 8 (1 / 7))\u207b\u00b9 -\n        Real.logb 7 (1 / 7) * (Real.logb 9 (1 / 7))\u207b\u00b9 -\n      Real.logb 7 (1 / 7) * (Real.logb 10 (1 / 7))\u207b\u00b9 =\n    Real.logb 7 (1 / 7)",
@@ -340,7 +408,7 @@
             "vote_count": 0
           }
         ],
-        "total": 2
+        "total": 3
       },
       "theorem": {
         "audits": [],
@@ -387,6 +455,21 @@
         "submissions": [
           {
             "accepted_at": null,
+            "created_at": "2026-09-30T09:06:06.677882+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "Use the reciprocal-change-of-base identity ((\\log_a c)^{-1}=\\log_c a), equivalently Mathlib's `inv_logb_mul_base` and `inv_logb_div_base`. The five positive terms combine to the reciprocal logarithm with base (2\\cdot3\\cdot4\\cdot5\\cdot6=720); the four negative terms combine to the reciprocal logarithm with base (7\\cdot8\\cdot9\\cdot10=5040). Their difference is therefore the reciprocal logarithm with base (720/5040=1/7). Since the argument is also (1/7), that logarithm equals (1), so its reciprocal is (1).",
+            "file_path": "26ed6455-5abb-4035-8621-2bdf2ef2037e/37daf168-68bd-45fc-b4d5-a2e74708a4e2/21586fc2-72a9-4d22-be8f-575628c1af0e.lean",
+            "id": "21586fc2-72a9-4d22-be8f-575628c1af0e",
+            "status": "PENDING",
+            "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
+            "updated_at": "2026-09-30T09:06:06.910228+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
             "created_at": "2026-09-30T06:21:24.599975+00:00",
             "deprecated_at": null,
             "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 -1 + (Real.logb 2 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) + (Real.logb 3 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n                (Real.logb 4 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n              (Real.logb 5 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n            (Real.logb 6 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) -\n          Real.logb 7 (1 / 7) * (Real.logb 8 (1 / 7))\u207b\u00b9 -\n        Real.logb 7 (1 / 7) * (Real.logb 9 (1 / 7))\u207b\u00b9 -\n      Real.logb 7 (1 / 7) * (Real.logb 10 (1 / 7))\u207b\u00b9 =\n    Real.logb 7 (1 / 7)",
@@ -416,7 +499,7 @@
             "vote_count": 0
           }
         ],
-        "total": 2
+        "total": 3
       },
       "theorem": {
         "audits": [],
