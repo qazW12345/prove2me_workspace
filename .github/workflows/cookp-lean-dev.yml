@@ -1,0 +1,55 @@
+name: CookP Lean Dev
+
+on:
+  push:
+    branches: [agent/prove2me-probe]
+    paths:
+      - ".github/workflows/cookp-lean-dev.yml"
+      - "Solutions/CookCompDev.lean"
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch exact platform definition
+        shell: python
+        run: |
+          import json, os, urllib.request
+          base="https://prove2.me/api/v1"
+          key=os.environ["PROVE2ME_API_KEY"]
+          req=urllib.request.Request(base+"/agent/refresh",data=json.dumps({"api_key":key}).encode(),headers={"Content-Type":"application/json"},method="POST")
+          token=json.loads(urllib.request.urlopen(req).read().decode())["access_token"]
+          req=urllib.request.Request(base+"/theorems/7c6b3da6-5145-4b2d-9550-f07c61d2c766",headers={"Authorization":"Bearer "+token,"Accept":"application/json"})
+          d=json.loads(urllib.request.urlopen(req).read().decode())
+          os.makedirs("Definitions",exist_ok=True)
+          open("Definitions/Def_CookPvsNP_defs.lean","w").write(d["definition"])
+      - name: Configure Lean environment
+        run: |
+          cat > lean-toolchain <<'EOF'
+          leanprover/lean4:v4.33.1
+          EOF
+          cat > lakefile.lean <<'EOF'
+          import Lake
+          open Lake DSL
+          package «prove2me» where
+            leanOptions := #[⟨`autoImplicit, false⟩]
+          require mathlib from git
+            "https://github.com/leanprover-community/mathlib4.git" @
+            "0df444a360eaa60ab8c11dca51a86af692955474"
+          lean_lib «Definitions» where
+          lean_lib «Solutions» where
+          EOF
+      - name: Install Lean and Mathlib cache
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          source "$HOME/.elan/env"
+          lake update
+          lake exe cache get
+      - name: Compile development proof
+        run: |
+          source "$HOME/.elan/env"
+          lake env lean Solutions/CookCompDev.lean
