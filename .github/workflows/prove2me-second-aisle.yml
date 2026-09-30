@@ -1,0 +1,21 @@
+name: Prove2Me Second Aisle Cleanup
+
+on:
+  push:
+    branches: [agent/prove2me-probe]
+    paths:
+      - ".github/workflows/prove2me-second-aisle.yml"
+      - "scripts/agent_cleanup_second_aisle.py"
+
+permissions:
+  contents: read
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/agent_cleanup_second_aisle.py
