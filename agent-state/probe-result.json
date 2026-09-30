@@ -114,6 +114,21 @@
         "submissions": [
           {
             "accepted_at": null,
+            "created_at": "2026-09-30T09:09:37.867973+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "Hand-crafted Lean reclaim for WorkbookCorrected.plus_15957.",
+            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/08e58b8e-0e71-47af-8097-41558a999a13.lean",
+            "id": "08e58b8e-0e71-47af-8097-41558a999a13",
+            "status": "PENDING",
+            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
+            "updated_at": "2026-09-30T09:09:38.5802+00:00",
+            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
+            "username": "carlok",
+            "vote_count": 0
+          },
+          {
+            "accepted_at": null,
             "created_at": "2026-09-30T09:06:10.04467+00:00",
             "deprecated_at": null,
             "error_message": "",
@@ -203,7 +218,7 @@
             "vote_count": 0
           }
         ],
-        "total": 6
+        "total": 7
       },
       "theorem": {
         "audits": [],
