@@ -1,0 +1,68 @@
+name: CookP Lean Fast Dev
+
+on:
+  push:
+    branches: [agent/prove2me-probe]
+    paths:
+      - ".github/workflows/cookp-lean-fast.yml"
+      - "Solutions/CookPCompDraft.lean"
+      - "scripts/fetch_cookp_definition.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: [self-hosted, Windows, X64, pc-ci]
+    timeout-minutes: 30
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          clean: false
+      - name: Fetch exact platform definition
+        shell: pwsh
+        run: python scripts/fetch_cookp_definition.py
+      - name: Configure Lean project
+        shell: pwsh
+        run: |
+          "leanprover/lean4:v4.33.1" | Set-Content -Encoding ascii lean-toolchain
+          @'
+          import Lake
+          open Lake DSL
+          package «prove2me» where
+            leanOptions := #[⟨`autoImplicit, false⟩]
+          require mathlib from git
+            "https://github.com/leanprover-community/mathlib4.git" @
+            "0df444a360eaa60ab8c11dca51a86af692955474"
+          lean_lib «Definitions» where
+          lean_lib «Theorems» where
+          @[default_target]
+          lean_lib «Solutions» where
+          '@ | Set-Content -Encoding utf8 lakefile.lean
+      - name: Ensure elan
+        shell: pwsh
+        run: |
+          if (-not (Get-Command elan -ErrorAction SilentlyContinue)) {
+            $exe = Join-Path $env:RUNNER_TEMP "elan-init.exe"
+            Invoke-WebRequest "https://github.com/leanprover/elan/releases/latest/download/elan-init-x86_64-pc-windows-msvc.exe" -OutFile $exe
+            & $exe -y --default-toolchain none
+            "$env:USERPROFILE\.elan\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+            $env:PATH = "$env:USERPROFILE\.elan\bin;$env:PATH"
+          }
+          elan --version
+      - name: Resolve Mathlib once
+        shell: pwsh
+        run: |
+          $env:PATH = "$env:USERPROFILE\.elan\bin;$env:PATH"
+          if (-not (Test-Path ".lake\packages\mathlib")) {
+            lake update
+            lake exe cache get
+          }
+      - name: Build composition draft
+        shell: pwsh
+        run: |
+          $env:PATH = "$env:USERPROFILE\.elan\bin;$env:PATH"
+          lake build Solutions.CookPCompDraft
