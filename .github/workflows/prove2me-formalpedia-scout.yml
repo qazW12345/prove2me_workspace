@@ -1,0 +1,31 @@
+name: Prove2Me Formalpedia Scout
+
+on:
+  push:
+    branches: [agent/prove2me-probe]
+    paths:
+      - ".github/workflows/prove2me-formalpedia-scout.yml"
+      - "scripts/agent_formalpedia_scout.py"
+
+permissions:
+  contents: write
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/agent_formalpedia_scout.py
+      - name: Commit scout result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add agent-state/formalpedia-scout.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: record Formalpedia scout"
+            git pull --rebase origin agent/prove2me-probe || true
+            git push || true
+          fi
