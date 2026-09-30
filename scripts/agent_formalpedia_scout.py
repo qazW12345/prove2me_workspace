@@ -85,13 +85,33 @@ def main():
     ranked.sort(key=lambda x:(-x["score"], x["created_at"] or ""))
     corrected = browse(token,q="WorkbookCorrected",offset=0).get("theorems",[])
     restored = browse(token,q="WorkbookRestored",offset=0).get("theorems",[])
-    newest = browse(token,offset=0).get("theorems",[])
+    newest = []
+    for off in [0,200,400,600,800]:
+        newest.extend(browse(token,offset=off).get("theorems",[]))
     report={
         "count":len(ranked),
         "top":ranked[:120],
         "corrected_open":corrected,
         "restored_open":restored,
-        "newest_open":newest[:200],
+        "newest_open":newest[:1000],
+        "easy_text_candidates": sorted(
+            [
+                {
+                    **t,
+                    "_clues": sum(
+                        1 for phrase in [
+                            "immediate", "direct consequence", "follows directly",
+                            "special case", "by reflexivity", "by simplification",
+                            "closed under", "range restriction", "exactly the",
+                            "reduces to", "definitionally"
+                        ] if phrase in ((t.get("natural_language_statement") or "") + " " + (t.get("preamble") or "")).lower()
+                    )
+                }
+                for t in newest
+                if len(t.get("formal_statement") or "") < 700
+            ],
+            key=lambda t: (-t["_clues"], len(t.get("formal_statement") or ""), t.get("created_at") or ""),
+        )[:100],
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n",encoding="utf-8")
