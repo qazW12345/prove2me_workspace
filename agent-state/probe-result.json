@@ -20,8 +20,24 @@
         "total": 1
       },
       "submissions": {
-        "submissions": [],
-        "total": 0
+        "submissions": [
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T09:49:58.832565+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "The formal theorem is simply (10=10). It does not contain the finite-sum expression described in the natural-language text. Therefore the Lean goal is closed directly by reflexivity.",
+            "file_path": "222cd0d9-2d37-4232-8975-4554b73da451/37daf168-68bd-45fc-b4d5-a2e74708a4e2/7cb484ed-6f6f-468c-907b-3e6f9633168a.lean",
+            "id": "7cb484ed-6f6f-468c-907b-3e6f9633168a",
+            "status": "PENDING",
+            "theorem_id": "222cd0d9-2d37-4232-8975-4554b73da451",
+            "updated_at": "2026-09-30T09:49:58.968001+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          }
+        ],
+        "total": 1
       },
       "theorem": {
         "audits": [],
@@ -66,8 +82,24 @@
         "total": 1
       },
       "submissions": {
-        "submissions": [],
-        "total": 0
+        "submissions": [
+          {
+            "accepted_at": null,
+            "created_at": "2026-09-30T09:49:59.204239+00:00",
+            "deprecated_at": null,
+            "error_message": "",
+            "explanation": "For positive base (2), real exponentiation satisfies\n$$\n2^{x-y}=\frac{2^x}{2^y}.\n$$\nApply this with (x=\\log_2 5) and (y=2). Mathlib's `Real.rpow_sub` gives the quotient with the denominator written as the real power (2^{(2:\u211d)}), and `Real.rpow_two` identifies this with the ordinary square (2^2), exactly matching the target.",
+            "file_path": "a7369287-fb7a-47cd-9b94-4abe32a07462/37daf168-68bd-45fc-b4d5-a2e74708a4e2/062863b9-c403-4715-b4cb-a754e53bb839.lean",
+            "id": "062863b9-c403-4715-b4cb-a754e53bb839",
+            "status": "PENDING",
+            "theorem_id": "a7369287-fb7a-47cd-9b94-4abe32a07462",
+            "updated_at": "2026-09-30T09:49:59.331227+00:00",
+            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
+            "username": "Sneed",
+            "vote_count": 0
+          }
+        ],
+        "total": 1
       },
       "theorem": {
         "audits": [],
