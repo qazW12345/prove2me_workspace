@@ -12,7 +12,9 @@ structure CompCell (Γ₁ Γ₂ : Type) where
   rightB : Bool
   secondOrigin : Bool
   finalOrigin : Bool
-deriving DecidableEq, Fintype
+deriving DecidableEq
+
+deriving instance [Fintype Γ₁] [Fintype Γ₂] for CompCell Γ₁ Γ₂
 
 def CompCell.blank {Γ₁ Γ₂ : Type} : CompCell Γ₁ Γ₂ :=
   ⟨none, none, false, false, false, false, false⟩
@@ -42,8 +44,9 @@ def compOutputEmbedding {Sym₃ Γ₁ Γ₂ : Type} (ι : Sym₃ ↪ Γ₂) :
     exact Option.some.inj (congrArg CompCell.two h)
 
 noncomputable def translateCell {Sym₂ Γ₁ Γ₂ : Type}
-    (ι₁ : Sym₂ ↪ Γ₁) (ι₂ : Sym₂ ↪ Γ₂) (a : Γ₁) : Option Γ₂ :=
-  if h : ∃ s : Sym₂, ι₁ s = a then some (ι₂ (Classical.choose h)) else none
+    (ι₁ : Sym₂ ↪ Γ₁) (ι₂ : Sym₂ ↪ Γ₂) (a : Γ₁) : Option Γ₂ := by
+  classical
+  exact if h : ∃ s : Sym₂, ι₁ s = a then some (ι₂ (Classical.choose h)) else none
 
 inductive CompQ (Q₁ Q₂ : Type)
   | setupStart
@@ -56,7 +59,8 @@ inductive CompQ (Q₁ Q₂ : Type)
   | sim₁L (q : Q₁)
   | sim₁LBack (q : Q₁)
   | convPlaceLeft
-  | convCopy
+  | convCopy (first : Bool)
+  | convEmptyRight
   | convSeekOldRight
   | convReturn
   | convBounce
@@ -70,7 +74,9 @@ inductive CompQ (Q₁ Q₂ : Type)
   | finalBounce
   | haltAccept
   | haltReject
-deriving DecidableEq, Fintype
+deriving DecidableEq
+
+deriving instance [Fintype Q₁] [Fintype Q₂] for CompQ Q₁ Q₂
 
 noncomputable def compTM
     {Sym₂ Γ₁ Γ₂ : Type} [Fintype Γ₁] [Fintype Γ₂]
@@ -123,18 +129,25 @@ noncomputable def compTM
     | .sim₁LBack q₁ =>
         (.sim₁ q₁, keep, .left)
     | .convPlaceLeft =>
-        (.convCopy, CompCell.pack { c with leftB := true }, .right)
-    | .convCopy =>
+        (.convCopy true, CompCell.pack { c with leftB := true }, .right)
+    | .convCopy first =>
         match c.one with
         | some a =>
-            (.convCopy,
+            (.convCopy false,
               CompCell.pack { c with two := translateCell ι₂₁ ι₂₂ a },
               .right)
         | none =>
-            if c.rightB then
+            if first then
+              (.convEmptyRight, keep, .right)
+            else if c.rightB then
               (.convReturn, keep, .left)
             else
               (.convSeekOldRight, CompCell.pack { c with rightB := true }, .right)
+    | .convEmptyRight =>
+        if c.rightB then
+          (.convReturn, keep, .left)
+        else
+          (.convSeekOldRight, CompCell.pack { c with rightB := true }, .right)
     | .convSeekOldRight =>
         if c.rightB then
           (.convReturn, CompCell.pack { c with rightB := false }, .left)
@@ -150,10 +163,13 @@ noncomputable def compTM
     | .sim₂ q₂ =>
         if q₂ = M₂.qaccept ∨ q₂ = M₂.qreject then
           let ended := c.two.isNone
-          (.finalClean ended,
-            CompCell.pack { c with one := none, finalOrigin := true,
-              setupOrigin := false, secondOrigin := false },
-            .right)
+          let c' : CompCell Γ₁ Γ₂ :=
+            { c with
+              one := none
+              setupOrigin := false
+              secondOrigin := false
+              finalOrigin := true }
+          (.finalClean ended, CompCell.pack c', .right)
         else
           match M₂.δ q₂ c.two with
           | (q', w, .right) =>
