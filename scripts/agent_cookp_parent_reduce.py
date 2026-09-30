@@ -8,19 +8,17 @@ import Theorems.Thm_CookPvsNP_tm_compose_poly_witness
 
 set_option autoImplicit false
 
-namespace CookPvsNP
+open CookPvsNP
 
 theorem solution {Sym₁ Sym₂ Sym₃ : Type}
     (f : List Sym₁ → List Sym₂) (g : List Sym₂ → List Sym₃)
-    (hf : PolyTimeComputable f) (hg : PolyTimeComputable g) :
-    PolyTimeComputable (g ∘ f) := by
+    (hf : CookPvsNP.PolyTimeComputable f) (hg : CookPvsNP.PolyTimeComputable g) :
+    CookPvsNP.PolyTimeComputable (g ∘ f) := by
   rcases hf with ⟨Γ₁, hfin₁, ι₁, ι₂₁, M₁, k₁, h₁⟩
   rcases hg with ⟨Γ₂, hfin₂, ι₂₂, ι₃, M₂, k₂, h₂⟩
   letI : Fintype Γ₁ := hfin₁
   letI : Fintype Γ₂ := hfin₂
-  exact tm_compose_poly_witness ι₁ ι₂₁ M₁ k₁ ι₂₂ ι₃ M₂ k₂ f g h₁ h₂
-
-end CookPvsNP'''
+  exact CookPvsNP.tm_compose_poly_witness ι₁ ι₂₁ M₁ k₁ ι₂₂ ι₃ M₂ k₂ f g h₁ h₂'''
 EXPL=("Unpack the two PolyTimeComputable hypotheses into finite work alphabets, symbol embeddings, "
       "Cook machines, exponents, and correctness/time guarantees. The witness-level theorem "
       "CookPvsNP.tm_compose_poly_witness merges those concrete witnesses into one finite-alphabet "
