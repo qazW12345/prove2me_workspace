@@ -1,5 +1,5 @@
 name: Prove2Me CookP Composition Probe
-# refresh exact definition lookup
+# refresh sibling infrastructure search
 on:
   push:
     branches: [agent/prove2me-probe]
