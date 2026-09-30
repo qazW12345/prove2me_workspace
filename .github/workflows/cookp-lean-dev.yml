@@ -52,4 +52,5 @@ jobs:
       - name: Compile development proof
         run: |
           source "$HOME/.elan/env"
-          lake build Definitions\n          lake build Solutions.CookCompDev
+          lake build Definitions
+          lake build Solutions.CookCompDev
