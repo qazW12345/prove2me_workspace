@@ -18,7 +18,7 @@ from pathlib import Path
 
 BASE = "https://prove2.me/api/v1"
 SKILL_VERSION = "0.11.5"
-TARGET_HINTS = ("alphaevolve", "2.371177")
+TARGET_HINTS = ("erdős problem 592", "partition ordinals", "schipperus")
 OUT = Path("agent-state/probe-result.json")
 MAX_SOLUTION_SOURCES = 30
 
@@ -154,6 +154,7 @@ def main() -> int:
         "open_leaves": None,
         "root": None,
         "frontier_details": [],
+        "milestone_details": [],
     }
 
     if target:
@@ -167,6 +168,32 @@ def main() -> int:
                 f"/missions/{q(mission_id)}/milestones?limit=100&offset=0",
                 token=token,
             )
+            for milestone in report["milestones"].get("milestones", []):
+                theorem = milestone.get("theorem") or {}
+                theorem_id = (
+                    milestone.get("theorem_id")
+                    or theorem.get("theorem_id")
+                    or theorem.get("id")
+                )
+                item = {"milestone": milestone}
+                if theorem_id:
+                    item["theorem"] = api(
+                        "GET", f"/theorems/{q(theorem_id)}", token=token
+                    )
+                    item["decompositions"] = api(
+                        "GET",
+                        f"/theorems/{q(theorem_id)}/decompositions",
+                        token=token,
+                    )
+                    item["graph"] = api(
+                        "GET", f"/theorems/{q(theorem_id)}/graph", token=token
+                    )
+                    item["open_leaves"] = api(
+                        "GET",
+                        f"/theorems/{q(theorem_id)}/open-leaves?limit=200&offset=0",
+                        token=token,
+                    )
+                report["milestone_details"].append(item)
             try:
                 report["mission_comments"] = api(
                     "GET", f"/missions/{q(mission_id)}/comments", token=token
