@@ -8,438 +8,42 @@
         "decompositions": []
       },
       "open_leaves": {
-        "open_leaves": [],
-        "root_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
-        "total": 0
-      },
-      "submissions": {
-        "submissions": [
+        "open_leaves": [
           {
-            "accepted_at": "2026-09-30T09:11:41.290011+00:00",
-            "created_at": "2026-09-30T09:06:05.01305+00:00",
-            "deprecated_at": null,
-            "error_message": "",
-            "explanation": "The Lean statement is false because the exponent in `(2/5) ^ (2/5)` is inferred as a natural number. Hence `2 / 5 = 0` in the exponent and the right-hand side is (1). The target therefore asserts (1 < \\log 2). But the standard strict logarithm bound (\\log x < x-1) for positive (x \ne 1), applied at (x=2), gives (\\log 2 < 1). Thus the stated proposition is false.",
-            "file_path": "0b2ef069-4e46-4965-bb5f-cb106334dc43/37daf168-68bd-45fc-b4d5-a2e74708a4e2/d860d6bb-1c65-4791-9e4e-265f6a6fe127.lean",
-            "id": "d860d6bb-1c65-4791-9e4e-265f6a6fe127",
-            "status": "ACCEPTED",
-            "theorem_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
-            "updated_at": "2026-09-30T09:11:41.290011+00:00",
-            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
-            "username": "Sneed",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T07:59:32.907715+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 1 < Real.log 2",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `positivity`.",
-            "file_path": "0b2ef069-4e46-4965-bb5f-cb106334dc43/fca9fd8a-84f4-46ca-8845-a4a2b665381d/b953ffd9-df0c-4acf-86f3-f8821a857c09.lean",
-            "id": "b953ffd9-df0c-4acf-86f3-f8821a857c09",
-            "status": "CE",
-            "theorem_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
-            "updated_at": "2026-09-30T08:05:48.571993+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T07:55:28.139328+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 1 < Real.log 2",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `positivity`.",
-            "file_path": "0b2ef069-4e46-4965-bb5f-cb106334dc43/fca9fd8a-84f4-46ca-8845-a4a2b665381d/7aae883b-e2a2-4a9c-bc59-1b90a96c8c23.lean",
-            "id": "7aae883b-e2a2-4a9c-bc59-1b90a96c8c23",
-            "status": "CE",
-            "theorem_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
-            "updated_at": "2026-09-30T08:01:53.129991+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "025d0490-fea5-40ba-8336-27d897bf3b62",
+            "theorem_name": "WorkbookCorrected.plus_27001"
           }
         ],
-        "total": 3
+        "root_id": "025d0490-fea5-40ba-8336-27d897bf3b62",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [],
+        "total": 0
       },
       "theorem": {
         "audits": [],
-        "created_at": "2026-09-30T07:09:31.687985+00:00",
+        "created_at": "2026-09-30T09:31:51.688852+00:00",
         "deprecated_at": null,
         "deprecated_by": null,
-        "formal_statement": "theorem WorkbookCorrected.plus_59205 : Real.log 2 > (2/5) ^ (2/5) := by sorry",
+        "formal_statement": "theorem WorkbookCorrected.plus_27001 : Real.logb 5 (25) + Real.logb 5 (125) = 4 := by sorry",
         "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "The elementary natural-number / rational identity\n$$\nReal.log 2 > (2/5)^(2/5)\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_59205`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_59205 (Apache-2.0).",
+        "natural_language_statement": "The elementary natural-number / rational identity\n$$\nReal.logb 5 (25) + Real.logb 5 (125) = 4\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_27001`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_27001 (Apache-2.0).",
         "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
         "readback": null,
-        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_59205; Apache-2.0; corrects Open node c0008fc7-8ae0-47a3-9412-95fc562f3045",
-        "status": "Disproved",
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_27001; Apache-2.0; corrects Open node 7d684f24-cb91-48dd-aefa-c792d3d98814",
+        "status": "Open",
         "tags": [
           "arithmetic",
           "corrected",
           "elementary",
           "workbook"
         ],
-        "theorem_id": "0b2ef069-4e46-4965-bb5f-cb106334dc43",
-        "theorem_name": "WorkbookCorrected.plus_59205",
-        "theorem_title": "Real logarithm identity #59205",
-        "visibility": "public",
-        "vote_count": 0
-      }
-    },
-    {
-      "decompositions": {
-        "decompositions": []
-      },
-      "open_leaves": {
-        "open_leaves": [],
-        "root_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
-        "total": 0
-      },
-      "submissions": {
-        "submissions": [
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T09:09:37.867973+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 17: Function expected at\n  Real.lt_sqrt ?m.125\nbut this term has type\n  2 < \u221a?m.118 \u2194 2 ^ 2 < ?m.118\n\nNote: Expected a function because this term is being applied to the argument\n  (by norm_num : (0 : \u211d) \u2264 5)",
-            "explanation": "Hand-crafted Lean reclaim for WorkbookCorrected.plus_15957.",
-            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/08e58b8e-0e71-47af-8097-41558a999a13.lean",
-            "id": "08e58b8e-0e71-47af-8097-41558a999a13",
-            "status": "CE",
-            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
-            "updated_at": "2026-09-30T09:14:18.182993+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T09:06:10.04467+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 17: Function expected at\n  Real.lt_sqrt ?m.125\nbut this term has type\n  2 < \u221a?m.118 \u2194 2 ^ 2 < ?m.118\n\nNote: Expected a function because this term is being applied to the argument\n  (by norm_num : (0 : \u211d) \u2264 5)",
-            "explanation": "logb 5 10 < 3/2 via logb_lt_iff_lt_rpow and sqrt comparison.",
-            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/c9d09377-b896-4ed2-bd06-6e1ffb464b6b.lean",
-            "id": "c9d09377-b896-4ed2-bd06-6e1ffb464b6b",
-            "status": "CE",
-            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
-            "updated_at": "2026-09-30T09:11:59.891981+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": "2026-09-30T09:11:50.233976+00:00",
-            "created_at": "2026-09-30T09:06:05.448232+00:00",
-            "deprecated_at": null,
-            "error_message": "",
-            "explanation": "Write the base-five logarithm as a quotient of natural logarithms. Since (\\log 5>0), the desired bound is equivalent to (\\log 10 < \tfrac32\\log 5). Using (10=2\\cdot5), this reduces to (2\\log 2<\\log 5). But (2\\log 2=\\log 4), and (\\log 4<\\log 5) by strict monotonicity of the logarithm on positive reals.",
-            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/37daf168-68bd-45fc-b4d5-a2e74708a4e2/96e4bb8e-e1fc-403f-9032-4c5e1461e50e.lean",
-            "id": "96e4bb8e-e1fc-403f-9032-4c5e1461e50e",
-            "status": "ACCEPTED",
-            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
-            "updated_at": "2026-09-30T09:11:50.233976+00:00",
-            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
-            "username": "Sneed",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T08:48:47.393981+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 18: Function expected at\n  Real.lt_sqrt ?m.125\nbut this term has type\n  2 < \u221a?m.118 \u2194 2 ^ 2 < ?m.118\n\nNote: Expected a function because this term is being applied to the argument\n  (by positivity)",
-            "explanation": "WorkbookCorrected twin reclaim for plus_15957: hand-crafted Lean proof of the Real/log identity.",
-            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/b4156368-9a59-4b03-8795-64dc65c93822.lean",
-            "id": "b4156368-9a59-4b03-8795-64dc65c93822",
-            "status": "CE",
-            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
-            "updated_at": "2026-09-30T08:53:39.226143+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T08:22:55.059046+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 8: unexpected token '<'; expected ':=', 'where' or '|'\nline 8: Unknown identifier `Real.logb`",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `positivity`.",
-            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/9b17d3c4-7daf-41e6-8257-b75b3f12c097.lean",
-            "id": "9b17d3c4-7daf-41e6-8257-b75b3f12c097",
-            "status": "CE",
-            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
-            "updated_at": "2026-09-30T08:27:21.701269+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T07:35:06.850208+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 Real.logb 5 10 * 2 < 3",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `positivity`.",
-            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/164c9b77-0400-44a0-90e7-2e8d7aa8a191.lean",
-            "id": "164c9b77-0400-44a0-90e7-2e8d7aa8a191",
-            "status": "CE",
-            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
-            "updated_at": "2026-09-30T07:43:45.857261+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T07:31:04.699373+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 Real.logb 5 10 < 3 / 2",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `positivity`.",
-            "file_path": "65cd88b8-088a-4bcb-801b-e82e9faf5838/fca9fd8a-84f4-46ca-8845-a4a2b665381d/c5945e51-7ef3-4916-b619-25d372398e60.lean",
-            "id": "c5945e51-7ef3-4916-b619-25d372398e60",
-            "status": "CE",
-            "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
-            "updated_at": "2026-09-30T07:36:51.258711+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          }
-        ],
-        "total": 7
-      },
-      "theorem": {
-        "audits": [],
-        "created_at": "2026-09-30T07:04:50.717181+00:00",
-        "deprecated_at": null,
-        "deprecated_by": null,
-        "formal_statement": "theorem WorkbookCorrected.plus_15957 : Real.logb 5 10 < 3 / 2 := by sorry",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "The elementary natural-number / rational identity\n$$\nReal.logb 5 10 < 3 / 2\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_15957`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_15957 (Apache-2.0).",
-        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
-        "readback": null,
-        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_15957; Apache-2.0; corrects Open node 7a6bbe4f-bdd9-4a17-9188-af6bc97126b7",
-        "status": "Proved",
-        "tags": [
-          "arithmetic",
-          "corrected",
-          "elementary",
-          "workbook"
-        ],
-        "theorem_id": "65cd88b8-088a-4bcb-801b-e82e9faf5838",
-        "theorem_name": "WorkbookCorrected.plus_15957",
-        "theorem_title": "Real logarithm identity #15957",
-        "visibility": "public",
-        "vote_count": 0
-      }
-    },
-    {
-      "decompositions": {
-        "decompositions": []
-      },
-      "open_leaves": {
-        "open_leaves": [],
-        "root_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
-        "total": 0
-      },
-      "submissions": {
-        "submissions": [
-          {
-            "accepted_at": "2026-09-30T09:11:41.217556+00:00",
-            "created_at": "2026-09-30T09:06:05.838088+00:00",
-            "deprecated_at": null,
-            "error_message": "",
-            "explanation": "Use the product law for logarithms in base (2). We have (\\log_2 4=2) and (\\log_2 2=1). Therefore (\\log_2(4\\cdot251)=2+\\log_2 251) and (\\log_2(2\\cdot5)=1+\\log_2 5). Substituting these two identities makes the two sides definitionally identical.",
-            "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/37daf168-68bd-45fc-b4d5-a2e74708a4e2/f27f6f29-5ca7-4bff-9713-e7cedf9ea235.lean",
-            "id": "f27f6f29-5ca7-4bff-9713-e7cedf9ea235",
-            "status": "ACCEPTED",
-            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
-            "updated_at": "2026-09-30T09:11:41.217556+00:00",
-            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
-            "username": "Sneed",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": "2026-09-30T09:02:17.326983+00:00",
-            "created_at": "2026-09-30T08:53:45.87299+00:00",
-            "deprecated_at": null,
-            "error_message": "",
-            "explanation": "WorkbookCorrected twin reclaim for plus_18935: hand-crafted Lean proof of the Real/log identity.",
-            "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/fca9fd8a-84f4-46ca-8845-a4a2b665381d/fd078859-28db-4626-86a4-931cc9f2bbbe.lean",
-            "id": "fd078859-28db-4626-86a4-931cc9f2bbbe",
-            "status": "ACCEPTED",
-            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
-            "updated_at": "2026-09-30T09:02:17.326983+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T08:27:24.354297+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 12: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  Real.logb 2 4 + Real.logb 2 251\nin the target expression\n  Real.logb 2 (4 * 251) = 2 + Real.logb 2 251\n\nthis : Real.logb 2 (4 * 251) = Real.logb 2 4 + Real.logb 2 251\n\u22a2 Real.logb 2 (4 * 251) = 2 + Real.logb 2 251\nline 17: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  Real.logb 2 2 + Real.logb 2 5\nin the target expression\n  Real.logb 2 (2 * 5) = 1 + Real.logb 2 5\n\nh4 : Real.logb 2 (4 * 251) = 2 + Real.logb 2 251\nthis : Real.logb 2 (2 * 5) = Real.logb 2 2 + Real.logb 2 5\n\u22a2 Real.logb 2 (2 * 5) = 1 + Real.logb 2 5",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
-            "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/fca9fd8a-84f4-46ca-8845-a4a2b665381d/2e3bdf4f-2f11-4d22-baf4-7de2825d7ed6.lean",
-            "id": "2e3bdf4f-2f11-4d22-baf4-7de2825d7ed6",
-            "status": "CE",
-            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
-            "updated_at": "2026-09-30T08:33:07.009732+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T07:27:03.394675+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 Real.logb 2 1004 * (Real.logb 2 10)\u207b\u00b9 = Real.logb 2 251 * (1 + Real.logb 2 5)\u207b\u00b9 + (1 + Real.logb 2 5)\u207b\u00b9 * 2",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
-            "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/fca9fd8a-84f4-46ca-8845-a4a2b665381d/b77121f7-5244-48a3-8cad-39fa124db655.lean",
-            "id": "b77121f7-5244-48a3-8cad-39fa124db655",
-            "status": "CE",
-            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
-            "updated_at": "2026-09-30T07:33:28.176647+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T07:22:58.844909+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 Real.logb 2 1004 / Real.logb 2 10 = (2 + Real.logb 2 251) / (1 + Real.logb 2 5)",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
-            "file_path": "5087755b-9ec3-4afc-a2ee-8f0d79d46674/fca9fd8a-84f4-46ca-8845-a4a2b665381d/3e1580ea-23ed-4524-a4bb-7594437c7059.lean",
-            "id": "3e1580ea-23ed-4524-a4bb-7594437c7059",
-            "status": "CE",
-            "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
-            "updated_at": "2026-09-30T07:30:58.221145+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          }
-        ],
-        "total": 5
-      },
-      "theorem": {
-        "audits": [],
-        "created_at": "2026-09-30T07:00:32.124776+00:00",
-        "deprecated_at": null,
-        "deprecated_by": null,
-        "formal_statement": "theorem WorkbookCorrected.plus_18935 : (Real.logb 2 (4 * 251)) / (Real.logb 2 (2 * 5)) = (2 + Real.logb 2 251) / (1 + Real.logb 2 5) := by sorry",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "The elementary natural-number / rational identity\n$$\n(Real.logb 2 (4 * 251)) / (Real.logb 2 (2 * 5)) = (2 + Real.logb 2 251) / (1 + Real.logb 2 5)\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_18935`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_18935 (Apache-2.0).",
-        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
-        "readback": null,
-        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_18935; Apache-2.0; corrects Open node 2e5720e5-fb54-4997-ba9f-941a454d8d46",
-        "status": "Proved",
-        "tags": [
-          "arithmetic",
-          "corrected",
-          "elementary",
-          "workbook"
-        ],
-        "theorem_id": "5087755b-9ec3-4afc-a2ee-8f0d79d46674",
-        "theorem_name": "WorkbookCorrected.plus_18935",
-        "theorem_title": "Real logarithm identity #18935",
-        "visibility": "public",
-        "vote_count": 0
-      }
-    },
-    {
-      "decompositions": {
-        "decompositions": []
-      },
-      "open_leaves": {
-        "open_leaves": [],
-        "root_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
-        "total": 0
-      },
-      "submissions": {
-        "submissions": [
-          {
-            "accepted_at": "2026-09-30T09:19:52.597459+00:00",
-            "created_at": "2026-09-30T09:13:40.572743+00:00",
-            "deprecated_at": null,
-            "error_message": "",
-            "explanation": "Using Mathlib's reciprocal change-of-base identities, collapse the five positive reciprocal logarithms to base 720 and the four negative terms to base 5040. Their difference collapses to the reciprocal logarithm with base 720/5040 = 1/7. The argument is also 1/7, so the logarithm is 1 and its reciprocal is 1.",
-            "file_path": "768cc757-f308-474b-ac9c-ce2c4ff41606/37daf168-68bd-45fc-b4d5-a2e74708a4e2/508b1c38-2044-4eec-a7bb-418745164f54.lean",
-            "id": "508b1c38-2044-4eec-a7bb-418745164f54",
-            "status": "ACCEPTED",
-            "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
-            "updated_at": "2026-09-30T09:19:52.597459+00:00",
-            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
-            "username": "Sneed",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T09:06:06.277417+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 54: 'change' tactic failed, pattern\n  (Real.logb 2 c)\u207b\u00b9 + (Real.logb 3 c)\u207b\u00b9 + (Real.logb 4 c)\u207b\u00b9 + (Real.logb 5 c)\u207b\u00b9 + (Real.logb 6 c)\u207b\u00b9 -\n            (Real.logb 7 c)\u207b\u00b9 -\n          (Real.logb 8 c)\u207b\u00b9 -\n        (Real.logb 9 c)\u207b\u00b9 -\n      (Real.logb 10 c)\u207b\u00b9 =\n    1\nis not definitionally equal to target\n  (Real.logb 2 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 3 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 4 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 5 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 6 7\u207b\u00b9)\u207b\u00b9 -\n            (Real.logb 7 7\u207b\u00b9)\u207b\u00b9 -\n          (Real.logb 8 7\u207b\u00b9)\u207b\u00b9 -\n        (Real.logb 9 7\u207b\u00b9)\u207b\u00b9 -\n      (Real.logb 10 7\u207b\u00b9)\u207b\u00b9 =\n    1",
-            "explanation": "Use the reciprocal-change-of-base identity ((\\log_a c)^{-1}=\\log_c a), equivalently Mathlib's `inv_logb_mul_base` and `inv_logb_div_base`. The five positive terms combine to the reciprocal logarithm with base (2\\cdot3\\cdot4\\cdot5\\cdot6=720); the four negative terms combine to the reciprocal logarithm with base (7\\cdot8\\cdot9\\cdot10=5040). Their difference is therefore the reciprocal logarithm with base (720/5040=1/7). Since the argument is also (1/7), that logarithm equals (1), so its reciprocal is (1).",
-            "file_path": "768cc757-f308-474b-ac9c-ce2c4ff41606/37daf168-68bd-45fc-b4d5-a2e74708a4e2/635a05c8-4ff5-48c8-8fc1-39bdf6ffc34e.lean",
-            "id": "635a05c8-4ff5-48c8-8fc1-39bdf6ffc34e",
-            "status": "CE",
-            "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
-            "updated_at": "2026-09-30T09:11:48.970994+00:00",
-            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
-            "username": "Sneed",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T06:29:28.307041+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 -1 + (Real.logb 2 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) + (Real.logb 3 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n                (Real.logb 4 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n              (Real.logb 5 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n            (Real.logb 6 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) -\n          Real.logb 7 (1 / 7) * (Real.logb 8 (1 / 7))\u207b\u00b9 -\n        Real.logb 7 (1 / 7) * (Real.logb 9 (1 / 7))\u207b\u00b9 -\n      Real.logb 7 (1 / 7) * (Real.logb 10 (1 / 7))\u207b\u00b9 =\n    Real.logb 7 (1 / 7)",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
-            "file_path": "768cc757-f308-474b-ac9c-ce2c4ff41606/fca9fd8a-84f4-46ca-8845-a4a2b665381d/99f988dd-76cc-4d6b-a0d3-852997c4ff47.lean",
-            "id": "99f988dd-76cc-4d6b-a0d3-852997c4ff47",
-            "status": "CE",
-            "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
-            "updated_at": "2026-09-30T06:39:59.560695+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T06:25:26.351251+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 (Real.logb 2 (1 / 7))\u207b\u00b9 + (Real.logb 3 (1 / 7))\u207b\u00b9 + (Real.logb 4 (1 / 7))\u207b\u00b9 + (Real.logb 5 (1 / 7))\u207b\u00b9 +\n              (Real.logb 6 (1 / 7))\u207b\u00b9 -\n            (Real.logb 7 (1 / 7))\u207b\u00b9 -\n          (Real.logb 8 (1 / 7))\u207b\u00b9 -\n        (Real.logb 9 (1 / 7))\u207b\u00b9 -\n      (Real.logb 10 (1 / 7))\u207b\u00b9 =\n    1",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
-            "file_path": "768cc757-f308-474b-ac9c-ce2c4ff41606/fca9fd8a-84f4-46ca-8845-a4a2b665381d/65b28c1c-230e-494a-8e2f-854d8a7f2477.lean",
-            "id": "65b28c1c-230e-494a-8e2f-854d8a7f2477",
-            "status": "CE",
-            "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
-            "updated_at": "2026-09-30T06:32:50.808983+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          }
-        ],
-        "total": 4
-      },
-      "theorem": {
-        "audits": [],
-        "created_at": "2026-09-30T06:02:36.82457+00:00",
-        "deprecated_at": null,
-        "deprecated_by": null,
-        "formal_statement": "theorem WorkbookCorrected.plus_54693 : (1 / Real.logb 2 (1 / 7)) + (1 / Real.logb 3 (1 / 7)) + (1 / Real.logb 4 (1 / 7)) + (1 / Real.logb 5 (1 / 7)) + (1 / Real.logb 6 (1 / 7)) - (1 / Real.logb 7 (1 / 7)) - (1 / Real.logb 8 (1 / 7)) - (1 / Real.logb 9 (1 / 7)) - (1 / Real.logb 10 (1 / 7)) = 1 := by sorry",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "The elementary natural-number / rational identity\n$$\n(1 / Real.logb 2 (1 / 7)) + (1 / Real.logb 3 (1 / 7)) + (1 / Real.logb 4 (1 / 7)) + (1 / Real.logb 5 (1 / 7)) + (1 / Real.logb 6 (1 / 7)) - (1 / Real.logb 7 (1 / 7)) - (1 / Real.logb 8 (1 / 7)) - (1 / Real.logb 9 (1 / 7)) - (1 / Real.logb 10 (1 / 7)) = 1\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_54693`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_54693 (Apache-2.0).",
-        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
-        "readback": null,
-        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_54693; Apache-2.0; corrects Open node 2fbc9765-e529-4dfa-912c-ef64cc2cef80",
-        "status": "Proved",
-        "tags": [
-          "arithmetic",
-          "corrected",
-          "elementary",
-          "workbook"
-        ],
-        "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
-        "theorem_name": "WorkbookCorrected.plus_54693",
-        "theorem_title": "Real logarithm identity #54693",
+        "theorem_id": "025d0490-fea5-40ba-8336-27d897bf3b62",
+        "theorem_name": "WorkbookCorrected.plus_27001",
+        "theorem_title": "Real logarithm identity #27001",
         "visibility": "public",
         "vote_count": 0
       }
@@ -453,89 +57,28 @@
           {
             "closability": 0,
             "status": "Open",
-            "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
-            "theorem_name": "WorkbookCorrected.plus_66568"
+            "theorem_id": "306ad1d3-54a4-4381-95a6-98a82e56e0fd",
+            "theorem_name": "WorkbookCorrected.plus_11295"
           }
         ],
-        "root_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
+        "root_id": "306ad1d3-54a4-4381-95a6-98a82e56e0fd",
         "total": 1
       },
       "submissions": {
-        "submissions": [
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T09:13:41.128457+00:00",
-            "deprecated_at": null,
-            "error_message": "",
-            "explanation": "Using Mathlib's reciprocal change-of-base identities, collapse the five positive reciprocal logarithms to base 720 and the four negative terms to base 5040. Their difference collapses to the reciprocal logarithm with base 720/5040 = 1/7. The argument is also 1/7, so the logarithm is 1 and its reciprocal is 1.",
-            "file_path": "26ed6455-5abb-4035-8621-2bdf2ef2037e/37daf168-68bd-45fc-b4d5-a2e74708a4e2/ab32226a-c16a-485a-b57d-313af2174250.lean",
-            "id": "ab32226a-c16a-485a-b57d-313af2174250",
-            "status": "PENDING",
-            "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
-            "updated_at": "2026-09-30T09:13:41.283524+00:00",
-            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
-            "username": "Sneed",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T09:06:06.677882+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 54: 'change' tactic failed, pattern\n  (Real.logb 2 c)\u207b\u00b9 + (Real.logb 3 c)\u207b\u00b9 + (Real.logb 4 c)\u207b\u00b9 + (Real.logb 5 c)\u207b\u00b9 + (Real.logb 6 c)\u207b\u00b9 -\n            (Real.logb 7 c)\u207b\u00b9 -\n          (Real.logb 8 c)\u207b\u00b9 -\n        (Real.logb 9 c)\u207b\u00b9 -\n      (Real.logb 10 c)\u207b\u00b9 =\n    1\nis not definitionally equal to target\n  (Real.logb 2 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 3 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 4 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 5 7\u207b\u00b9)\u207b\u00b9 + (Real.logb 6 7\u207b\u00b9)\u207b\u00b9 -\n            (Real.logb 7 7\u207b\u00b9)\u207b\u00b9 -\n          (Real.logb 8 7\u207b\u00b9)\u207b\u00b9 -\n        (Real.logb 9 7\u207b\u00b9)\u207b\u00b9 -\n      (Real.logb 10 7\u207b\u00b9)\u207b\u00b9 =\n    1",
-            "explanation": "Use the reciprocal-change-of-base identity ((\\log_a c)^{-1}=\\log_c a), equivalently Mathlib's `inv_logb_mul_base` and `inv_logb_div_base`. The five positive terms combine to the reciprocal logarithm with base (2\\cdot3\\cdot4\\cdot5\\cdot6=720); the four negative terms combine to the reciprocal logarithm with base (7\\cdot8\\cdot9\\cdot10=5040). Their difference is therefore the reciprocal logarithm with base (720/5040=1/7). Since the argument is also (1/7), that logarithm equals (1), so its reciprocal is (1).",
-            "file_path": "26ed6455-5abb-4035-8621-2bdf2ef2037e/37daf168-68bd-45fc-b4d5-a2e74708a4e2/21586fc2-72a9-4d22-be8f-575628c1af0e.lean",
-            "id": "21586fc2-72a9-4d22-be8f-575628c1af0e",
-            "status": "CE",
-            "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
-            "updated_at": "2026-09-30T09:11:56.578284+00:00",
-            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
-            "username": "Sneed",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T06:21:24.599975+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 -1 + (Real.logb 2 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) + (Real.logb 3 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n                (Real.logb 4 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n              (Real.logb 5 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) +\n            (Real.logb 6 (1 / 7))\u207b\u00b9 * Real.logb 7 (1 / 7) -\n          Real.logb 7 (1 / 7) * (Real.logb 8 (1 / 7))\u207b\u00b9 -\n        Real.logb 7 (1 / 7) * (Real.logb 9 (1 / 7))\u207b\u00b9 -\n      Real.logb 7 (1 / 7) * (Real.logb 10 (1 / 7))\u207b\u00b9 =\n    Real.logb 7 (1 / 7)",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
-            "file_path": "26ed6455-5abb-4035-8621-2bdf2ef2037e/fca9fd8a-84f4-46ca-8845-a4a2b665381d/f241c0bc-6556-46bd-8070-61dbb92475d0.lean",
-            "id": "f241c0bc-6556-46bd-8070-61dbb92475d0",
-            "status": "CE",
-            "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
-            "updated_at": "2026-09-30T06:27:27.82553+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          },
-          {
-            "accepted_at": null,
-            "created_at": "2026-09-30T06:17:22.541972+00:00",
-            "deprecated_at": null,
-            "error_message": "Compile error in your proof:\nline 10: unsolved goals\n\u22a2 (Real.logb 2 (1 / 7))\u207b\u00b9 + (Real.logb 3 (1 / 7))\u207b\u00b9 + (Real.logb 4 (1 / 7))\u207b\u00b9 + (Real.logb 5 (1 / 7))\u207b\u00b9 +\n              (Real.logb 6 (1 / 7))\u207b\u00b9 -\n            (Real.logb 7 (1 / 7))\u207b\u00b9 -\n          (Real.logb 8 (1 / 7))\u207b\u00b9 -\n        (Real.logb 9 (1 / 7))\u207b\u00b9 -\n      (Real.logb 10 (1 / 7))\u207b\u00b9 =\n    1",
-            "explanation": "Direct evaluation of the elementary natural-number / rational identity yields the stated equality. Lean closes the goal with `norm_num`.",
-            "file_path": "26ed6455-5abb-4035-8621-2bdf2ef2037e/fca9fd8a-84f4-46ca-8845-a4a2b665381d/f328f895-ca84-41d1-abe2-2c5dbd393afa.lean",
-            "id": "f328f895-ca84-41d1-abe2-2c5dbd393afa",
-            "status": "CE",
-            "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
-            "updated_at": "2026-09-30T06:24:37.035031+00:00",
-            "user_id": "fca9fd8a-84f4-46ca-8845-a4a2b665381d",
-            "username": "carlok",
-            "vote_count": 0
-          }
-        ],
-        "total": 4
+        "submissions": [],
+        "total": 0
       },
       "theorem": {
         "audits": [],
-        "created_at": "2026-09-30T05:57:08.044595+00:00",
+        "created_at": "2026-09-30T09:31:59.635398+00:00",
         "deprecated_at": null,
         "deprecated_by": null,
-        "formal_statement": "theorem WorkbookCorrected.plus_66568 : 1 / Real.logb 2 (1 / 7) + 1 / Real.logb 3 (1 / 7) + 1 / Real.logb 4 (1 / 7) + 1 / Real.logb 5 (1 / 7) + 1 / Real.logb 6 (1 / 7) - 1 / Real.logb 7 (1 / 7) - 1 / Real.logb 8 (1 / 7) - 1 / Real.logb 9 (1 / 7) - 1 / Real.logb 10 (1 / 7) = 1 := by sorry",
+        "formal_statement": "theorem WorkbookCorrected.plus_11295 : (2:\u211d) ^ (-Real.sqrt 2) = ((4:\u211d) ^ (1 / 2)) ^ (-Real.sqrt 2) := by sorry",
         "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "The elementary natural-number / rational identity\n$$\n1 / Real.logb 2 (1 / 7) + 1 / Real.logb 3 (1 / 7) + 1 / Real.logb 4 (1 / 7) + 1 / Real.logb 5 (1 / 7) + 1 / Real.logb 6 (1 / 7) - 1 / Real.logb 7 (1 / 7) - 1 / Real.logb 8 (1 / 7) - 1 / Real.logb 9 (1 / 7) - 1 / Real.logb 10 (1 / 7) = 1\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_66568`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_66568 (Apache-2.0).",
-        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
+        "natural_language_statement": "The elementary natural-number / rational identity\n$$\n2^(-Real.sqrt 2) = (4^(1 / 2))^(-Real.sqrt 2)\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_11295`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_11295 (Apache-2.0).",
+        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Pow.Real\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
         "readback": null,
-        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_66568; Apache-2.0; corrects Open node 2ea0881e-4b4b-4326-8305-c46cd4c9b646",
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_11295; Apache-2.0; corrects Open node 3e9b173c-b796-41a7-8d85-b0ca0172fb59",
         "status": "Open",
         "tags": [
           "arithmetic",
@@ -543,9 +86,9 @@
           "elementary",
           "workbook"
         ],
-        "theorem_id": "26ed6455-5abb-4035-8621-2bdf2ef2037e",
-        "theorem_name": "WorkbookCorrected.plus_66568",
-        "theorem_title": "Real logarithm identity #66568",
+        "theorem_id": "306ad1d3-54a4-4381-95a6-98a82e56e0fd",
+        "theorem_name": "WorkbookCorrected.plus_11295",
+        "theorem_title": "Real logarithm identity #11295",
         "visibility": "public",
         "vote_count": 0
       }
