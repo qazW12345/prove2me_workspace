@@ -12,28 +12,28 @@
           {
             "closability": 0,
             "status": "Open",
-            "theorem_id": "222cd0d9-2d37-4232-8975-4554b73da451",
-            "theorem_name": "WorkbookCorrected.plus_47605"
+            "theorem_id": "d35b4074-49f9-448b-8a64-95bf688a7c7e",
+            "theorem_name": "lean_workbook_plus_14398"
           }
         ],
-        "root_id": "222cd0d9-2d37-4232-8975-4554b73da451",
+        "root_id": "d35b4074-49f9-448b-8a64-95bf688a7c7e",
         "total": 1
       },
       "submissions": {
         "submissions": [
           {
             "accepted_at": null,
-            "created_at": "2026-09-30T09:49:58.832565+00:00",
+            "created_at": "2026-09-07T00:03:09.07055+00:00",
             "deprecated_at": null,
-            "error_message": "",
-            "explanation": "The formal theorem is simply (10=10). It does not contain the finite-sum expression described in the natural-language text. Therefore the Lean goal is closed directly by reflexivity.",
-            "file_path": "222cd0d9-2d37-4232-8975-4554b73da451/37daf168-68bd-45fc-b4d5-a2e74708a4e2/7cb484ed-6f6f-468c-907b-3e6f9633168a.lean",
-            "id": "7cb484ed-6f6f-468c-907b-3e6f9633168a",
-            "status": "PENDING",
-            "theorem_id": "222cd0d9-2d37-4232-8975-4554b73da451",
-            "updated_at": "2026-09-30T09:49:58.968001+00:00",
-            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
-            "username": "Sneed",
+            "error_message": "Failed to compile theorem module: Failed to compile module Theorems.Thm_lean_workbook_plus_14398: \u2716 [1820/1820] Building Theorems.Thm_lean_workbook_plus_14398 (4.9s)\nerror: Theorems/Thm_lean_workbook_plus_14398.lean:3:32: unexpected token; expected ':'\nerror: Lean exited with code 1\nSome required targets logged failures:\n- Theorems.Thm_lean_workbook_plus_14398\nerror: build failed",
+            "explanation": "This is a direct arithmetic proof of the catalog theorem.  The equation is\nchecked by Lean's `norm_num` tactic; no conjectural premise or unproved\ndependency is used.\n",
+            "file_path": "d35b4074-49f9-448b-8a64-95bf688a7c7e/6c80ba11-7e1d-448d-8c96-a2e4af9daf58/3c9b82ef-b849-4fce-b4ce-af75eff3b2c7.lean",
+            "id": "3c9b82ef-b849-4fce-b4ce-af75eff3b2c7",
+            "status": "ERROR",
+            "theorem_id": "d35b4074-49f9-448b-8a64-95bf688a7c7e",
+            "updated_at": "2026-09-07T00:03:19.21238+00:00",
+            "user_id": "6c80ba11-7e1d-448d-8c96-a2e4af9daf58",
+            "username": "WillR",
             "vote_count": 0
           }
         ],
@@ -41,26 +41,20 @@
       },
       "theorem": {
         "audits": [],
-        "created_at": "2026-09-30T09:47:24.410673+00:00",
+        "created_at": "2026-02-28T22:43:55.554211+00:00",
         "deprecated_at": null,
         "deprecated_by": null,
-        "formal_statement": "theorem WorkbookCorrected.plus_47605 : 10 = 10 := by sorry",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "The elementary natural-number / rational identity\n$$\n\u2211 k in Finset.Icc 1 10, (2 * k)) - (\u2211 k in Finset.Icc 1 10, (2 * k - 1)) = 10\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_47605`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_47605 (Apache-2.0).",
-        "preamble": "import Mathlib.Tactic.NormNum",
+        "formal_statement": "theorem lean_workbook_plus_14398 37^2 + 36^2 = 2665   :=  by sorry",
+        "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+        "natural_language_statement": "EDIT: Fixed arithmetic error as pointed out below. Thanks. Just a minor computation error. That is, $ 37^2+36^2=2665$ .",
+        "preamble": "import Mathlib.Analysis.Complex.Basic",
         "readback": null,
-        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_47605; Apache-2.0; corrects Open node dabb7a02-0a52-4ac5-ba60-672cae89aaf7",
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook",
         "status": "Open",
-        "tags": [
-          "arithmetic",
-          "corrected",
-          "elementary",
-          "finset",
-          "workbook"
-        ],
-        "theorem_id": "222cd0d9-2d37-4232-8975-4554b73da451",
-        "theorem_name": "WorkbookCorrected.plus_47605",
-        "theorem_title": "Finite-sum arithmetic identity #47605",
+        "tags": [],
+        "theorem_id": "d35b4074-49f9-448b-8a64-95bf688a7c7e",
+        "theorem_name": "lean_workbook_plus_14398",
+        "theorem_title": null,
         "visibility": "public",
         "vote_count": 0
       }
@@ -74,28 +68,148 @@
           {
             "closability": 0,
             "status": "Open",
-            "theorem_id": "a7369287-fb7a-47cd-9b94-4abe32a07462",
-            "theorem_name": "WorkbookCorrected.plus_2048"
+            "theorem_id": "2c69dd67-2e11-48f1-a673-766ff312d2f3",
+            "theorem_name": "lean_workbook_plus_22403"
           }
         ],
-        "root_id": "a7369287-fb7a-47cd-9b94-4abe32a07462",
+        "root_id": "2c69dd67-2e11-48f1-a673-766ff312d2f3",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [],
+        "total": 0
+      },
+      "theorem": {
+        "audits": [],
+        "created_at": "2026-02-28T22:43:55.916039+00:00",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "formal_statement": "theorem lean_workbook_plus_22403 :\n  \u2211 k in (Finset.range 13), (25 - 2 * k) = 169   :=  by sorry",
+        "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+        "natural_language_statement": "We can just write this as a summation, $\\sum_{x=0}^{12} 25-2x$ and this simplifies to the arithmetic series 1+3+5+\\dots+25 which is equal to 169.",
+        "preamble": "import Mathlib.Analysis.Complex.Basic",
+        "readback": null,
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook",
+        "status": "Open",
+        "tags": [],
+        "theorem_id": "2c69dd67-2e11-48f1-a673-766ff312d2f3",
+        "theorem_name": "lean_workbook_plus_22403",
+        "theorem_title": null,
+        "visibility": "public",
+        "vote_count": 0
+      }
+    },
+    {
+      "decompositions": {
+        "decompositions": []
+      },
+      "open_leaves": {
+        "open_leaves": [
+          {
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "0e716ba7-41b8-45cb-9fe1-7f2171e0a498",
+            "theorem_name": "lean_workbook_plus_56995"
+          }
+        ],
+        "root_id": "0e716ba7-41b8-45cb-9fe1-7f2171e0a498",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [],
+        "total": 0
+      },
+      "theorem": {
+        "audits": [],
+        "created_at": "2026-02-28T22:43:57.366127+00:00",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "formal_statement": "theorem lean_workbook_plus_56995 \u2211 k in Finset.range 2009, k = 2019045   :=  by sorry",
+        "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+        "natural_language_statement": "The sum $ 1 + 2 + ... + 2009$ equals: \\n\\n $ (A)$ $ 2019045$ \\n $ (B)$ $ 2018045$ \\n $ (C)$ $ 2009045$ \\n $ (D)$ $ 1019045$ \\n $ (E)$ $ 2019005$ \\n\\nthe form ia Arithmetic Progression \\n( 1 ,2 , 3 , ........, 2009) \\nnumber of terms n is 2009 \\na = 1 , r = 1 \\nS = (n/2) . (2a + r(n-1)) \\n\\n= (2009/2) .(2 +2008) \\n\\n= (2009 . 2010)/2 \\n\\n=2019045",
+        "preamble": "import Mathlib.Analysis.Complex.Basic",
+        "readback": null,
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook",
+        "status": "Open",
+        "tags": [],
+        "theorem_id": "0e716ba7-41b8-45cb-9fe1-7f2171e0a498",
+        "theorem_name": "lean_workbook_plus_56995",
+        "theorem_title": null,
+        "visibility": "public",
+        "vote_count": 0
+      }
+    },
+    {
+      "decompositions": {
+        "decompositions": []
+      },
+      "open_leaves": {
+        "open_leaves": [
+          {
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "2a4f7220-3d87-42a8-85e2-b651dfa8a5af",
+            "theorem_name": "lean_workbook_plus_58893"
+          }
+        ],
+        "root_id": "2a4f7220-3d87-42a8-85e2-b651dfa8a5af",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [],
+        "total": 0
+      },
+      "theorem": {
+        "audits": [],
+        "created_at": "2026-02-28T22:43:57.496679+00:00",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "formal_statement": "theorem lean_workbook_plus_58893 (x : \u2124) : \u2211 k in Finset.range 100, (x + k) = 100*x + 4950   :=  by sorry",
+        "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+        "natural_language_statement": "The sum of an arithmetic sequence with difference 1, 100 terms, and first term x is $ \\dfrac{100}{2} (2x + (99)(1)) = 100x + 4950$",
+        "preamble": "import Mathlib.Analysis.Complex.Basic",
+        "readback": null,
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook",
+        "status": "Open",
+        "tags": [],
+        "theorem_id": "2a4f7220-3d87-42a8-85e2-b651dfa8a5af",
+        "theorem_name": "lean_workbook_plus_58893",
+        "theorem_title": null,
+        "visibility": "public",
+        "vote_count": 0
+      }
+    },
+    {
+      "decompositions": {
+        "decompositions": []
+      },
+      "open_leaves": {
+        "open_leaves": [
+          {
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "e0bb838b-f7e6-4cfe-90a9-a5ad1fa8fa94",
+            "theorem_name": "lean_workbook_plus_72207"
+          }
+        ],
+        "root_id": "e0bb838b-f7e6-4cfe-90a9-a5ad1fa8fa94",
         "total": 1
       },
       "submissions": {
         "submissions": [
           {
             "accepted_at": null,
-            "created_at": "2026-09-30T09:49:59.204239+00:00",
+            "created_at": "2026-09-08T15:30:57.730981+00:00",
             "deprecated_at": null,
-            "error_message": "",
-            "explanation": "For positive base (2), real exponentiation satisfies\n$$\n2^{x-y}=\frac{2^x}{2^y}.\n$$\nApply this with (x=\\log_2 5) and (y=2). Mathlib's `Real.rpow_sub` gives the quotient with the denominator written as the real power (2^{(2:\u211d)}), and `Real.rpow_two` identifies this with the ordinary square (2^2), exactly matching the target.",
-            "file_path": "a7369287-fb7a-47cd-9b94-4abe32a07462/37daf168-68bd-45fc-b4d5-a2e74708a4e2/062863b9-c403-4715-b4cb-a754e53bb839.lean",
-            "id": "062863b9-c403-4715-b4cb-a754e53bb839",
-            "status": "PENDING",
-            "theorem_id": "a7369287-fb7a-47cd-9b94-4abe32a07462",
-            "updated_at": "2026-09-30T09:49:59.331227+00:00",
-            "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
-            "username": "Sneed",
+            "error_message": "Failed to compile theorem module: Failed to compile module Theorems.Thm_lean_workbook_plus_72207: \u2716 [1820/1820] Building Theorems.Thm_lean_workbook_plus_72207 (11s)\nerror: Theorems/Thm_lean_workbook_plus_72207.lean:3:38: unexpected token 'in'; expected ','\nerror: Lean exited with code 1\nSome required targets logged failures:\n- Theorems.Thm_lean_workbook_plus_72207\nerror: build failed",
+            "explanation": "Found by the math_graph prover ladder (tier sweep); verified locally on Lean 4.29.0 under this theorem's own preamble before submission.",
+            "file_path": "e0bb838b-f7e6-4cfe-90a9-a5ad1fa8fa94/06020dba-1a4e-4713-ac4b-3b029d820208/2f098760-8c49-4e71-977a-22fc3fd4a884.lean",
+            "id": "2f098760-8c49-4e71-977a-22fc3fd4a884",
+            "status": "ERROR",
+            "theorem_id": "e0bb838b-f7e6-4cfe-90a9-a5ad1fa8fa94",
+            "updated_at": "2026-09-08T15:36:26.24218+00:00",
+            "user_id": "06020dba-1a4e-4713-ac4b-3b029d820208",
+            "username": "cm_alpha",
             "vote_count": 0
           }
         ],
@@ -103,25 +217,100 @@
       },
       "theorem": {
         "audits": [],
-        "created_at": "2026-09-30T09:47:29.731854+00:00",
+        "created_at": "2026-02-28T22:43:58.028831+00:00",
         "deprecated_at": null,
         "deprecated_by": null,
-        "formal_statement": "theorem WorkbookCorrected.plus_2048 : (2:\u211d) ^ (Real.logb 2 5 - 2) = (2:\u211d) ^ (Real.logb 2 5) / (2:\u211d) ^ 2 := by sorry",
-        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
-        "natural_language_statement": "The elementary natural-number / rational identity\n$$\n2^(Real.logb 2 5 - 2) = 2^(Real.logb 2 5) / 2^2\n$$\nholds by direct arithmetic evaluation.\n\nFormalization Note: This corrects Lean-Workbook record `lean_workbook_plus_2048`, which omitted a compilable colon/type annotation and/or used a preamble of only `Mathlib.Analysis.Complex.Basic`.\n\nSource: InternLM Lean-Workbook, record lean_workbook_plus_2048 (Apache-2.0).",
-        "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Pow.Real\nimport Mathlib.Tactic.NormNum",
+        "formal_statement": "theorem lean_workbook_plus_72207 : \u2211 k in Finset.Icc 2 7, k = 27   :=  by sorry",
+        "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+        "natural_language_statement": "Find the sum of the arithmetic sequence $2+\\cdots +7$.",
+        "preamble": "import Mathlib.Analysis.Complex.Basic",
         "readback": null,
-        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_2048; Apache-2.0; corrects Open node 708b5936-4988-4b07-bd45-2ec77a455817",
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook",
         "status": "Open",
-        "tags": [
-          "arithmetic",
-          "corrected",
-          "elementary",
-          "workbook"
+        "tags": [],
+        "theorem_id": "e0bb838b-f7e6-4cfe-90a9-a5ad1fa8fa94",
+        "theorem_name": "lean_workbook_plus_72207",
+        "theorem_title": null,
+        "visibility": "public",
+        "vote_count": 0
+      }
+    },
+    {
+      "decompositions": {
+        "decompositions": []
+      },
+      "open_leaves": {
+        "open_leaves": [
+          {
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "e0517f66-770f-4f03-beba-61959a80df78",
+            "theorem_name": "lean_workbook_plus_56973"
+          }
         ],
-        "theorem_id": "a7369287-fb7a-47cd-9b94-4abe32a07462",
-        "theorem_name": "WorkbookCorrected.plus_2048",
-        "theorem_title": "Real logarithm identity #2048",
+        "root_id": "e0517f66-770f-4f03-beba-61959a80df78",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [],
+        "total": 0
+      },
+      "theorem": {
+        "audits": [],
+        "created_at": "2026-02-28T22:43:57.366127+00:00",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "formal_statement": "theorem lean_workbook_plus_56973 : 41 \u2223 3*x + 2*y \u2192 41 \u2223 25*x + 3*y   :=  by sorry",
+        "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+        "natural_language_statement": "Prove that if $41 \\mid 3x+2y$ , then $41 \\mid 25x+3y$ using modular arithmetic.",
+        "preamble": "import Mathlib.Analysis.Complex.Basic",
+        "readback": null,
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook",
+        "status": "Open",
+        "tags": [],
+        "theorem_id": "e0517f66-770f-4f03-beba-61959a80df78",
+        "theorem_name": "lean_workbook_plus_56973",
+        "theorem_title": null,
+        "visibility": "public",
+        "vote_count": 0
+      }
+    },
+    {
+      "decompositions": {
+        "decompositions": []
+      },
+      "open_leaves": {
+        "open_leaves": [
+          {
+            "closability": 0,
+            "status": "Open",
+            "theorem_id": "4cb6ee1f-83cc-4be2-b63b-16815b307fda",
+            "theorem_name": "lean_workbook_plus_8810"
+          }
+        ],
+        "root_id": "4cb6ee1f-83cc-4be2-b63b-16815b307fda",
+        "total": 1
+      },
+      "submissions": {
+        "submissions": [],
+        "total": 0
+      },
+      "theorem": {
+        "audits": [],
+        "created_at": "2026-02-28T22:43:55.293252+00:00",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "formal_statement": "theorem lean_workbook_plus_8810 (x : \u211d) (hx : 0 \u2264 x \u2227 x \u2264 \u03c0/2) :\n  Real.sqrt (x * Real.cos x) \u2264 (x + Real.cos x) / 2   :=  by sorry",
+        "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+        "natural_language_statement": "Prove that $\\sqrt{x\\cos x} \\le \\frac{x + \\cos x}{2}$ for $x\\in [0,\\frac{\\pi}{2}]$ using the Arithmetic Mean-Geometric Mean (AM-GM) inequality.",
+        "preamble": "import Mathlib.Analysis.Complex.Basic",
+        "readback": null,
+        "source": "https://huggingface.co/datasets/internlm/Lean-Workbook",
+        "status": "Open",
+        "tags": [],
+        "theorem_id": "4cb6ee1f-83cc-4be2-b63b-16815b307fda",
+        "theorem_name": "lean_workbook_plus_8810",
+        "theorem_title": null,
         "visibility": "public",
         "vote_count": 0
       }
