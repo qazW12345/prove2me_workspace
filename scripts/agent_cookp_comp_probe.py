@@ -24,7 +24,8 @@ def main():
       headers={"Content-Type":"application/json","Accept":"application/json"},method="POST")
     with urllib.request.urlopen(ref,timeout=60) as r: token=json.loads(r.read().decode())["access_token"]
     paths=[
-      f"/theorems/{DEF_ID}",\n      f"/definitions/{DEF_ID}",
+      f"/theorems/{DEF_ID}",
+      f"/definitions/{DEF_ID}",
       "/definitions?"+urllib.parse.urlencode({"definition_name":"CookPvsNP_defs"}),
       "/definitions?"+urllib.parse.urlencode({"q":"CookPvsNP_defs"}),
       f"/theorems/{THM_ID}",
