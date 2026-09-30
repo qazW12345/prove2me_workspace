@@ -31,6 +31,9 @@ def main():
       f"/theorems/{THM_ID}",
       f"/theorems/{THM_ID}/decompositions",
       f"/theorems/{THM_ID}/submissions?limit=20&offset=0",
+      "/theorems?"+urllib.parse.urlencode({"q":"CookPvsNP","limit":"200","offset":"0"}),
+      "/theorems?"+urllib.parse.urlencode({"q":"simulation","limit":"200","offset":"0"}),
+      "/theorems?"+urllib.parse.urlencode({"q":"Turing machine","limit":"200","offset":"0"}),
     ]
     out={p:api("GET",p,token) for p in paths}
     OUT.parent.mkdir(parents=True,exist_ok=True)
