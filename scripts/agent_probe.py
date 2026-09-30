@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only Prove2Me state collector for the ChatGPT/GitHub bridge.\n\nCleanup status refresh 5.
+"""Read-only Prove2Me state collector for the ChatGPT/GitHub bridge.\n\nCleanup status refresh 6.
 
 Authenticates with the Actions secret, discovers the live target mission, and
 writes only sanitized platform data. It never calls /verify or any mutating
