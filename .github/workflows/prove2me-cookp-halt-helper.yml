@@ -1,0 +1,18 @@
+name: Prove2Me CookP Halt Helper
+on:
+  push:
+    branches: [agent/prove2me-probe]
+    paths:
+      - ".github/workflows/prove2me-cookp-halt-helper.yml"
+      - "scripts/agent_cookp_halt_helper.py"
+permissions:
+  contents: read
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/agent_cookp_halt_helper.py
