@@ -83,7 +83,16 @@ def main():
             "vote_count":t.get("vote_count"),
         })
     ranked.sort(key=lambda x:(-x["score"], x["created_at"] or ""))
-    report={"count":len(ranked),"top":ranked[:120]}
+    corrected = browse(token,q="WorkbookCorrected",offset=0).get("theorems",[])
+    restored = browse(token,q="WorkbookRestored",offset=0).get("theorems",[])
+    newest = browse(token,offset=0).get("theorems",[])
+    report={
+        "count":len(ranked),
+        "top":ranked[:120],
+        "corrected_open":corrected,
+        "restored_open":restored,
+        "newest_open":newest[:200],
+    }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     print(json.dumps({"count":len(ranked),"top":[{"score":x["score"],"id":x["theorem_id"],"name":x["theorem_name"],"statement":x["formal_statement"]} for x in ranked[:30]]},indent=2))
