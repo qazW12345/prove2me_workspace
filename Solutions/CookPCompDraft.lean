@@ -12,7 +12,18 @@ structure CompCell (Γ₁ Γ₂ : Type) where
   rightB : Bool
   secondOrigin : Bool
   finalOrigin : Bool
-deriving DecidableEq, Fintype
+deriving DecidableEq
+
+noncomputable instance instFintypeCompCell {Γ₁ Γ₂ : Type} [Fintype Γ₁] [Fintype Γ₂] :
+    Fintype (CompCell Γ₁ Γ₂) :=
+  Fintype.ofInjective
+    (fun c : CompCell Γ₁ Γ₂ =>
+      (c.one, c.two, c.setupOrigin, c.leftB, c.rightB, c.secondOrigin, c.finalOrigin))
+    (by
+      intro a b h
+      cases a
+      cases b
+      simp_all)
 
 def CompCell.blank {Γ₁ Γ₂ : Type} : CompCell Γ₁ Γ₂ :=
   ⟨none, none, false, false, false, false, false⟩
