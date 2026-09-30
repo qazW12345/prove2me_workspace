@@ -350,30 +350,23 @@
         "decompositions": []
       },
       "open_leaves": {
-        "open_leaves": [
-          {
-            "closability": 0,
-            "status": "Open",
-            "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
-            "theorem_name": "WorkbookCorrected.plus_54693"
-          }
-        ],
+        "open_leaves": [],
         "root_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
-        "total": 1
+        "total": 0
       },
       "submissions": {
         "submissions": [
           {
-            "accepted_at": null,
+            "accepted_at": "2026-09-30T09:19:52.597459+00:00",
             "created_at": "2026-09-30T09:13:40.572743+00:00",
             "deprecated_at": null,
             "error_message": "",
             "explanation": "Using Mathlib's reciprocal change-of-base identities, collapse the five positive reciprocal logarithms to base 720 and the four negative terms to base 5040. Their difference collapses to the reciprocal logarithm with base 720/5040 = 1/7. The argument is also 1/7, so the logarithm is 1 and its reciprocal is 1.",
             "file_path": "768cc757-f308-474b-ac9c-ce2c4ff41606/37daf168-68bd-45fc-b4d5-a2e74708a4e2/508b1c38-2044-4eec-a7bb-418745164f54.lean",
             "id": "508b1c38-2044-4eec-a7bb-418745164f54",
-            "status": "PENDING",
+            "status": "ACCEPTED",
             "theorem_id": "768cc757-f308-474b-ac9c-ce2c4ff41606",
-            "updated_at": "2026-09-30T09:13:40.721412+00:00",
+            "updated_at": "2026-09-30T09:19:52.597459+00:00",
             "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2",
             "username": "Sneed",
             "vote_count": 0
@@ -437,7 +430,7 @@
         "preamble": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Base\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic.Ring\nimport Mathlib.Tactic.FieldSimp\nimport Mathlib.Tactic.Positivity\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.NormNum",
         "readback": null,
         "source": "https://huggingface.co/datasets/internlm/Lean-Workbook; record lean_workbook_plus_54693; Apache-2.0; corrects Open node 2fbc9765-e529-4dfa-912c-ef64cc2cef80",
-        "status": "Open",
+        "status": "Proved",
         "tags": [
           "arithmetic",
           "corrected",
