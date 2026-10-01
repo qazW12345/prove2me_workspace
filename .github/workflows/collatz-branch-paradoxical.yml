@@ -1,0 +1,33 @@
+name: Collatz Branch Paradoxical Search
+
+on:
+  push:
+    branches: [prove2me/collatz-residual-recursive-decompose]
+    paths:
+      - "scripts/analyze_collatz_branch_paradoxical.py"
+      - ".github/workflows/collatz-branch-paradoxical.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Search branch paradoxical cylinders
+        run: python3 scripts/analyze_collatz_branch_paradoxical.py --lengths 66 80 100 128 --work-limit 10000000
+      - name: Commit result
+        if: always()
+        run: |
+          if [[ -f agent-state/collatz-branch-paradoxical-search.json ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add agent-state/collatz-branch-paradoxical-search.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: record branch paradoxical search"
+              git pull --rebase origin prove2me/collatz-residual-recursive-decompose || true
+              git push || true
+            fi
+          fi
