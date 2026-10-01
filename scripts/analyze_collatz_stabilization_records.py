@@ -35,9 +35,12 @@ def v2(n:int)->int:
 def analyze(n:int, limit:int=10000):
     x=n; S=0; rows=[]
     first_stable=None
+    coefficient_stop=None
     for t in range(1,limit+1):
         z=3*x+1; a=v2(z); x=z>>a; S+=a
         D=math.floor(t*L)-S
+        if coefficient_stop is None and D < 0:
+            coefficient_stop=(t,S,x)
         if first_stable is None and (1<<S)>n:
             first_stable=t
         rows.append((t,x,a,S,D))
@@ -49,6 +52,8 @@ def analyze(n:int, limit:int=10000):
                 if vals: late[str(cutoff)]=min(vals)
             zero_hits=[t0 for t0,_,_,_,D0 in safe_rows if D0==0]
             return {
+              "coefficient_stopping_time": coefficient_stop[0] if coefficient_stop else None,
+              "coefficient_stopping_state": coefficient_stop,
               "stopping_time":t,
               "total_exponent":S,
               "descent_value":x,
@@ -72,12 +77,18 @@ def main():
     best_zero=-1
     zero_record=None
     checked=0
+    coefficient_actual_mismatch_count=0
+    coefficient_actual_mismatch_sample=[]
     for base in BASES:
         for k in range(lifts):
             n=base+(k<<16)
             st=analyze(n)
             checked+=1
             if st is None: continue
+            if st["coefficient_stopping_time"] is not None and st["coefficient_stopping_time"] != st["stopping_time"]:
+                coefficient_actual_mismatch_count += 1
+                if len(coefficient_actual_mismatch_sample) < 50:
+                    coefficient_actual_mismatch_sample.append({"n":n,**st})
             if st["stopping_time"]>best_t:
                 best_t=st["stopping_time"]
                 records.append({"n":n,**st})
@@ -95,6 +106,8 @@ def main():
       "base_residue_count":len(BASES),
       "best_stopping_record":best,
       "best_zero_lift_record":zero_record,
+      "coefficient_actual_mismatch_count":coefficient_actual_mismatch_count,
+      "coefficient_actual_mismatch_sample":coefficient_actual_mismatch_sample,
       "record_events":records,
       "interpretation":{
         "finite_window_no_go":(
@@ -115,6 +128,7 @@ def main():
       "best_zero_lift_n":zero_record["n"],
       "best_zero_lift_run":zero_record["zero_lift_run_before_descent"],
       "best_late_zero_slack_step":best["last_zero_slack_step"],
+      "coefficient_actual_mismatch_count":coefficient_actual_mismatch_count,
     },indent=2))
 
 if __name__=="__main__": main()
