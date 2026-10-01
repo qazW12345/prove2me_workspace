@@ -1117,3 +1117,108 @@ The safe way to use the symbolic reduction is therefore:
 This distinction becomes especially important if future search reaches
 continued-fraction/Diophantine near-equalities where (3^t) and (2^{S_t})
 are extremely close and the additive term is comparatively significant.
+
+
+---
+
+## 20. A 75,234-step first-contraction barrier for this branch
+
+The survivor-language analysis can be combined with a much sharper finite
+arithmetic fact from the external Lean development.
+
+`Collatz.first_contraction_seed_bound` proves the following.  Suppose (T)
+is the first Terras time at which the multiplicative coefficient contracts,
+write
+
+[
+j=operatorname{oddSteps}(T,n),
+qquad
+3^j<2^T,
+]
+
+and suppose the endpoint still has not descended below the starting seed.
+Then
+
+[
+3(2^T-3^j)nle j3^j.
+]
+
+Consequently every paradoxical first contraction at ((T,j)) has
+
+[
+n<
+M(T,j):=
+leftlfloor
+rac{j3^j}{3(2^T-3^j)}
+ightfloor+1.
+]
+
+For fixed (T), the worst case is the largest admissible (j) with
+(3^j<2^T).  Let (M^*(H)) be the maximum of this threshold over
+(1le Tle H).
+
+The exact integer computation in
+`scripts/analyze_collatz_first_contraction_horizon.py` gives the record
+sequence
+
+| Terras time (T) | odd count (j) | new threshold (M) |
+|---:|---:|---:|
+| 65 | 41 | 1,186 |
+| 149 | 94 | 3,327 |
+| 485 | 306 | 99,730 |
+| 1,539 | 971 | 330,588 |
+| 9,971 | 6,291 | 3,330,950 |
+| 19,457 | 12,276 | 17,302,831 |
+| 24,727 | 15,601 | 285,814,987 |
+| **75,235** | **47,468** | **1,447,674,322** |
+
+There is no new record between (T=24,727) and (T=75,235).
+
+Our exact Python branch census already checked every one of the
+6,471,680 old-residual seeds below
+
+[
+2^{30}=1,073,741,824
+]
+
+and found zero cases in which coefficient stopping preceded actual descent.
+
+Since
+
+[
+285,814,987<2^{30},
+]
+
+the two results splice:
+
+- for (nge285,814,987), the Lean-formal first-contraction inequality
+  itself rules out a non-descending first contraction at every
+  (Tle75,234);
+- for (n<285,814,987), the seed is inside the complete branch census and
+  directly descends.
+
+Thus we have the following **machine-reproducible proof candidate**:
+
+> Every seed in the old seven-mod-32 residual branch whose first coefficient
+> contraction occurs by Terras time 75,234 actually descends.
+
+Equivalently, a genuine no-descent counterexample in this branch would have
+to remain coefficient-noncontracting through time 75,234.
+
+This is dramatically stronger than the raw modulus-30 sieve, which was only
+seeing accelerated certificate lengths around 18.
+
+### Formality status
+
+The analytic inequality is already Lean-formal in
+`msharpe248/collatz/lean/Collatz/FirstContraction.lean`.
+
+The (<2^{30}) branch census is exact integer computation and CI-reproducible,
+but is not yet represented by a compact Lean kernel certificate in this
+workspace.  Therefore this section deliberately calls the combined statement
+a *proof candidate*, not a fully kernel-checked theorem.
+
+The next threshold jump is at (T=75,235), where the exceptional seed bound
+becomes (1,447,674,322).  Extending the branch census only from (2^{30})
+to that number is enough to carry the same argument all the way to the next
+record time (T=125,743).
