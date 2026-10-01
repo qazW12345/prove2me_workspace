@@ -294,6 +294,7 @@ def main():
     parent = parent20
     parent_id = PARENT20_ID
     parent_arg_names = ["n","h","h256","h1024","h4096","h8192","h32768","h65536","h524288","h1048576"]
+    inherited_definition_names = []
 
     for K, modulus, shapes in stages:
         defs=[]
@@ -339,9 +340,10 @@ def main():
         residual_name=f"syracuse_descent_residual_seven_mod32_mod{modulus}"
         new_hyps=[f"(h{K}_{t} : n % {modulus} ∉ {dname})" for t,S,dname,vals in defs]
         residual_formal=add_hypotheses(parent["formal_statement"],new_hyps,residual_name)
+        current_definition_names = [dname for _,_,dname,_ in defs]
         residual_preamble="\n".join(
             ["import Definitions.Def_syracuseStep","import Mathlib.Logic.Function.Iterate"]+
-            [f"import Definitions.Def_{dname}" for _,_,dname,_ in defs]+
+            [f"import Definitions.Def_{dname}" for dname in inherited_definition_names + current_definition_names]+
             ["set_option autoImplicit false","set_option maxRecDepth 200000"]
         )
         density_parent=len(remaining[K-1])*2
@@ -362,7 +364,7 @@ def main():
 
         imports=[f"import Theorems.Thm_{cname}" for _,_,cname,_ in children]
         imports.append(f"import Theorems.Thm_{residual_name}")
-        imports += [f"import Definitions.Def_{dname}" for _,_,dname,_ in defs]
+        imports += [f"import Definitions.Def_{dname}" for dname in inherited_definition_names + current_definition_names]
         imports += ["import Definitions.Def_syracuseStep","import Mathlib.Logic.Function.Iterate"]
         proof_lines=[]
         indent="  "
@@ -419,6 +421,7 @@ def main():
         parent=api("GET",f"/theorems/{rid}",token=token)
         parent_id=rid
         parent_arg_names += [f"h{K}_{t}" for t,S in shapes]
+        inherited_definition_names += current_definition_names
 
     report["final_residual"]={
         "id":parent_id,
