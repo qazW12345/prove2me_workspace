@@ -1,0 +1,77 @@
+{
+  "definitions": {
+    "syracuseSevenMod32New23Step11Chunk01Classes": "01bd6054-a588-4ef3-a2c2-cc68aae266fe",
+    "syracuseSevenMod32New23Step12Chunk01Classes": "bb969c3b-8171-46a3-9d51-95d70a0cd0a9",
+    "syracuseSevenMod32New23Step13Chunk01Classes": "9c70ef25-576d-4616-bccd-e1a0fad9a846",
+    "syracuseSevenMod32New23Step13Chunk02Classes": "39853984-a4bc-4e04-bdfb-a1f04a6517e6",
+    "syracuseSevenMod32New24Step11Chunk01Classes": "83bf0f8d-7b63-492d-a4c5-0cbdbbad1d35",
+    "syracuseSevenMod32New24Step12Chunk01Classes": "17c069a2-8628-4d47-bf4d-d1ce5e3c34fe",
+    "syracuseSevenMod32New24Step13Chunk01Classes": "30ad93fe-ebaa-4084-8b6f-e5ac54d2cedf",
+    "syracuseSevenMod32New24Step13Chunk02Classes": "70558593-535e-412e-9142-ae5fd354f9b1",
+    "syracuseSevenMod32New24Step14Chunk01Classes": "b1e9b7db-c0be-448d-821a-4d41c66c748c",
+    "syracuseSevenMod32New24Step14Chunk02Classes": "50cdc293-2f7d-41f2-a6e0-43e019a42965",
+    "syracuseSevenMod32New24Step14Chunk03Classes": "837cb6fe-6c0e-417f-921c-0de1b64a6524",
+    "syracuseSevenMod32New24Step14Chunk04Classes": "e06093ba-18ed-40bb-9973-63e5636c423e",
+    "syracuseSevenMod32New24Step14Chunk05Classes": "8540c749-bfbe-4419-86ce-429606a78965"
+  },
+  "final": {
+    "fraction_parent22_removed": 0.13334200260078022,
+    "name": "syracuse_descent_residual_seven_mod32_mod16777216",
+    "remaining_mod_2_24": 66646,
+    "residual_id": "45a0800b-e750-4c32-bc04-98c579509977"
+  },
+  "finite_children": {
+    "syracuse_descent_new23_step11_chunk01_seven_mod32": "68bb66e8-b788-47f7-82a5-cb9b4090cc16",
+    "syracuse_descent_new23_step12_chunk01_seven_mod32": "d4307688-c053-4849-8766-2e41fe09361c",
+    "syracuse_descent_new23_step13_chunk01_seven_mod32": "b4a57708-a0bf-4f22-aa01-69281b8fb344",
+    "syracuse_descent_new23_step13_chunk02_seven_mod32": "e3e29711-dafb-468a-8199-980b855e5e47",
+    "syracuse_descent_new24_step11_chunk01_seven_mod32": "5cce971e-70c6-4b45-834f-0786a8a65f04",
+    "syracuse_descent_new24_step12_chunk01_seven_mod32": "fdc01d26-0309-4074-a402-8c2903b3d978",
+    "syracuse_descent_new24_step13_chunk01_seven_mod32": "c202280d-e8f6-4536-a7dd-b3f2472d8e11",
+    "syracuse_descent_new24_step13_chunk02_seven_mod32": "cb449ec0-64d7-4142-8996-7664a93db3ff",
+    "syracuse_descent_new24_step14_chunk01_seven_mod32": "c32bae54-04d2-4e84-85d2-11e0b5cd6086",
+    "syracuse_descent_new24_step14_chunk02_seven_mod32": "61065a9b-db48-4dac-9043-7015cf6dd029",
+    "syracuse_descent_new24_step14_chunk03_seven_mod32": "366e7247-3d32-486f-a231-a51bc96db99b",
+    "syracuse_descent_new24_step14_chunk04_seven_mod32": "f70a410a-b4f5-4057-b2b5-d4e42b0c49c3",
+    "syracuse_descent_new24_step14_chunk05_seven_mod32": "7ac14b3f-91bd-4fd0-94f5-5959a543f5b5"
+  },
+  "platform_version": "0.11.6",
+  "sketches": {
+    "syracuse_descent_residual_seven_mod32_mod4194304": {
+      "created_at": "2026-10-01T08:05:05.99321+00:00",
+      "error_message": "",
+      "file_path": "a4ee549a-031c-41b2-923c-b6e1d51bbc45/37daf168-68bd-45fc-b4d5-a2e74708a4e2/0a75d23a-28d5-48b0-ae0f-d7c5342f0840.lean",
+      "id": "0a75d23a-28d5-48b0-ae0f-d7c5342f0840",
+      "status": "SKETCH_ACCEPTED",
+      "theorem_id": "a4ee549a-031c-41b2-923c-b6e1d51bbc45",
+      "updated_at": "2026-10-01T08:07:28.932875+00:00",
+      "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2"
+    },
+    "syracuse_descent_residual_seven_mod32_mod8388608": {
+      "created_at": "2026-10-01T08:10:33.593602+00:00",
+      "error_message": "",
+      "file_path": "bbda9a87-e550-446e-873c-36c10f3e5164/37daf168-68bd-45fc-b4d5-a2e74708a4e2/0fd28828-2cb9-42f3-ac01-d453e7ff85ff.lean",
+      "id": "0fd28828-2cb9-42f3-ac01-d453e7ff85ff",
+      "status": "SKETCH_ACCEPTED",
+      "theorem_id": "bbda9a87-e550-446e-873c-36c10f3e5164",
+      "updated_at": "2026-10-01T08:14:18.444419+00:00",
+      "user_id": "37daf168-68bd-45fc-b4d5-a2e74708a4e2"
+    }
+  },
+  "stages": {
+    "23": {
+      "chunks": 4,
+      "remaining": 36161,
+      "removed": 2289,
+      "residual_id": "bbda9a87-e550-446e-873c-36c10f3e5164",
+      "residual_name": "syracuse_descent_residual_seven_mod32_mod8388608"
+    },
+    "24": {
+      "chunks": 9,
+      "remaining": 66646,
+      "removed": 5676,
+      "residual_id": "45a0800b-e750-4c32-bc04-98c579509977",
+      "residual_name": "syracuse_descent_residual_seven_mod32_mod16777216"
+    }
+  }
+}
