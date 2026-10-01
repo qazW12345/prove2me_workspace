@@ -726,3 +726,163 @@ Reference for the Lean theorem and accompanying paper:
 Michael Sharpe, *Collatz at the Critical Line*, repository section
 `Collatz.RationalMechanical`, especially
 `eventual_mechanical_reaches_one` and `mechanical_classification`.
+
+
+---
+
+## 16. Machine-verified orbit summability forces the slack to infinity
+
+A substantially stronger restriction follows from the machine-verified
+`Collatz.OrbitSummability` development in the external repository
+
+https://github.com/msharpe248/collatz
+
+For a positive natural seed (N), the theorem
+
+`unbounded_inverse_drift_tendsto_zero`
+
+proves that every unbounded orbit satisfies
+
+[
+rac{2^ell}{3^{h(ell)}}longrightarrow0,
+]
+
+where (ell) is the number of ordinary Terras half-steps and (h(ell))
+is the number of odd steps among them.
+
+A positive coefficient-safe survivor in our branch cannot have a bounded
+orbit: a bounded integer orbit is eventually periodic, hence eventually
+cycles, whereas a globally no-descent orbit starting above 1 cannot enter the
+(1leftrightarrow2) cycle and an eventual positive cycle would force a
+coefficient contraction over one period.
+
+Therefore a hypothetical positive survivor is unbounded and the theorem
+applies.
+
+At the endpoint of the (t)-th accelerated Syracuse block,
+
+[
+ell=S_t,qquad h(ell)=t.
+]
+
+Thus the inverse drift along this subsequence is
+
+[
+rac{2^{S_t}}{3^t}
+=
+2^{S_t-tlog_2 3}
+=
+2^{-D_t-{tlog_2 3}}.
+]
+
+Since the fractional part lies in ([0,1)), convergence to zero is equivalent
+to
+
+[
+oxed{D_tlongrightarrow+infty.}
+]
+
+This is much stronger than the earlier exclusions of zero slack, eventually
+constant slack, and eventually periodic valuation words.
+
+Combining it with the López--Stoll critical-density restriction gives the
+central asymptotic shape of any hypothetical positive survivor:
+
+[
+oxed{
+D_t	oinfty
+quad	ext{but}quad
+liminf_{t	oinfty}rac{D_t}{t}=0.
+}
+]
+
+So the path must escape arbitrarily far below the coefficient boundary in
+absolute slack, while returning arbitrarily close to it on the *linear*
+scale.  It cannot remain in any fixed-width band.
+
+### A quantitative summability restriction
+
+The same external development proves
+
+`unbounded_orbit_reciprocal_summable`:
+
+[
+sum_{ellge0}rac1{T^ell(N)}<infty
+]
+
+for every unbounded positive natural orbit.
+
+For accelerated block endpoints, the exact affine formula is
+
+[
+operatorname{Syr}^t(N)
+=
+rac{3^t}{2^{S_t}}
+left(
+N+sum_{j=0}^{t-1}rac{2^{S_j}}{3^{j+1}}
+ight).
+]
+
+Coefficient safety gives (2^{S_j}le3^j), hence the parenthesized correction
+is at most (N+t/3).  Also
+
+[
+rac{3^t}{2^{S_t}}
+=
+2^{D_t+{tlog_2 3}}
+<2^{D_t+1}.
+]
+
+Therefore
+
+[
+operatorname{Syr}^t(N)
+<
+2^{D_t+1}left(N+rac t3ight)
+]
+
+and hence
+
+[
+rac1{operatorname{Syr}^t(N)}
+>
+rac{2^{-D_t-1}}{N+t/3}.
+]
+
+Because the accelerated orbit is a subsequence of the ordinary Terras orbit,
+its reciprocal series must also converge.  Consequently any positive
+survivor must satisfy the necessary condition
+
+[
+oxed{
+sum_{tge1}rac{2^{-D_t}}{N+t}<infty.
+}
+]
+
+This is stronger than (D_t	oinfty).  For example, a path with
+
+[
+D_tle(1-arepsilon)log_2log t
+]
+
+eventually would make the comparison series diverge.  Near-critical returns
+therefore have to be sufficiently sparse/deep to preserve reciprocal
+summability.
+
+The surviving target is now not merely "sublinear slack".  It is an integer
+path whose slack simultaneously satisfies:
+
+1. (D_tge0) for every (t);
+2. (D_t	oinfty);
+3. (liminf D_t/t=0);
+4. (sum 2^{-D_t}/(N+t)<infty);
+5. the canonical 2-adic residues eventually stabilize to (N).
+
+That is the structural regime the next search should target.
+
+External formal references:
+
+- `Collatz.unbounded_orbit_reciprocal_summable`
+- `Collatz.unbounded_inverse_drift_tendsto_zero`
+
+in `lean/Collatz/OrbitSummability.lean`.
