@@ -1,0 +1,72 @@
+name: Collatz Branch Large Interval Scan
+
+on:
+  push:
+    branches: [prove2me/collatz-residual-recursive-decompose]
+    paths:
+      - "scripts/scan_collatz_branch_interval.py"
+      - "scripts/merge_collatz_branch_interval_shards.py"
+      - ".github/workflows/collatz-branch-large-interval.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { shard: 0, low: 1447674322, high: 2168726190 }
+          - { shard: 1, low: 2168726190, high: 2889778059 }
+          - { shard: 2, low: 2889778059, high: 3610829927 }
+          - { shard: 3, low: 3610829927, high: 4331881796 }
+          - { shard: 4, low: 4331881796, high: 5052933665 }
+          - { shard: 5, low: 5052933665, high: 5773985533 }
+          - { shard: 6, low: 5773985533, high: 6495037402 }
+          - { shard: 7, low: 6495037402, high: 7216089271 }
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan shard
+        run: >
+          python3 scripts/scan_collatz_branch_interval.py
+          --low ${{ matrix.low }}
+          --high ${{ matrix.high }}
+          --step-limit 301993
+          --output shard-${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: collatz-shard-${{ matrix.shard }}
+          path: shard-${{ matrix.shard }}.json
+          retention-days: 1
+
+  merge:
+    needs: scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: collatz-shard-*
+          path: shards
+          merge-multiple: true
+      - name: Merge and validate shards
+        run: >
+          python3 scripts/merge_collatz_branch_interval_shards.py
+          --glob "shards/shard-*.json"
+          --expected-low 1447674322
+          --expected-high 7216089271
+          --output agent-state/collatz-branch-interval-1447674322-to-7216089271.json
+      - name: Commit result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add agent-state/collatz-branch-interval-1447674322-to-7216089271.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: extend Collatz branch census to 7.2B"
+            git pull --rebase origin prove2me/collatz-residual-recursive-decompose || true
+            git push || true
+          fi
