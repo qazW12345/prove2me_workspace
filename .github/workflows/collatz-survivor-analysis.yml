@@ -5,6 +5,7 @@ on:
     branches: [prove2me/collatz-residual-recursive-decompose]
     paths:
       - "scripts/analyze_collatz_survivor_language.py"
+      - "scripts/analyze_collatz_2adic_survivors.py"
       - ".github/workflows/collatz-survivor-analysis.yml"
 
 permissions:
@@ -18,6 +19,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Analyze symbolic survivor language
         run: python3 scripts/analyze_collatz_survivor_language.py --max-word-length 100
+      - name: Analyze 2-adic survivor structure
+        run: python3 scripts/analyze_collatz_2adic_survivors.py
       - name: Commit report data
         run: |
           git config user.name "github-actions[bot]"
