@@ -1064,3 +1064,56 @@ sum_trac{2^{-D_t}}{N+t}<infty,
 together with **eventual no-wrap shadow dynamics**.  The last property is
 where the arithmetic of actual positive integers re-enters the otherwise
 purely symbolic survivor language.
+
+
+---
+
+## 19. Additive-term caveat: branch evidence is clean, but the global equivalence is not assumed
+
+The symbolic language above tracks the first time the multiplicative coefficient
+
+[
+3^t/2^{S_t}
+]
+
+drops below one.  For the actual Syracuse stopping problem, the additive
+correction term must also be small enough to make the iterate itself fall below
+the start.
+
+This distinction matters.  The equality between coefficient stopping time and
+ordinary stopping time is a classical/open issue in the literature; it should
+not be silently assumed in an infinite argument.
+
+For this particular seven-mod-32 residual branch, however, the finite evidence
+is unusually clean.
+
+The repository scan
+
+`scripts/analyze_collatz_stabilization_records.py`
+
+was augmented by an independent coefficient-vs-actual stopping check over all
+395 base classes lifted below (2^{30}), i.e. 6,471,680 candidate starts.
+
+Result:
+
+[
+oxed{	ext{zero coefficient/actual first-descent mismatches below }2^{30}.}
+]
+
+So every branch candidate tested to that range descends at its first
+accelerated coefficient crossing.
+
+This supports the use of the coefficient-safe language as the correct local
+model for the branch, but it remains **evidence**, not a proof that the
+equivalence persists to arbitrary depth.
+
+The safe way to use the symbolic reduction is therefore:
+
+- prove statements conditional on genuine no-descent / survivor behavior;
+- use coefficient slack as a necessary structural invariant;
+- do not identify the infinite coefficient-safe tree with the true
+  no-descent tree without an additional additive-term argument.
+
+This distinction becomes especially important if future search reaches
+continued-fraction/Diophantine near-equalities where (3^t) and (2^{S_t})
+are extremely close and the additive term is comparatively significant.
