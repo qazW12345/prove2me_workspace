@@ -68,7 +68,6 @@ def threshold_records_until_cross(bound: int = SCAN_BOUND, max_T: int = 1_000_00
                 "T": T,
                 "j": j,
                 "threshold_M": M,
-                "gap_2T_minus_3j": two_T - three_j,
             })
             if record >= bound:
                 break
