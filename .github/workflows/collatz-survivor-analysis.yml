@@ -22,7 +22,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add agent-state/collatz-survivor-language.json
+          git add agent-state/collatz-survivor-language.json agent-state/collatz-2adic-survivors.json
           if ! git diff --cached --quiet; then
             git commit -m "chore: record Collatz survivor analysis"
             git pull --rebase origin prove2me/collatz-residual-recursive-decompose || true
