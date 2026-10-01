@@ -1,0 +1,216 @@
+{
+  "analytic_ingredient": {
+    "external_repository": "msharpe248/collatz",
+    "inequality": "3*(2^T-3^j)*n <= j*3^j for a non-descending first contraction",
+    "source_path": "lean/Collatz/FirstContraction.lean",
+    "theorem": "Collatz.first_contraction_seed_bound"
+  },
+  "branch": "old seven-mod-32 residual predicate",
+  "caveat": "The analytic inequality is already Lean-formalized externally. The <2^30 branch census is exact Python computation in this repository, not yet a Lean-kernel table. Therefore the combined statement is a machine-reproducible proof candidate, not yet a fully kernel-checked theorem.",
+  "combined_certificate": {
+    "full_first_contraction_horizon": 75234,
+    "logic": [
+      "If a branch seed n >= 285814987 has its first coefficient contraction at T <= 75234, the first-contraction inequality forces actual descent.",
+      "If n < 285814987, then n < 2^30 and is among the exact branch scan; that scan found zero coefficient/actual stopping mismatches.",
+      "Thus every tested/formally-bounded branch seed whose first coefficient contraction occurs by Terras time 75234 descends.",
+      "The same splice no longer follows from the current 2^30 scan at T=75235, where the analytic exceptional threshold jumps to 1447674322 > 2^30."
+    ],
+    "max_small_seed_threshold_below_horizon": 285814987,
+    "next_threshold": 1447674322,
+    "next_time": 75235,
+    "scan_bound": 1073741824,
+    "threshold_record_odd_steps": 15601,
+    "threshold_record_time": 24727
+  },
+  "record_thresholds": [
+    {
+      "T": 1,
+      "j": 0,
+      "threshold_M": 1
+    },
+    {
+      "T": 2,
+      "j": 1,
+      "threshold_M": 2
+    },
+    {
+      "T": 5,
+      "j": 3,
+      "threshold_M": 6
+    },
+    {
+      "T": 8,
+      "j": 5,
+      "threshold_M": 32
+    },
+    {
+      "T": 27,
+      "j": 17,
+      "threshold_M": 145
+    },
+    {
+      "T": 46,
+      "j": 29,
+      "threshold_M": 382
+    },
+    {
+      "T": 65,
+      "j": 41,
+      "threshold_M": 1186
+    },
+    {
+      "T": 149,
+      "j": 94,
+      "threshold_M": 3327
+    },
+    {
+      "T": 233,
+      "j": 147,
+      "threshold_M": 6701
+    },
+    {
+      "T": 317,
+      "j": 200,
+      "threshold_M": 12791
+    },
+    {
+      "T": 401,
+      "j": 253,
+      "threshold_M": 27072
+    },
+    {
+      "T": 485,
+      "j": 306,
+      "threshold_M": 99730
+    },
+    {
+      "T": 1539,
+      "j": 971,
+      "threshold_M": 330588
+    },
+    {
+      "T": 2593,
+      "j": 1636,
+      "threshold_M": 583015
+    },
+    {
+      "T": 3647,
+      "j": 2301,
+      "threshold_M": 860180
+    },
+    {
+      "T": 4701,
+      "j": 2966,
+      "threshold_M": 1165906
+    },
+    {
+      "T": 5755,
+      "j": 3631,
+      "threshold_M": 1504844
+    },
+    {
+      "T": 6809,
+      "j": 4296,
+      "threshold_M": 1882716
+    },
+    {
+      "T": 7863,
+      "j": 4961,
+      "threshold_M": 2306636
+    },
+    {
+      "T": 8917,
+      "j": 5626,
+      "threshold_M": 2785565
+    },
+    {
+      "T": 9971,
+      "j": 6291,
+      "threshold_M": 3330950
+    },
+    {
+      "T": 11025,
+      "j": 6956,
+      "threshold_M": 3957650
+    },
+    {
+      "T": 12079,
+      "j": 7621,
+      "threshold_M": 4685313
+    },
+    {
+      "T": 13133,
+      "j": 8286,
+      "threshold_M": 5540467
+    },
+    {
+      "T": 14187,
+      "j": 8951,
+      "threshold_M": 6559829
+    },
+    {
+      "T": 15241,
+      "j": 9616,
+      "threshold_M": 7795715
+    },
+    {
+      "T": 16295,
+      "j": 10281,
+      "threshold_M": 9325298
+    },
+    {
+      "T": 17349,
+      "j": 10946,
+      "threshold_M": 11267376
+    },
+    {
+      "T": 18403,
+      "j": 11611,
+      "threshold_M": 13814800
+    },
+    {
+      "T": 19457,
+      "j": 12276,
+      "threshold_M": 17302831
+    },
+    {
+      "T": 20511,
+      "j": 12941,
+      "threshold_M": 22370353
+    },
+    {
+      "T": 21565,
+      "j": 13606,
+      "threshold_M": 30404189
+    },
+    {
+      "T": 22619,
+      "j": 14271,
+      "threshold_M": 45086469
+    },
+    {
+      "T": 23673,
+      "j": 14936,
+      "threshold_M": 80495028
+    },
+    {
+      "T": 24727,
+      "j": 15601,
+      "threshold_M": 285814987
+    },
+    {
+      "T": 75235,
+      "j": 47468,
+      "threshold_M": 1447674322
+    }
+  ],
+  "scan": {
+    "candidate_count": 6471680,
+    "coefficient_actual_mismatch_count": 0,
+    "depth": 30,
+    "exclusive_upper_bound": 1073741824,
+    "largest_observed_first_coefficient_stop": 222,
+    "largest_observed_record_seed": 326610023
+  },
+  "status": "exact computational proof candidate; Lean port pending"
+}
