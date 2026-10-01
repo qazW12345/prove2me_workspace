@@ -1222,3 +1222,89 @@ The next threshold jump is at (T=75,235), where the exceptional seed bound
 becomes (1,447,674,322).  Extending the branch census only from (2^{30})
 to that number is enough to carry the same argument all the way to the next
 record time (T=125,743).
+
+
+---
+
+## 21. The finite-horizon barrier is now 301,993 Terras steps
+
+The finite/analytic splice from Section 20 has now been pushed two full
+Diophantine record jumps farther.
+
+The branch census was extended in two stages:
+
+1. (2^{30}le n<1,447,674,322):
+   2,253,778 residual-branch seeds, zero unresolved; the largest observed
+   first descent time was 362.
+2. (1,447,674,322le n<7,216,089,271):
+   eight parallel exact shards covering 34,767,517 residual-branch seeds,
+   zero unresolved; the largest observed first descent time was 397.
+
+Together with the original (<2^{30}) census, this is one contiguous
+exact branch verification through
+
+[
+n<7,216,089,271.
+]
+
+The first-contraction seed threshold remains at most that bound for every
+Terras time
+
+[
+Tle301,993.
+]
+
+Therefore the current machine-reproducible proof candidate is:
+
+> **Every seed in the old seven-mod-32 residual branch whose first
+> coefficient contraction occurs by Terras time 301,993 descends.**
+
+Equivalently, a genuine no-descent counterexample in this branch must satisfy
+
+[
+2^Tle3^{operatorname{oddSteps}(T,n)}
+qquad
+	ext{for every }Tle301,993.
+]
+
+The first unsupported Diophantine record is
+
+[
+(T,j)=(301,994,190,537),
+]
+
+where
+
+[
+leftlfloor
+rac{j3^j}{3(2^T-3^j)}
+ightfloor+1
+=
+984,572,779,225.
+]
+
+Thus the next finite brute-force extension would require enlarging the
+verified seed interval from (7.2	imes10^9) to almost (9.85	imes10^{11}),
+roughly two orders of magnitude.  That is deliberately **not** the next
+strategy.
+
+The new research frontier is the arithmetic of the near-equality
+
+[
+3^{190537}<2^{301994},
+]
+
+together with the infinite survivor restrictions established above:
+(D_t	oinfty), (liminf D_t/t=0), reciprocal summability, and eventual
+3-adic no-wrap dynamics.
+
+Artifacts:
+
+- `agent-state/collatz-first-contraction-horizon.json`
+- `agent-state/collatz-branch-interval-1447674322-to-7216089271.json`
+- `scripts/analyze_collatz_first_contraction_horizon.py`
+- `scripts/scan_collatz_branch_interval.py`
+
+The analytic half uses the externally Lean-formal theorem
+`Collatz.first_contraction_seed_bound`; the finite census remains exact
+CI-reproduced Python and is the remaining kernel-formalization obligation.
