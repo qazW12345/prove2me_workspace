@@ -6,21 +6,21 @@
     "theorem": "Collatz.first_contraction_seed_bound"
   },
   "branch": "old seven-mod-32 residual predicate",
-  "caveat": "The analytic inequality is already Lean-formalized externally. The <2^30 branch census is exact Python computation in this repository, not yet a Lean-kernel table. Therefore the combined statement is a machine-reproducible proof candidate, not yet a fully kernel-checked theorem.",
+  "caveat": "The analytic inequality is Lean-formalized externally. The branch census is exact Python integer computation and CI-reproducible, but not yet a Lean-kernel table in this workspace.",
   "combined_certificate": {
-    "full_first_contraction_horizon": 75234,
+    "full_first_contraction_horizon": 125742,
     "logic": [
-      "If a branch seed n >= 285814987 has its first coefficient contraction at T <= 75234, the first-contraction inequality forces actual descent.",
-      "If n < 285814987, then n < 2^30 and is among the exact branch scan; that scan found zero coefficient/actual stopping mismatches.",
-      "Thus every tested/formally-bounded branch seed whose first coefficient contraction occurs by Terras time 75234 descends.",
-      "The same splice no longer follows from the current 2^30 scan at T=75235, where the analytic exceptional threshold jumps to 1447674322 > 2^30."
+      "If a branch seed n >= 1447674322 has its first coefficient contraction at T <= 125742, the first-contraction inequality forces actual descent.",
+      "If n < 1447674322, then n < 1447674322 and lies inside the contiguous exact branch census; those scans found no unresolved seed.",
+      "Thus every branch seed covered by the analytic/census split whose first coefficient contraction occurs by Terras time 125742 descends.",
+      "The same splice first fails at T=125743, where the exceptional threshold jumps to 7216089271 > 1447674322."
     ],
-    "max_small_seed_threshold_below_horizon": 285814987,
-    "next_threshold": 1447674322,
-    "next_time": 75235,
-    "scan_bound": 1073741824,
-    "threshold_record_odd_steps": 15601,
-    "threshold_record_time": 24727
+    "max_small_seed_threshold_below_horizon": 1447674322,
+    "next_threshold": 7216089271,
+    "next_time": 125743,
+    "scan_bound": 1447674322,
+    "threshold_record_odd_steps": 47468,
+    "threshold_record_time": 75235
   },
   "record_thresholds": [
     {
@@ -202,13 +202,32 @@
       "T": 75235,
       "j": 47468,
       "threshold_M": 1447674322
+    },
+    {
+      "T": 125743,
+      "j": 79335,
+      "threshold_M": 7216089271
     }
   ],
   "scan": {
-    "candidate_count": 6471680,
+    "base_candidate_count": 6471680,
+    "base_depth": 30,
+    "base_exclusive_upper_bound": 1073741824,
     "coefficient_actual_mismatch_count": 0,
-    "depth": 30,
-    "exclusive_upper_bound": 1073741824,
+    "contiguous_coverage_high_exclusive": 1447674322,
+    "extensions": [
+      {
+        "high_exclusive": 1447674322,
+        "low_inclusive": 1073741824,
+        "max_observed_first_descent": {
+          "n": 1410123943,
+          "t": 362,
+          "value": 912105203
+        },
+        "path": "agent-state/collatz-branch-interval-2p30-to-1447674322.json",
+        "tested": 2253778
+      }
+    ],
     "largest_observed_first_coefficient_stop": 222,
     "largest_observed_record_seed": 326610023
   },
