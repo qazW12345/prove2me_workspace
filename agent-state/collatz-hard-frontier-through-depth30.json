@@ -1,0 +1,91 @@
+{
+  "generated_for": "seven-mod-32 Syracuse hard residual",
+  "current_published_frontier": {
+    "depth": 25,
+    "modulus": 33554432,
+    "theorem_name": "syracuse_descent_residual_seven_mod32_mod33554432",
+    "theorem_id": "6f1306a9-a925-4647-96e1-50172f86da98",
+    "unresolved_classes": 117926
+  },
+  "queued": {
+    "depth": 26,
+    "modulus": 67108864,
+    "expected_new_certificate_families": {
+      "t11_S25": 194,
+      "t12_S25": 525,
+      "t13_S25": 1570,
+      "t14_S25": 3387,
+      "t15_S25": 9690
+    },
+    "expected_removed": 15366,
+    "expected_unresolved": 220486,
+    "script": "scripts/agent_collatz_residual_depth26.py"
+  },
+  "staged": [
+    {
+      "depth": 27,
+      "modulus": 134217728,
+      "families": {
+        "t11_S26": 194,
+        "t12_S26": 525,
+        "t13_S26": 1570,
+        "t14_S26": 3387,
+        "t15_S26": 9690,
+        "t16_S26": 20423
+      },
+      "removed": 35789,
+      "unresolved": 405183,
+      "script": "scripts/agent_collatz_residual_depth27.py"
+    },
+    {
+      "depth": 28,
+      "modulus": 268435456,
+      "families": {
+        "t11_S27": 194,
+        "t12_S27": 525,
+        "t13_S27": 1570,
+        "t14_S27": 3387,
+        "t15_S27": 9690,
+        "t16_S27": 20423,
+        "t17_S27": 58040
+      },
+      "removed": 93829,
+      "unresolved": 716537,
+      "script": "scripts/agent_collatz_residual_depth28.py"
+    },
+    {
+      "depth": 29,
+      "modulus": 536870912,
+      "families": {
+        "t11_S28": 194,
+        "t12_S28": 525,
+        "t13_S28": 1570,
+        "t14_S28": 3387,
+        "t15_S28": 9690,
+        "t16_S28": 20423,
+        "t17_S28": 58040
+      },
+      "removed": 93829,
+      "unresolved": 1339245,
+      "script": "scripts/agent_collatz_residual_depth29.py"
+    },
+    {
+      "depth": 30,
+      "modulus": 1073741824,
+      "families": {
+        "t11_S29": 194,
+        "t12_S29": 525,
+        "t13_S29": 1570,
+        "t14_S29": 3387,
+        "t15_S29": 9690,
+        "t16_S29": 20423,
+        "t17_S29": 58040,
+        "t18_S29": 121977
+      },
+      "removed": 215806,
+      "unresolved": 2462684,
+      "script": "scripts/agent_collatz_residual_depth30.py"
+    }
+  ],
+  "policy": "Follow only the hard residual. Publish newly certifiable families as <=800-residue finite leaves; leave them open for other agents."
+}
