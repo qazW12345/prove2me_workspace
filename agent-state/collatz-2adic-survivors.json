@@ -1,0 +1,509 @@
+{
+  "bounded_slack_bands": {
+    "100": {
+      "all_safe_probability": 9.013360308375316e-05,
+      "bands": {
+        "0": {
+          "conditional_haar_probability": 4.3790577010150533e-47,
+          "fraction_of_safe_probability": 4.858407465355605e-43,
+          "word_count": 1
+        },
+        "1": {
+          "conditional_haar_probability": 1.0467236620831548e-22,
+          "fraction_of_safe_probability": 1.1613023625722889e-18,
+          "word_count": 1593529527049509771804672
+        },
+        "10": {
+          "conditional_haar_probability": 4.273979582367302e-05,
+          "fraction_of_safe_probability": 0.4741827061319042,
+          "word_count": 216147146341955502221125153031988762284973
+        },
+        "2": {
+          "conditional_haar_probability": 3.2089828568965554e-14,
+          "fraction_of_safe_probability": 3.5602513902775333e-10,
+          "word_count": 375982307339476061028566636306082
+        },
+        "3": {
+          "conditional_haar_probability": 2.531743319813295e-10,
+          "fraction_of_safe_probability": 2.808878412927497e-06,
+          "word_count": 2437665454932801477141363791142363264
+        },
+        "4": {
+          "conditional_haar_probability": 2.8910636892588046e-08,
+          "fraction_of_safe_probability": 0.0003207531475882969,
+          "word_count": 238371228324196573288071326935329243273
+        },
+        "5": {
+          "conditional_haar_probability": 4.6529899361474445e-07,
+          "fraction_of_safe_probability": 0.005162325455716925,
+          "word_count": 3389508748731846470557708027614649005511
+        }
+      }
+    },
+    "20": {
+      "all_safe_probability": 0.05377116799354553,
+      "bands": {
+        "0": {
+          "conditional_haar_probability": 7.450580596923828e-09,
+          "fraction_of_safe_probability": 1.385608844840076e-07,
+          "word_count": 1
+        },
+        "1": {
+          "conditional_haar_probability": 0.00017380714416503906,
+          "fraction_of_safe_probability": 0.003232348313242929,
+          "word_count": 17496
+        },
+        "10": {
+          "conditional_haar_probability": 0.05377116799354553,
+          "fraction_of_safe_probability": 1.0,
+          "word_count": 2427209
+        },
+        "2": {
+          "conditional_haar_probability": 0.004652291536331177,
+          "fraction_of_safe_probability": 0.08652018748950402,
+          "word_count": 366417
+        },
+        "3": {
+          "conditional_haar_probability": 0.01870192587375641,
+          "fraction_of_safe_probability": 0.34780583296984197,
+          "word_count": 1220982
+        },
+        "4": {
+          "conditional_haar_probability": 0.03437686711549759,
+          "fraction_of_safe_probability": 0.6393178425959437,
+          "word_count": 1936227
+        },
+        "5": {
+          "conditional_haar_probability": 0.045368991792201996,
+          "fraction_of_safe_probability": 0.8437419807888105,
+          "word_count": 2289791
+        }
+      }
+    },
+    "200": {
+      "all_safe_probability": 1.410418305577092e-07,
+      "bands": {
+        "0": {
+          "conditional_haar_probability": 1.1985091468012028e-94,
+          "fraction_of_safe_probability": 8.497543899296006e-88,
+          "word_count": 1
+        },
+        "1": {
+          "conditional_haar_probability": 1.826050707941284e-45,
+          "fraction_of_safe_probability": 1.2946873283767614e-38,
+          "word_count": 11427013591103854329723022655719974125464744624128
+        },
+        "10": {
+          "conditional_haar_probability": 8.020447506282947e-09,
+          "fraction_of_safe_probability": 0.05686573603425596,
+          "word_count": 18668864375791130077118977793171148051251625449079591862498877777186906932571015955699
+        },
+        "2": {
+          "conditional_haar_probability": 3.6134238553072424e-28,
+          "fraction_of_safe_probability": 2.5619518982552913e-21,
+          "word_count": 1840766582639698681429602399736440479642845881475558587158292766599
+        },
+        "3": {
+          "conditional_haar_probability": 3.662155084558192e-20,
+          "fraction_of_safe_probability": 2.596502803513863e-13,
+          "word_count": 157858102218198843547778243428929249897476336613977055316565363332398022656
+        },
+        "4": {
+          "conditional_haar_probability": 7.255092595720258e-16,
+          "fraction_of_safe_probability": 5.143929688825002e-09,
+          "word_count": 2718406788809231800816220318955992001040408067420192486380244623056833095391867
+        },
+        "5": {
+          "conditional_haar_probability": 2.6710560975142196e-13,
+          "fraction_of_safe_probability": 1.8938041905385795e-06,
+          "word_count": 890540690523447941501775770182708126381398472764827377677021860374143466206806331
+        }
+      }
+    },
+    "50": {
+      "all_safe_probability": 0.0035357416202651897,
+      "bands": {
+        "0": {
+          "conditional_haar_probability": 2.6469779601696886e-23,
+          "fraction_of_safe_probability": 7.486344434781291e-21,
+          "word_count": 1
+        },
+        "1": {
+          "conditional_haar_probability": 2.3627370140954802e-11,
+          "fraction_of_safe_probability": 6.682436862901393e-09,
+          "word_count": 595077871104
+        },
+        "10": {
+          "conditional_haar_probability": 0.003226208066898763,
+          "fraction_of_safe_probability": 0.9124558334261962,
+          "word_count": 26070703341722602059
+        },
+        "2": {
+          "conditional_haar_probability": 2.944758090391167e-07,
+          "fraction_of_safe_probability": 8.328544352656353e-05,
+          "word_count": 5661579861503361
+        },
+        "3": {
+          "conditional_haar_probability": 2.0953635083510186e-05,
+          "fraction_of_safe_probability": 0.005926234814052563,
+          "word_count": 325565678614090752
+        },
+        "4": {
+          "conditional_haar_probability": 0.0001834755596174853,
+          "fraction_of_safe_probability": 0.051891676293847555,
+          "word_count": 2417057286526482231
+        },
+        "5": {
+          "conditional_haar_probability": 0.0006211577478704009,
+          "fraction_of_safe_probability": 0.1756796210193132,
+          "word_count": 7173363765877564642
+        }
+      }
+    }
+  },
+  "canonical_residue_formula": {
+    "C_recurrence": "C_(t+1)=3*C_t+2^S_t",
+    "iterate": "T^t(x)=(3^t*x+C_t)/2^S_t",
+    "positive_integer_criterion": "An infinite valuation word represents a nonnegative integer n iff the canonical residues r_t are eventually constant at n once 2^S_t>n.",
+    "residue": "r_t=-C_t*3^{-t} mod 2^S_t"
+  },
+  "critical_density_translation": {
+    "odd_steps": "h=t",
+    "ordinary_half_collatz_steps": "ell=S_t",
+    "parity_density": "h/ell=t/S_t",
+    "rational_noncyclic_necessary_condition": "Lopez-Stoll imply the critical value must be approached: liminf t/S_t=1/log2(3), hence liminf D_t/t=0 along accelerated block endpoints.",
+    "research_target": "A positive integer survivor must therefore be aperiodic, coefficient-safe, and return arbitrarily close to the critical boundary on a linear scale.",
+    "safe_side": "S_t/t <= log2(3), equivalently t/S_t >= 1/log2(3)"
+  },
+  "log2_3": 1.584962500721156,
+  "periodic_safe_obstruction": {
+    "examples": [
+      {
+        "average_A_over_p": 1.0,
+        "below_log2_3": true,
+        "block": [
+          1
+        ],
+        "period_p": 1,
+        "periodic_point_den": 1,
+        "periodic_point_num": -1,
+        "periodic_point_sign": -1,
+        "phase_zero_safe_check": true,
+        "sum_A": 1
+      },
+      {
+        "average_A_over_p": 1.0,
+        "below_log2_3": true,
+        "block": [
+          1,
+          1
+        ],
+        "period_p": 2,
+        "periodic_point_den": 1,
+        "periodic_point_num": -1,
+        "periodic_point_sign": -1,
+        "phase_zero_safe_check": true,
+        "sum_A": 2
+      },
+      {
+        "average_A_over_p": 1.5,
+        "below_log2_3": true,
+        "block": [
+          1,
+          2
+        ],
+        "period_p": 2,
+        "periodic_point_den": 1,
+        "periodic_point_num": -5,
+        "periodic_point_sign": -1,
+        "phase_zero_safe_check": true,
+        "sum_A": 3
+      },
+      {
+        "average_A_over_p": 1.3333333333333333,
+        "below_log2_3": true,
+        "block": [
+          1,
+          1,
+          2
+        ],
+        "period_p": 3,
+        "periodic_point_den": 11,
+        "periodic_point_num": -19,
+        "periodic_point_sign": -1,
+        "phase_zero_safe_check": true,
+        "sum_A": 4
+      },
+      {
+        "average_A_over_p": 1.4,
+        "below_log2_3": true,
+        "block": [
+          1,
+          2,
+          1,
+          2,
+          1
+        ],
+        "period_p": 5,
+        "periodic_point_den": 115,
+        "periodic_point_num": -319,
+        "periodic_point_sign": -1,
+        "phase_zero_safe_check": true,
+        "sum_A": 7
+      }
+    ],
+    "proof_core": "For a tail period of length p and valuation sum A, global coefficient safety forces A/p<log2(3) (strict because log2(3) is irrational). The period map has fixed point C/(2^A-3^p), with C>0 and denominator<0. Inverse accelerated steps x=(2^a*y-1)/3 preserve negativity.",
+    "statement": "Any eventually periodic coefficient-safe accelerated valuation word represents a negative rational 2-adic, hence cannot represent a positive integer."
+  },
+  "zero_slack_path": {
+    "canonical_residue_at_300": 81962640816308764829116109269485305857400407809254919531719704768405693351726091987437666572641453437521774602578942360946222676552443973452871,
+    "canonical_residue_rows_20": [
+      {
+        "C": 1,
+        "S": 1,
+        "a": 1,
+        "canonical_residue": 1,
+        "lift_digit": null,
+        "modulus_bits": 1,
+        "t": 1
+      },
+      {
+        "C": 5,
+        "S": 2,
+        "a": 1,
+        "canonical_residue": 3,
+        "lift_digit": 1,
+        "modulus_bits": 2,
+        "t": 2
+      },
+      {
+        "C": 19,
+        "S": 4,
+        "a": 2,
+        "canonical_residue": 7,
+        "lift_digit": 1,
+        "modulus_bits": 4,
+        "t": 3
+      },
+      {
+        "C": 73,
+        "S": 6,
+        "a": 2,
+        "canonical_residue": 7,
+        "lift_digit": 0,
+        "modulus_bits": 6,
+        "t": 4
+      },
+      {
+        "C": 283,
+        "S": 7,
+        "a": 1,
+        "canonical_residue": 71,
+        "lift_digit": 1,
+        "modulus_bits": 7,
+        "t": 5
+      },
+      {
+        "C": 977,
+        "S": 9,
+        "a": 2,
+        "canonical_residue": 71,
+        "lift_digit": 0,
+        "modulus_bits": 9,
+        "t": 6
+      },
+      {
+        "C": 3443,
+        "S": 11,
+        "a": 2,
+        "canonical_residue": 1095,
+        "lift_digit": 2,
+        "modulus_bits": 11,
+        "t": 7
+      },
+      {
+        "C": 12377,
+        "S": 12,
+        "a": 1,
+        "canonical_residue": 1095,
+        "lift_digit": 0,
+        "modulus_bits": 12,
+        "t": 8
+      },
+      {
+        "C": 41227,
+        "S": 14,
+        "a": 2,
+        "canonical_residue": 1095,
+        "lift_digit": 0,
+        "modulus_bits": 14,
+        "t": 9
+      },
+      {
+        "C": 140065,
+        "S": 15,
+        "a": 1,
+        "canonical_residue": 17479,
+        "lift_digit": 1,
+        "modulus_bits": 15,
+        "t": 10
+      },
+      {
+        "C": 452963,
+        "S": 17,
+        "a": 2,
+        "canonical_residue": 115783,
+        "lift_digit": 3,
+        "modulus_bits": 17,
+        "t": 11
+      },
+      {
+        "C": 1489961,
+        "S": 19,
+        "a": 2,
+        "canonical_residue": 377927,
+        "lift_digit": 2,
+        "modulus_bits": 19,
+        "t": 12
+      },
+      {
+        "C": 4994171,
+        "S": 20,
+        "a": 1,
+        "canonical_residue": 902215,
+        "lift_digit": 1,
+        "modulus_bits": 20,
+        "t": 13
+      },
+      {
+        "C": 16031089,
+        "S": 22,
+        "a": 2,
+        "canonical_residue": 2999367,
+        "lift_digit": 2,
+        "modulus_bits": 22,
+        "t": 14
+      },
+      {
+        "C": 52287571,
+        "S": 23,
+        "a": 1,
+        "canonical_residue": 7193671,
+        "lift_digit": 1,
+        "modulus_bits": 23,
+        "t": 15
+      },
+      {
+        "C": 165251321,
+        "S": 25,
+        "a": 2,
+        "canonical_residue": 15582279,
+        "lift_digit": 1,
+        "modulus_bits": 25,
+        "t": 16
+      },
+      {
+        "C": 529308395,
+        "S": 26,
+        "a": 1,
+        "canonical_residue": 49136711,
+        "lift_digit": 1,
+        "modulus_bits": 26,
+        "t": 17
+      },
+      {
+        "C": 1655034049,
+        "S": 28,
+        "a": 2,
+        "canonical_residue": 183354439,
+        "lift_digit": 2,
+        "modulus_bits": 28,
+        "t": 18
+      },
+      {
+        "C": 5233537603,
+        "S": 30,
+        "a": 2,
+        "canonical_residue": 720225351,
+        "lift_digit": 2,
+        "modulus_bits": 30,
+        "t": 19
+      },
+      {
+        "C": 16774354633,
+        "S": 31,
+        "a": 1,
+        "canonical_residue": 1793967175,
+        "lift_digit": 1,
+        "modulus_bits": 31,
+        "t": 20
+      }
+    ],
+    "description": "The unique D_t=0 path for all t>=3.",
+    "eventual_stabilization_seen": false,
+    "longest_zero_lift_run_through_300": 6,
+    "modulus_bits_at_300": 475,
+    "valuation_prefix_60": [
+      1,
+      1,
+      2,
+      2,
+      1,
+      2,
+      2,
+      1,
+      2,
+      1,
+      2,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      2,
+      1,
+      2,
+      1,
+      2,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      2,
+      1,
+      2,
+      1,
+      2,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      2,
+      1,
+      2,
+      1,
+      2,
+      2,
+      1,
+      2,
+      1,
+      2,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      2
+    ]
+  }
+}
