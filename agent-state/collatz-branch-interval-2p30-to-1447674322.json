@@ -1,0 +1,16 @@
+{
+  "base_residue_count": 395,
+  "high_exclusive": 1447674322,
+  "low_inclusive": 1073741824,
+  "max_observed_first_descent": {
+    "n": 1410123943,
+    "t": 362,
+    "value": 912105203
+  },
+  "note": "Exact integer Terras scan over every old-residual residue class in the numeric interval.",
+  "status": "complete",
+  "step_limit": 125742,
+  "tested": 2253778,
+  "unresolved_count_capped": 0,
+  "unresolved_sample": []
+}
