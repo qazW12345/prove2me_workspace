@@ -25,6 +25,7 @@ from pathlib import Path
 BASE_SCAN = Path("agent-state/collatz-stabilization-records.json")
 EXTENSIONS = [
     Path("agent-state/collatz-branch-interval-2p30-to-1447674322.json"),
+    Path("agent-state/collatz-branch-interval-1447674322-to-7216089271.json"),
 ]
 OUT = Path("agent-state/collatz-first-contraction-horizon.json")
 BASE_SCAN_BOUND = 1 << 30
