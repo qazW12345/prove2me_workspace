@@ -1,0 +1,97 @@
+{
+  "high_exclusive": 7216089271,
+  "low_inclusive": 1447674322,
+  "max_observed_first_descent": {
+    "n": 1801487687,
+    "t": 397,
+    "value": 1064232949
+  },
+  "note": "Merged exact integer Terras scans over all old-residual branch seeds in a contiguous interval.",
+  "shard_count": 8,
+  "shards": [
+    {
+      "high_exclusive": 2168726190,
+      "low_inclusive": 1447674322,
+      "max_observed_first_descent": {
+        "n": 1801487687,
+        "t": 397,
+        "value": 1064232949
+      },
+      "tested": 4345935
+    },
+    {
+      "high_exclusive": 2889778059,
+      "low_inclusive": 2168726190,
+      "max_observed_first_descent": {
+        "n": 2225002343,
+        "t": 333,
+        "value": 1994368511
+      },
+      "tested": 4345940
+    },
+    {
+      "high_exclusive": 3610829927,
+      "low_inclusive": 2889778059,
+      "max_observed_first_descent": {
+        "n": 3157880679,
+        "t": 325,
+        "value": 2981977373
+      },
+      "tested": 4345944
+    },
+    {
+      "high_exclusive": 4331881796,
+      "low_inclusive": 3610829927,
+      "max_observed_first_descent": {
+        "n": 4015548263,
+        "t": 349,
+        "value": 3243040721
+      },
+      "tested": 4345933
+    },
+    {
+      "high_exclusive": 5052933665,
+      "low_inclusive": 4331881796,
+      "max_observed_first_descent": {
+        "n": 4410330791,
+        "t": 352,
+        "value": 4007109764
+      },
+      "tested": 4345943
+    },
+    {
+      "high_exclusive": 5773985533,
+      "low_inclusive": 5052933665,
+      "max_observed_first_descent": {
+        "n": 5732459239,
+        "t": 356,
+        "value": 2929702870
+      },
+      "tested": 4345940
+    },
+    {
+      "high_exclusive": 6495037402,
+      "low_inclusive": 5773985533,
+      "max_observed_first_descent": {
+        "n": 6399014119,
+        "t": 354,
+        "value": 4360481077
+      },
+      "tested": 4345934
+    },
+    {
+      "high_exclusive": 7216089271,
+      "low_inclusive": 6495037402,
+      "max_observed_first_descent": {
+        "n": 6608137575,
+        "t": 363,
+        "value": 6411475412
+      },
+      "tested": 4345948
+    }
+  ],
+  "status": "complete",
+  "tested": 34767517,
+  "unresolved_count_capped": 0,
+  "unresolved_sample": []
+}
