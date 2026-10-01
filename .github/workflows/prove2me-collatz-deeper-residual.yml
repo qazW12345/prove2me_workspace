@@ -1,0 +1,32 @@
+name: Prove2Me Collatz Deeper Residual
+on:
+  push:
+    branches: [prove2me/collatz-residual-recursive-decompose]
+    paths:
+      - ".github/workflows/prove2me-collatz-deeper-residual.yml"
+      - "scripts/agent_collatz_deeper_residual.py"
+permissions:
+  contents: write
+jobs:
+  decompose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decompose Collatz residual through 2^24
+        run: python3 scripts/agent_collatz_deeper_residual.py
+      - name: Commit sanitized result
+        if: always()
+        run: |
+          if [[ -f agent-state/collatz-deeper-residual.json ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add agent-state/collatz-deeper-residual.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: record deeper Collatz decomposition"
+              git pull --rebase origin prove2me/collatz-residual-recursive-decompose || true
+              git push || true
+            fi
+          fi
