@@ -1,0 +1,35 @@
+name: Prove2Me Collatz Structural 301993
+
+on:
+  push:
+    branches: [prove2me/collatz-residual-recursive-decompose]
+    paths:
+      - "scripts/agent_collatz_structural_decomposition.py"
+      - ".github/workflows/prove2me-collatz-structural-301993.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish structural decomposition
+        run: python3 scripts/agent_collatz_structural_decomposition.py
+      - name: Commit result
+        if: always()
+        run: |
+          if [[ -f agent-state/collatz-structural-decomposition.json ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add agent-state/collatz-structural-decomposition.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: record structural Collatz decomposition"
+              git pull --rebase origin prove2me/collatz-residual-recursive-decompose || true
+              git push || true
+            fi
+          fi
