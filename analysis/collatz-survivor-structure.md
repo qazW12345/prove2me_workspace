@@ -442,3 +442,207 @@ python scripts/analyze_collatz_survivor_language.py --bruteforce-depth 30
 
 The expected result is zero classifier mismatches at every level 17 through
 30 and no parent with zero surviving children.
+
+
+---
+
+## 11. Exact 2-adic cylinder map
+
+A finite valuation word (a_1,ldots,a_t) does not merely describe a family
+qualitatively: it determines one exact residue class.
+
+Let
+
+[
+S_t=a_1+cdots+a_t
+]
+
+and define (C_0=0) by
+
+[
+C_{t+1}=3C_t+2^{S_t}.
+]
+
+Then
+
+[
+operatorname{Syr}^t(x)=rac{3^t x+C_t}{2^{S_t}}.
+]
+
+Consequently the starting value must satisfy
+
+[
+xequiv r_t:=-C_t,3^{-t}pmod{2^{S_t}}.
+]
+
+Because (3) is a 2-adic unit, this residue is unique.
+
+For an infinite valuation word the compatible residues (r_t) converge to a
+unique point of (mathbb Z_2).  A nonnegative integer (n) is much more
+special: once (2^{S_t}>n), its canonical representative modulo
+(2^{S_t}) is literally (n).  Therefore
+
+> an infinite valuation word represents a nonnegative integer if and only if
+> its canonical residues (r_t) are eventually constant.
+
+Equivalently, after some stage every higher-precision lift digit is zero.
+
+This gives us a direct arithmetic observable for the "eventually-zero binary
+2-adic" condition instead of reasoning about the full residue sets.
+
+---
+
+## 12. Eventually periodic safe valuation words are automatically negative
+
+There is a clean structural obstruction that removes all eventually periodic
+safe words from the positive-integer problem.
+
+Suppose a tail repeats a valuation block
+
+[
+(a_1,ldots,a_p)
+]
+
+with total valuation
+
+[
+A=a_1+cdots+a_p.
+]
+
+The map of one period is
+
+[
+xlongmapstorac{3^p x+C}{2^A}
+]
+
+for an integer (C>0).  Its unique periodic point is
+
+[
+x_*=rac{C}{2^A-3^p}.
+]
+
+If the repeated word is coefficient-safe forever, then its asymptotic average
+must satisfy
+
+[
+rac{A}{p}lelog_2 3.
+]
+
+Equality is impossible because (log_2 3) is irrational while (A/p) is
+rational.  Hence
+
+[
+A<plog_2 3,
+qquad
+2^A<3^p.
+]
+
+Therefore
+
+[
+2^A-3^p<0
+]
+
+and so (x_*<0).
+
+A finite preperiod cannot repair the sign.  The inverse of one accelerated
+step is
+
+[
+x=rac{2^a y-1}{3},
+]
+
+which is negative whenever (y<0).
+
+Thus:
+
+> **Every eventually periodic coefficient-safe accelerated valuation word
+> represents a negative rational 2-adic integer.**
+
+In particular, a positive integer counterexample in this survivor branch must
+have an **aperiodic** valuation word.
+
+This is stronger than merely observing that simple periodic examples such as
+the all-1 tail lead to negative 2-adic cycles.
+
+---
+
+## 13. Critical density means sublinear slack, not bounded slack
+
+López--Stoll work with the ordinary half-Collatz parity vector.  At the end of
+(t) accelerated Syracuse blocks,
+
+- the number of odd half-Collatz steps is (h=t);
+- the total number of half-Collatz steps is (ell=S_t).
+
+Thus their parity-density ratio is
+
+[
+rac hell=rac{t}{S_t}.
+]
+
+For coefficient-safe paths,
+
+[
+rac{S_t}{t}lelog_2 3
+]
+
+and hence
+
+[
+rac{t}{S_t}gerac1{log_2 3}.
+]
+
+Their necessary condition for a rational 2-adic integer with a noncyclic
+trajectory forces the critical value to be approached.  In our slack
+notation this gives, at least along a subsequence of accelerated block
+endpoints,
+
+[
+rac{D_t}{t}longrightarrow0.
+]
+
+It is important not to strengthen this without justification to (D_t=O(1)).
+
+The companion DP confirms that fixed-width slack bands become a vanishing
+fraction of the long safe language.  For example, under the natural Haar /
+geometric weighting, among words safe through length 100:
+
+- (D_tle5) accounts for only about (0.52%) of safe mass;
+- (D_tle10) accounts for a much larger but still non-universal portion.
+
+By length 200 even the (D_tle10) band is only about (5.7%) of safe mass.
+
+So the rationality restriction points us toward **sublinear boundary
+excursions**, not merely a fixed finite-state strip.
+
+---
+
+## 14. Refined hard target
+
+Combining the structural reductions, a positive-integer survivor in this
+branch would have to satisfy all of the following:
+
+1. its accelerated valuation word begins ((1,1,2));
+2. it is coefficient-safe for every prefix;
+3. it is aperiodic;
+4. its canonical 2-adic residues eventually stabilize to a nonnegative
+   integer;
+5. its slack returns sublinearly close to the critical boundary,
+   (liminf D_t/t=0).
+
+This is a qualitatively smaller target than the raw residue tree.
+
+The next computational experiment should therefore search the safe language
+not by modulus depth but by **slack profile and lift digits**:
+
+- rank safe prefixes by (D_t/t);
+- compute their canonical-residue lift digits;
+- measure long zero-lift runs (near-stabilization);
+- test whether boundary-hugging paths systematically force nonzero high lift
+  digits;
+- isolate any symbolic condition that forbids eventual stabilization.
+
+The companion script
+`scripts/analyze_collatz_2adic_survivors.py` implements the first version of
+that experiment.
