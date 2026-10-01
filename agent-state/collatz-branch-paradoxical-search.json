@@ -1,0 +1,66 @@
+{
+  "results": [
+    {
+      "branch_pruned_nodes": 74,
+      "checked_seeds": 2497,
+      "length": 66,
+      "max_paradoxical_seed": null,
+      "no_prior_descent_count": 0,
+      "no_prior_descent_examples": [],
+      "paradoxical_count": 0,
+      "paradoxical_examples": [],
+      "pending_nodes": 0,
+      "pruned_nodes": 0,
+      "resolved_cylinders": 203,
+      "status": "complete",
+      "visited_nodes": 553
+    },
+    {
+      "branch_pruned_nodes": 173,
+      "checked_seeds": 52636,
+      "length": 80,
+      "max_paradoxical_seed": null,
+      "no_prior_descent_count": 0,
+      "no_prior_descent_examples": [],
+      "paradoxical_count": 0,
+      "paradoxical_examples": [],
+      "pending_nodes": 0,
+      "pruned_nodes": 0,
+      "resolved_cylinders": 2480,
+      "status": "complete",
+      "visited_nodes": 5305
+    },
+    {
+      "branch_pruned_nodes": 173,
+      "checked_seeds": 10254264,
+      "length": 100,
+      "max_paradoxical_seed": null,
+      "no_prior_descent_count": 0,
+      "no_prior_descent_examples": [],
+      "paradoxical_count": 0,
+      "paradoxical_examples": [],
+      "pending_nodes": 0,
+      "pruned_nodes": 0,
+      "resolved_cylinders": 502833,
+      "status": "complete",
+      "visited_nodes": 1006011
+    },
+    {
+      "branch_pruned_nodes": 34,
+      "checked_seeds": 97273202,
+      "length": 128,
+      "max_paradoxical_seed": null,
+      "no_prior_descent_count": 0,
+      "no_prior_descent_examples": [],
+      "paradoxical_count": 0,
+      "paradoxical_examples": [],
+      "pending_nodes": 17,
+      "pruned_nodes": 0,
+      "resolved_cylinders": 4999958,
+      "status": "incomplete_work_limit",
+      "visited_nodes": 10000000
+    }
+  ],
+  "scope": "fixed Terras lengths, restricted to old seven-mod-32 residual low-16-bit classes",
+  "warning": "Finite computation only; complete status is per listed length, not all intermediate lengths or all lengths."
+}
