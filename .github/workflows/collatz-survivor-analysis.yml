@@ -6,6 +6,7 @@ on:
     paths:
       - "scripts/analyze_collatz_survivor_language.py"
       - "scripts/analyze_collatz_2adic_survivors.py"
+      - "scripts/analyze_collatz_stabilization_records.py"
       - ".github/workflows/collatz-survivor-analysis.yml"
 
 permissions:
@@ -21,11 +22,13 @@ jobs:
         run: python3 scripts/analyze_collatz_survivor_language.py --max-word-length 100
       - name: Analyze 2-adic survivor structure
         run: python3 scripts/analyze_collatz_2adic_survivors.py
+      - name: Scan stabilized survivor records through 2^30
+        run: python3 scripts/analyze_collatz_stabilization_records.py --depth 30
       - name: Commit report data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add agent-state/collatz-survivor-language.json agent-state/collatz-2adic-survivors.json
+          git add agent-state/collatz-survivor-language.json agent-state/collatz-2adic-survivors.json agent-state/collatz-stabilization-records.json
           if ! git diff --cached --quiet; then
             git commit -m "chore: record Collatz survivor analysis"
             git pull --rebase origin prove2me/collatz-residual-recursive-decompose || true
