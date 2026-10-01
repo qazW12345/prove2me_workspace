@@ -1,0 +1,35 @@
+name: Prove2Me Collatz Recursive Residual
+
+on:
+  push:
+    branches: [prove2me/collatz-residual-recursive-decompose]
+    paths:
+      - ".github/workflows/prove2me-collatz-recursive-residual.yml"
+      - "scripts/agent_collatz_recursive_residual.py"
+
+permissions:
+  contents: write
+
+jobs:
+  decompose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Recursively decompose hard Collatz residual
+        run: python3 scripts/agent_collatz_recursive_residual.py
+      - name: Commit sanitized result
+        if: always()
+        run: |
+          if [[ -f agent-state/collatz-residual-recursive-decompose.json ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add agent-state/collatz-residual-recursive-decompose.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: record recursive Collatz decomposition"
+              git pull --rebase origin prove2me/collatz-residual-recursive-decompose || true
+              git push || true
+            fi
+          fi
