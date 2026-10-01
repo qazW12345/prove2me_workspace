@@ -1,4 +1,5 @@
 name: Collatz Survivor Structure Analysis
+# Re-run on stabilization scan changes
 
 on:
   push:
