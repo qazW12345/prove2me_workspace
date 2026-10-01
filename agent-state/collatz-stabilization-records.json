@@ -1,6 +1,12 @@
 {
   "base_residue_count": 395,
   "best_stopping_record": {
+    "coefficient_stopping_state": [
+      222,
+      352,
+      296749223
+    ],
+    "coefficient_stopping_time": 222,
     "descent_value": 296749223,
     "first_canonical_stabilization_step": 21,
     "last_zero_slack_step": 181,
@@ -38,6 +44,12 @@
     "zero_lift_run_before_descent": 201
   },
   "best_zero_lift_record": {
+    "coefficient_stopping_state": [
+      222,
+      352,
+      296749223
+    ],
+    "coefficient_stopping_time": 222,
     "descent_value": 296749223,
     "first_canonical_stabilization_step": 21,
     "last_zero_slack_step": 181,
@@ -75,12 +87,20 @@
     "zero_lift_run_before_descent": 201
   },
   "candidate_count": 6471680,
+  "coefficient_actual_mismatch_count": 0,
+  "coefficient_actual_mismatch_sample": [],
   "depth": 30,
   "interpretation": {
     "finite_window_no_go": "Once 2^S>n, the canonical residue is literally n.  Thus zero_lift_run_before_descent counts consecutive exact stabilization steps before the orbit finally defeats coefficient safety.  Long runs with late zero-slack hits show that no fixed finite window of stabilization plus criticality can rule out positive integers."
   },
   "record_events": [
     {
+      "coefficient_stopping_state": [
+        32,
+        51,
+        61
+      ],
+      "coefficient_stopping_time": 32,
       "descent_value": 61,
       "first_canonical_stabilization_step": 5,
       "last_zero_slack_step": 6,
@@ -98,6 +118,12 @@
       "zero_lift_run_before_descent": 27
     },
     {
+      "coefficient_stopping_state": [
+        35,
+        56,
+        1820189
+      ],
+      "coefficient_stopping_time": 35,
       "descent_value": 1820189,
       "first_canonical_stabilization_step": 16,
       "last_zero_slack_step": 34,
@@ -115,6 +141,12 @@
       "zero_lift_run_before_descent": 19
     },
     {
+      "coefficient_stopping_state": [
+        38,
+        62,
+        1190221
+      ],
+      "coefficient_stopping_time": 38,
       "descent_value": 1190221,
       "first_canonical_stabilization_step": 17,
       "last_zero_slack_step": 37,
@@ -132,6 +164,12 @@
       "zero_lift_run_before_descent": 21
     },
     {
+      "coefficient_stopping_state": [
+        45,
+        72,
+        3033997
+      ],
+      "coefficient_stopping_time": 45,
       "descent_value": 3033997,
       "first_canonical_stabilization_step": 17,
       "last_zero_slack_step": 27,
@@ -149,6 +187,12 @@
       "zero_lift_run_before_descent": 28
     },
     {
+      "coefficient_stopping_state": [
+        57,
+        91,
+        3241625
+      ],
+      "coefficient_stopping_time": 57,
       "descent_value": 3241625,
       "first_canonical_stabilization_step": 18,
       "last_zero_slack_step": 56,
@@ -171,6 +215,12 @@
       "zero_lift_run_before_descent": 39
     },
     {
+      "coefficient_stopping_state": [
+        75,
+        119,
+        6597839
+      ],
+      "coefficient_stopping_time": 75,
       "descent_value": 6597839,
       "first_canonical_stabilization_step": 17,
       "last_zero_slack_step": 6,
@@ -193,6 +243,12 @@
       "zero_lift_run_before_descent": 58
     },
     {
+      "coefficient_stopping_state": [
+        92,
+        149,
+        2806189
+      ],
+      "coefficient_stopping_time": 92,
       "descent_value": 2806189,
       "first_canonical_stabilization_step": 17,
       "last_zero_slack_step": 90,
@@ -215,6 +271,12 @@
       "zero_lift_run_before_descent": 75
     },
     {
+      "coefficient_stopping_state": [
+        99,
+        159,
+        7718867
+      ],
+      "coefficient_stopping_time": 99,
       "descent_value": 7718867,
       "first_canonical_stabilization_step": 17,
       "last_zero_slack_step": 92,
@@ -237,6 +299,12 @@
       "zero_lift_run_before_descent": 82
     },
     {
+      "coefficient_stopping_state": [
+        116,
+        186,
+        77292509
+      ],
+      "coefficient_stopping_time": 116,
       "descent_value": 77292509,
       "first_canonical_stabilization_step": 22,
       "last_zero_slack_step": 6,
@@ -264,6 +332,12 @@
       "zero_lift_run_before_descent": 94
     },
     {
+      "coefficient_stopping_state": [
+        119,
+        189,
+        524125873
+      ],
+      "coefficient_stopping_time": 119,
       "descent_value": 524125873,
       "first_canonical_stabilization_step": 21,
       "last_zero_slack_step": 6,
@@ -291,6 +365,12 @@
       "zero_lift_run_before_descent": 98
     },
     {
+      "coefficient_stopping_state": [
+        122,
+        196,
+        118420111
+      ],
+      "coefficient_stopping_time": 122,
       "descent_value": 118420111,
       "first_canonical_stabilization_step": 20,
       "last_zero_slack_step": 27,
@@ -318,6 +398,12 @@
       "zero_lift_run_before_descent": 102
     },
     {
+      "coefficient_stopping_state": [
+        139,
+        222,
+        28269319
+      ],
+      "coefficient_stopping_time": 139,
       "descent_value": 28269319,
       "first_canonical_stabilization_step": 20,
       "last_zero_slack_step": 5,
@@ -345,6 +431,12 @@
       "zero_lift_run_before_descent": 119
     },
     {
+      "coefficient_stopping_state": [
+        178,
+        286,
+        8316317
+      ],
+      "coefficient_stopping_time": 178,
       "descent_value": 8316317,
       "first_canonical_stabilization_step": 20,
       "last_zero_slack_step": 150,
@@ -377,6 +469,12 @@
       "zero_lift_run_before_descent": 158
     },
     {
+      "coefficient_stopping_state": [
+        184,
+        293,
+        127050103
+      ],
+      "coefficient_stopping_time": 184,
       "descent_value": 127050103,
       "first_canonical_stabilization_step": 22,
       "last_zero_slack_step": 182,
@@ -409,6 +507,12 @@
       "zero_lift_run_before_descent": 162
     },
     {
+      "coefficient_stopping_state": [
+        196,
+        311,
+        339215887
+      ],
+      "coefficient_stopping_time": 196,
       "descent_value": 339215887,
       "first_canonical_stabilization_step": 23,
       "last_zero_slack_step": 195,
@@ -441,6 +545,12 @@
       "zero_lift_run_before_descent": 173
     },
     {
+      "coefficient_stopping_state": [
+        205,
+        326,
+        275145181
+      ],
+      "coefficient_stopping_time": 205,
       "descent_value": 275145181,
       "first_canonical_stabilization_step": 21,
       "last_zero_slack_step": 11,
@@ -478,6 +588,12 @@
       "zero_lift_run_before_descent": 184
     },
     {
+      "coefficient_stopping_state": [
+        208,
+        330,
+        695527075
+      ],
+      "coefficient_stopping_time": 208,
       "descent_value": 695527075,
       "first_canonical_stabilization_step": 21,
       "last_zero_slack_step": 207,
@@ -515,6 +631,12 @@
       "zero_lift_run_before_descent": 187
     },
     {
+      "coefficient_stopping_state": [
+        216,
+        343,
+        92734679
+      ],
+      "coefficient_stopping_time": 216,
       "descent_value": 92734679,
       "first_canonical_stabilization_step": 23,
       "last_zero_slack_step": 215,
@@ -552,6 +674,12 @@
       "zero_lift_run_before_descent": 193
     },
     {
+      "coefficient_stopping_state": [
+        222,
+        352,
+        296749223
+      ],
+      "coefficient_stopping_time": 222,
       "descent_value": 296749223,
       "first_canonical_stabilization_step": 21,
       "last_zero_slack_step": 181,
