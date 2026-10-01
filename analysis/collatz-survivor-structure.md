@@ -886,3 +886,103 @@ External formal references:
 - `Collatz.unbounded_inverse_drift_tendsto_zero`
 
 in `lean/Collatz/OrbitSummability.lean`.
+
+
+---
+
+## 17. Critical returns force exact 3-adic shadow hits
+
+The same valuation prefix has a second arithmetic encoding.
+
+From
+
+[
+2^{S_t}operatorname{Syr}^t(N)=3^tN+C_t
+]
+
+we obtain, modulo (3^t),
+
+[
+operatorname{Syr}^t(N)
+equiv
+C_t,2^{-S_t}
+pmod{3^t}.
+]
+
+Define the canonical shadow residue
+
+[
+Q_t=
+C_t,2^{-S_t}mod 3^t,
+qquad
+0le Q_t<3^t.
+]
+
+This depends only on the valuation/parity prefix, not on the starting integer.
+
+Now take the critical subsequence forced by López--Stoll, on which
+
+[
+D_t/t	o0.
+]
+
+Coefficient safety and the affine bound from the previous section give
+
+[
+operatorname{Syr}^t(N)
+<
+2^{D_t+1}left(N+rac t3ight)
+=
+exp(o(t)).
+]
+
+But (3^t=exp(tlog3)).  Hence along this subsequence,
+
+[
+rac{operatorname{Syr}^t(N)}{3^t}	o0.
+]
+
+In particular, for all sufficiently large critical-return indices,
+
+[
+0<operatorname{Syr}^t(N)<3^t.
+]
+
+The congruence modulo (3^t) therefore has no room for a nonzero multiple of
+the modulus:
+
+[
+oxed{
+operatorname{Syr}^t(N)=Q_t
+}
+]
+
+at those indices.
+
+Thus a hypothetical positive survivor is squeezed simultaneously from both
+adic sides:
+
+- the **2-adic starting cylinders** must eventually stabilize to the fixed
+  integer (N);
+- along infinitely many critical returns, the **3-adic shadow residues** must
+  equal the actual forward orbit values and satisfy
+  (Q_t/3^t	o0).
+
+This connects our survivor-language analysis directly to the machine-verified
+3-adic shadow framework in `Collatz.Shadow`, where the shadow congruence and
+its entropy-compression properties are formalized.
+
+The new computational target is therefore not merely low slack.  Search for
+safe prefixes satisfying all three simultaneous signatures:
+
+1. large absolute slack (D_t) (eventually, since (D_t	oinfty));
+2. small relative slack (D_t/t) on critical returns;
+3. anomalously tiny normalized shadow residue (Q_t/3^t).
+
+A positive counterexample would have to realize such shadow hits infinitely
+often while its 2-adic canonical start has already frozen to one fixed
+positive integer.
+
+External formal reference:
+`Collatz.Shadow.shadow_modEq` and the surrounding 3-adic shadow development
+in https://github.com/msharpe248/collatz.
