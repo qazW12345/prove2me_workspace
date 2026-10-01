@@ -1,0 +1,35 @@
+name: Prove2Me Collatz Seven-Mod-32 Decompose
+
+on:
+  push:
+    branches: [prove2me/collatz-seven-mod32-decompose]
+    paths:
+      - ".github/workflows/prove2me-collatz-seven-mod32-decompose.yml"
+      - "scripts/agent_collatz_seven_mod32_decompose.py"
+
+permissions:
+  contents: write
+
+jobs:
+  decompose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Submit Collatz decomposition
+        run: python3 scripts/agent_collatz_seven_mod32_decompose.py
+      - name: Commit sanitized result
+        if: always()
+        run: |
+          if [[ -f agent-state/collatz-seven-mod32-decompose.json ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add agent-state/collatz-seven-mod32-decompose.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: record Collatz decomposition result"
+              git pull --rebase origin prove2me/collatz-seven-mod32-decompose || true
+              git push || true
+            fi
+          fi
