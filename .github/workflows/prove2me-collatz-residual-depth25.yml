@@ -1,0 +1,35 @@
+name: Prove2Me Collatz Residual Depth 25
+
+on:
+  push:
+    branches: [prove2me/collatz-residual-recursive-decompose]
+    paths:
+      - ".github/workflows/prove2me-collatz-residual-depth25.yml"
+      - "scripts/agent_collatz_residual_depth25.py"
+
+permissions:
+  contents: write
+
+jobs:
+  decompose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      PROVE2ME_API_KEY: ${{ secrets.PROVE2ME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decompose hard Collatz residual at 2^25
+        run: python3 scripts/agent_collatz_residual_depth25.py
+      - name: Commit sanitized result
+        if: always()
+        run: |
+          if [[ -f agent-state/collatz-residual-depth25.json ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add agent-state/collatz-residual-depth25.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: record Collatz 2^25 decomposition"
+              git pull --rebase origin prove2me/collatz-residual-recursive-decompose || true
+              git push || true
+            fi
+          fi
