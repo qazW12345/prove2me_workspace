@@ -1,0 +1,38 @@
+name: Collatz Branch Interval Extension
+
+on:
+  push:
+    branches: [prove2me/collatz-residual-recursive-decompose]
+    paths:
+      - "scripts/scan_collatz_branch_interval.py"
+      - ".github/workflows/collatz-branch-interval-extension.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan branch from 2^30 to next threshold
+        run: >
+          python3 scripts/scan_collatz_branch_interval.py
+          --low 1073741824
+          --high 1447674322
+          --step-limit 125742
+          --output agent-state/collatz-branch-interval-2p30-to-1447674322.json
+      - name: Commit result
+        if: always()
+        run: |
+          if [[ -f agent-state/collatz-branch-interval-2p30-to-1447674322.json ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add agent-state/collatz-branch-interval-2p30-to-1447674322.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: extend Collatz branch census past 2^30"
+              git pull --rebase origin prove2me/collatz-residual-recursive-decompose || true
+              git push || true
+            fi
+          fi
