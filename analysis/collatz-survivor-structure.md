@@ -646,3 +646,83 @@ not by modulus depth but by **slack profile and lift digits**:
 The companion script
 `scripts/analyze_collatz_2adic_survivors.py` implements the first version of
 that experiment.
+
+
+---
+
+## 15. Eventual-constant slack is formally excluded by mechanical-itinerary results
+
+There is a stronger exact exclusion than the elementary eventually-periodic
+valuation-word argument above.
+
+Suppose a coefficient-safe accelerated valuation path has eventually constant
+slack:
+
+[
+D_t=lfloor tlog_2 3floor-S_t=c
+]
+
+for all sufficiently large (t).  Then
+
+[
+S_t=lfloor tlog_2 3floor-c.
+]
+
+In the ordinary Terras (half-Collatz) parity word, the (t)-th accelerated
+block begins with an odd step at ordinary time (S_t).  Hence, after a finite
+prefix, the positions of the odd steps are exactly a fixed translate of the
+Beatty sequence
+
+[
+{lfloor tlog_2 3floor:tge0}.
+]
+
+Equivalently, the parity tail is a mechanical/Sturmian word of slope
+
+[
+alpha=rac1{log_2 3}.
+]
+
+This is not merely an experimental observation.  The external Lean
+formalization at
+
+https://github.com/msharpe248/collatz
+
+contains the theorem
+
+`Collatz.eventual_mechanical_reaches_one`
+
+in `lean/Collatz/RationalMechanical.lean`: any positive natural-number orbit
+with a mechanical parity tail reaches 1.  The stronger global classification
+`Collatz.mechanical_classification` states that the only positive natural
+seeds with globally mechanical itineraries are 1 and 2, with slope 1/2.
+
+Since (1/log_2 3
+e1/2), and a globally coefficient-safe survivor in our
+seven-mod-32 branch cannot reach 1 without first descending below its starting
+value, we obtain:
+
+> **No positive-integer survivor in this branch can have eventually constant
+> slack (D_t).**
+
+In particular, the exact zero-slack Sturmian spine is rigorously excluded,
+not merely numerically non-stabilizing.
+
+This refines the hard target again.  A hypothetical positive survivor must be:
+
+- coefficient-safe forever;
+- aperiodic in its accelerated valuation word;
+- not eventually mechanical;
+- not eventually constant in slack;
+- critical in the López--Stoll sense, with (liminf D_t/t=0);
+- yet have its canonical 2-adic residues eventually stabilize to one positive
+  integer.
+
+What remains is therefore a genuinely irregular critical path: it must return
+arbitrarily close to the coefficient boundary on a linear scale while never
+settling onto the mechanical boundary orbit.
+
+Reference for the Lean theorem and accompanying paper:
+Michael Sharpe, *Collatz at the Critical Line*, repository section
+`Collatz.RationalMechanical`, especially
+`eventual_mechanical_reaches_one` and `mechanical_classification`.
