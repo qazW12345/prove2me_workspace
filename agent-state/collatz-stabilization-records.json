@@ -1,0 +1,592 @@
+{
+  "base_residue_count": 395,
+  "best_stopping_record": {
+    "descent_value": 296749223,
+    "first_canonical_stabilization_step": 21,
+    "last_zero_slack_step": 181,
+    "late_min_slack_ratio": {
+      "100": [
+        0.0,
+        142,
+        0
+      ],
+      "150": [
+        0.0,
+        180,
+        0
+      ],
+      "20": [
+        0.0,
+        142,
+        0
+      ],
+      "200": [
+        0.009852216748768473,
+        203,
+        2
+      ],
+      "50": [
+        0.0,
+        142,
+        0
+      ]
+    },
+    "max_safe_slack": 11,
+    "n": 326610023,
+    "stopping_time": 222,
+    "total_exponent": 352,
+    "zero_lift_run_before_descent": 201
+  },
+  "best_zero_lift_record": {
+    "descent_value": 296749223,
+    "first_canonical_stabilization_step": 21,
+    "last_zero_slack_step": 181,
+    "late_min_slack_ratio": {
+      "100": [
+        0.0,
+        142,
+        0
+      ],
+      "150": [
+        0.0,
+        180,
+        0
+      ],
+      "20": [
+        0.0,
+        142,
+        0
+      ],
+      "200": [
+        0.009852216748768473,
+        203,
+        2
+      ],
+      "50": [
+        0.0,
+        142,
+        0
+      ]
+    },
+    "max_safe_slack": 11,
+    "n": 326610023,
+    "stopping_time": 222,
+    "total_exponent": 352,
+    "zero_lift_run_before_descent": 201
+  },
+  "candidate_count": 6471680,
+  "depth": 30,
+  "interpretation": {
+    "finite_window_no_go": "Once 2^S>n, the canonical residue is literally n.  Thus zero_lift_run_before_descent counts consecutive exact stabilization steps before the orbit finally defeats coefficient safety.  Long runs with late zero-slack hits show that no fixed finite window of stabilization plus criticality can rule out positive integers."
+  },
+  "record_events": [
+    {
+      "descent_value": 61,
+      "first_canonical_stabilization_step": 5,
+      "last_zero_slack_step": 6,
+      "late_min_slack_ratio": {
+        "20": [
+          0.06451612903225806,
+          31,
+          2
+        ]
+      },
+      "max_safe_slack": 5,
+      "n": 71,
+      "stopping_time": 32,
+      "total_exponent": 51,
+      "zero_lift_run_before_descent": 27
+    },
+    {
+      "descent_value": 1820189,
+      "first_canonical_stabilization_step": 16,
+      "last_zero_slack_step": 34,
+      "late_min_slack_ratio": {
+        "20": [
+          0.0,
+          29,
+          0
+        ]
+      },
+      "max_safe_slack": 8,
+      "n": 2621511,
+      "stopping_time": 35,
+      "total_exponent": 56,
+      "zero_lift_run_before_descent": 19
+    },
+    {
+      "descent_value": 1190221,
+      "first_canonical_stabilization_step": 17,
+      "last_zero_slack_step": 37,
+      "late_min_slack_ratio": {
+        "20": [
+          0.0,
+          29,
+          0
+        ]
+      },
+      "max_safe_slack": 4,
+      "n": 4063303,
+      "stopping_time": 38,
+      "total_exponent": 62,
+      "zero_lift_run_before_descent": 21
+    },
+    {
+      "descent_value": 3033997,
+      "first_canonical_stabilization_step": 17,
+      "last_zero_slack_step": 27,
+      "late_min_slack_ratio": {
+        "20": [
+          0.0,
+          27,
+          0
+        ]
+      },
+      "max_safe_slack": 3,
+      "n": 4849735,
+      "stopping_time": 45,
+      "total_exponent": 72,
+      "zero_lift_run_before_descent": 28
+    },
+    {
+      "descent_value": 3241625,
+      "first_canonical_stabilization_step": 18,
+      "last_zero_slack_step": 56,
+      "late_min_slack_ratio": {
+        "20": [
+          0.0,
+          53,
+          0
+        ],
+        "50": [
+          0.0,
+          53,
+          0
+        ]
+      },
+      "max_safe_slack": 10,
+      "n": 5111879,
+      "stopping_time": 57,
+      "total_exponent": 91,
+      "zero_lift_run_before_descent": 39
+    },
+    {
+      "descent_value": 6597839,
+      "first_canonical_stabilization_step": 17,
+      "last_zero_slack_step": 6,
+      "late_min_slack_ratio": {
+        "20": [
+          0.013513513513513514,
+          74,
+          1
+        ],
+        "50": [
+          0.013513513513513514,
+          74,
+          1
+        ]
+      },
+      "max_safe_slack": 7,
+      "n": 7209031,
+      "stopping_time": 75,
+      "total_exponent": 119,
+      "zero_lift_run_before_descent": 58
+    },
+    {
+      "descent_value": 2806189,
+      "first_canonical_stabilization_step": 17,
+      "last_zero_slack_step": 90,
+      "late_min_slack_ratio": {
+        "20": [
+          0.0,
+          90,
+          0
+        ],
+        "50": [
+          0.0,
+          90,
+          0
+        ]
+      },
+      "max_safe_slack": 11,
+      "n": 25493575,
+      "stopping_time": 92,
+      "total_exponent": 149,
+      "zero_lift_run_before_descent": 75
+    },
+    {
+      "descent_value": 7718867,
+      "first_canonical_stabilization_step": 17,
+      "last_zero_slack_step": 92,
+      "late_min_slack_ratio": {
+        "20": [
+          0.0,
+          92,
+          0
+        ],
+        "50": [
+          0.0,
+          92,
+          0
+        ]
+      },
+      "max_safe_slack": 15,
+      "n": 32833607,
+      "stopping_time": 99,
+      "total_exponent": 159,
+      "zero_lift_run_before_descent": 82
+    },
+    {
+      "descent_value": 77292509,
+      "first_canonical_stabilization_step": 22,
+      "last_zero_slack_step": 6,
+      "late_min_slack_ratio": {
+        "100": [
+          0.008695652173913044,
+          115,
+          1
+        ],
+        "20": [
+          0.008695652173913044,
+          115,
+          1
+        ],
+        "50": [
+          0.008695652173913044,
+          115,
+          1
+        ]
+      },
+      "max_safe_slack": 11,
+      "n": 341704775,
+      "stopping_time": 116,
+      "total_exponent": 186,
+      "zero_lift_run_before_descent": 94
+    },
+    {
+      "descent_value": 524125873,
+      "first_canonical_stabilization_step": 21,
+      "last_zero_slack_step": 6,
+      "late_min_slack_ratio": {
+        "100": [
+          0.008547008547008548,
+          117,
+          1
+        ],
+        "20": [
+          0.008547008547008548,
+          117,
+          1
+        ],
+        "50": [
+          0.008547008547008548,
+          117,
+          1
+        ]
+      },
+      "max_safe_slack": 13,
+      "n": 686555207,
+      "stopping_time": 119,
+      "total_exponent": 189,
+      "zero_lift_run_before_descent": 98
+    },
+    {
+      "descent_value": 118420111,
+      "first_canonical_stabilization_step": 20,
+      "last_zero_slack_step": 27,
+      "late_min_slack_ratio": {
+        "100": [
+          0.024793388429752067,
+          121,
+          3
+        ],
+        "20": [
+          0.0,
+          22,
+          0
+        ],
+        "50": [
+          0.024793388429752067,
+          121,
+          3
+        ]
+      },
+      "max_safe_slack": 16,
+      "n": 735379527,
+      "stopping_time": 122,
+      "total_exponent": 196,
+      "zero_lift_run_before_descent": 102
+    },
+    {
+      "descent_value": 28269319,
+      "first_canonical_stabilization_step": 20,
+      "last_zero_slack_step": 5,
+      "late_min_slack_ratio": {
+        "100": [
+          0.00980392156862745,
+          102,
+          1
+        ],
+        "20": [
+          0.00980392156862745,
+          102,
+          1
+        ],
+        "50": [
+          0.00980392156862745,
+          102,
+          1
+        ]
+      },
+      "max_safe_slack": 10,
+      "n": 91226279,
+      "stopping_time": 139,
+      "total_exponent": 222,
+      "zero_lift_run_before_descent": 119
+    },
+    {
+      "descent_value": 8316317,
+      "first_canonical_stabilization_step": 20,
+      "last_zero_slack_step": 150,
+      "late_min_slack_ratio": {
+        "100": [
+          0.0,
+          150,
+          0
+        ],
+        "150": [
+          0.0,
+          150,
+          0
+        ],
+        "20": [
+          0.0,
+          80,
+          0
+        ],
+        "50": [
+          0.0,
+          80,
+          0
+        ]
+      },
+      "max_safe_slack": 10,
+      "n": 122159271,
+      "stopping_time": 178,
+      "total_exponent": 286,
+      "zero_lift_run_before_descent": 158
+    },
+    {
+      "descent_value": 127050103,
+      "first_canonical_stabilization_step": 22,
+      "last_zero_slack_step": 182,
+      "late_min_slack_ratio": {
+        "100": [
+          0.0,
+          158,
+          0
+        ],
+        "150": [
+          0.0,
+          158,
+          0
+        ],
+        "20": [
+          0.0,
+          40,
+          0
+        ],
+        "50": [
+          0.0,
+          69,
+          0
+        ]
+      },
+      "max_safe_slack": 10,
+      "n": 327682215,
+      "stopping_time": 184,
+      "total_exponent": 293,
+      "zero_lift_run_before_descent": 162
+    },
+    {
+      "descent_value": 339215887,
+      "first_canonical_stabilization_step": 23,
+      "last_zero_slack_step": 195,
+      "late_min_slack_ratio": {
+        "100": [
+          0.0,
+          181,
+          0
+        ],
+        "150": [
+          0.0,
+          181,
+          0
+        ],
+        "20": [
+          0.0,
+          181,
+          0
+        ],
+        "50": [
+          0.0,
+          181,
+          0
+        ]
+      },
+      "max_safe_slack": 14,
+      "n": 431557735,
+      "stopping_time": 196,
+      "total_exponent": 311,
+      "zero_lift_run_before_descent": 173
+    },
+    {
+      "descent_value": 275145181,
+      "first_canonical_stabilization_step": 21,
+      "last_zero_slack_step": 11,
+      "late_min_slack_ratio": {
+        "100": [
+          0.004901960784313725,
+          204,
+          1
+        ],
+        "150": [
+          0.004901960784313725,
+          204,
+          1
+        ],
+        "20": [
+          0.004901960784313725,
+          204,
+          1
+        ],
+        "200": [
+          0.004901960784313725,
+          204,
+          1
+        ],
+        "50": [
+          0.004901960784313725,
+          204,
+          1
+        ]
+      },
+      "max_safe_slack": 17,
+      "n": 582751335,
+      "stopping_time": 205,
+      "total_exponent": 326,
+      "zero_lift_run_before_descent": 184
+    },
+    {
+      "descent_value": 695527075,
+      "first_canonical_stabilization_step": 21,
+      "last_zero_slack_step": 207,
+      "late_min_slack_ratio": {
+        "100": [
+          0.0,
+          196,
+          0
+        ],
+        "150": [
+          0.0,
+          196,
+          0
+        ],
+        "20": [
+          0.0,
+          196,
+          0
+        ],
+        "200": [
+          0.0,
+          203,
+          0
+        ],
+        "50": [
+          0.0,
+          196,
+          0
+        ]
+      },
+      "max_safe_slack": 13,
+      "n": 872954535,
+      "stopping_time": 208,
+      "total_exponent": 330,
+      "zero_lift_run_before_descent": 187
+    },
+    {
+      "descent_value": 92734679,
+      "first_canonical_stabilization_step": 23,
+      "last_zero_slack_step": 215,
+      "late_min_slack_ratio": {
+        "100": [
+          0.0,
+          214,
+          0
+        ],
+        "150": [
+          0.0,
+          214,
+          0
+        ],
+        "20": [
+          0.0,
+          214,
+          0
+        ],
+        "200": [
+          0.0,
+          214,
+          0
+        ],
+        "50": [
+          0.0,
+          214,
+          0
+        ]
+      },
+      "max_safe_slack": 20,
+      "n": 145324775,
+      "stopping_time": 216,
+      "total_exponent": 343,
+      "zero_lift_run_before_descent": 193
+    },
+    {
+      "descent_value": 296749223,
+      "first_canonical_stabilization_step": 21,
+      "last_zero_slack_step": 181,
+      "late_min_slack_ratio": {
+        "100": [
+          0.0,
+          142,
+          0
+        ],
+        "150": [
+          0.0,
+          180,
+          0
+        ],
+        "20": [
+          0.0,
+          142,
+          0
+        ],
+        "200": [
+          0.009852216748768473,
+          203,
+          2
+        ],
+        "50": [
+          0.0,
+          142,
+          0
+        ]
+      },
+      "max_safe_slack": 11,
+      "n": 326610023,
+      "stopping_time": 222,
+      "total_exponent": 352,
+      "zero_lift_run_before_descent": 201
+    }
+  ]
+}
