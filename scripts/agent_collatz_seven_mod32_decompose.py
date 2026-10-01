@@ -47,7 +47,7 @@ PREAMBLE = """import Definitions.Def_syracuseStep
 import Mathlib.Logic.Function.Iterate
 import Mathlib.Data.Finset.Insert
 
-set_option autoImplicit false"""
+set_option autoImplicit false\nset_option maxRecDepth 100000"""
 
 
 def api(method: str, path: str, *, token: str | None = None, payload=None):
