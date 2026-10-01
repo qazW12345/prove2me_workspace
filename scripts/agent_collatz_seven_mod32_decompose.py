@@ -261,6 +261,7 @@ import Mathlib.Logic.Function.Iterate
 import Mathlib.Data.Finset.Insert
 
 set_option autoImplicit false
+set_option maxRecDepth 100000
 
 theorem solution (n : ℕ)
 {old_hypotheses()} :
