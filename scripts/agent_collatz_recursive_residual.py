@@ -141,25 +141,22 @@ def finset_literal(vals, width=100):
 
 
 def find_exact(token, name, status=None):
-    params = {"q":name,"limit":"100","offset":"0"}
-    if status: params["status"] = status
-    path = "/theorems?"+urllib.parse.urlencode(params)
-    last = None
-    for attempt in range(10):
-        try:
-            page = api("GET",path,token=token)
-            for item in page.get("theorems",[]):
-                if item.get("theorem_name") == name or item.get("definition_name") == name:
-                    return item
+    kind = "definition" if status == "Definition" else "problem"
+    offset = 0
+    for _ in range(20):
+        path = "/publish-jobs?" + urllib.parse.urlencode({"kind":kind,"limit":"100","offset":str(offset)})
+        page = api("GET", path, token=token)
+        items = page if isinstance(page, list) else page.get("jobs", page.get("publish_jobs", []))
+        if not items:
             return None
-        except RuntimeError as exc:
-            last = exc
-            msg = str(exc)
-            if "HTTP 500" not in msg and "HTTP 502" not in msg and "HTTP 503" not in msg and "HTTP 504" not in msg:
-                raise
-            print("catalog-search-retry", json.dumps({"name":name,"attempt":attempt+1,"error":msg[:500]}))
-            time.sleep(min(5 + 3*attempt, 30))
-    raise last
+        for item in items:
+            item_name = item.get("theorem_name") or item.get("definition_name") or item.get("name")
+            if item_name == name and item.get("status") == "PUBLISHED":
+                return item
+        if len(items) < 100:
+            return None
+        offset += len(items)
+    return None
 
 
 def poll_job(token, jid):
