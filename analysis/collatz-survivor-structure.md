@@ -986,3 +986,81 @@ positive integer.
 External formal reference:
 `Collatz.Shadow.shadow_modEq` and the surrounding 3-adic shadow development
 in https://github.com/msharpe248/collatz.
+
+
+---
+
+## 18. Once the 3-adic shadow becomes exact, exactness propagates forever
+
+The shadow residues admit a particularly simple recursive description.
+
+If (Q_t) is the canonical residue modulo (3^t) after (t) accelerated
+blocks and the next valuation is (a_{t+1}), then
+
+[
+Q_{t+1}
+equiv
+(3Q_t+1),2^{-a_{t+1}}
+pmod{3^{t+1}}.
+]
+
+This follows directly from the cocycle recurrence
+(C_{t+1}=3C_t+2^{S_t}).
+
+For an arbitrary 2-adic symbolic path this is a modular transition and may
+wrap around the modulus.  For an actual positive orbit, however, once a
+critical return is late enough that
+
+[
+Q_t=operatorname{Syr}^t(N)<3^t,
+]
+
+the next true accelerated iterate is
+
+[
+Y_{t+1}
+=
+rac{3Q_t+1}{2^{a_{t+1}}}
+<
+rac{3cdot3^t+1}{2}
+<
+3^{t+1}.
+]
+
+Therefore (Y_{t+1}) is already the least nonnegative residue satisfying the
+shadow congruence, so
+
+[
+Q_{t+1}=Y_{t+1}.
+]
+
+Induction gives:
+
+> **After the first sufficiently late exact shadow hit, all later shadow
+> residues are the actual positive accelerated orbit values.**
+
+Thus a hypothetical positive survivor has a two-sided eventual exactness
+property:
+
+- its 2-adic canonical *starting* residues eventually freeze to (N);
+- its 3-adic canonical *endpoint* residues eventually cease wrapping and
+  evolve as an honest positive Syracuse orbit.
+
+This is a useful computational reformulation.  A symbolic safe path that
+continues to incur 3-adic modular wraps infinitely often cannot come from a
+positive integer counterexample.
+
+Conversely, proving that every path satisfying the slack constraints from
+Section 16 must wrap infinitely often would kill the branch.
+
+This is now the concrete symbolic target:
+
+[
+D_t	oinfty,qquad
+liminf D_t/t=0,qquad
+sum_trac{2^{-D_t}}{N+t}<infty,
+]
+
+together with **eventual no-wrap shadow dynamics**.  The last property is
+where the arithmetic of actual positive integers re-enters the otherwise
+purely symbolic survivor language.
