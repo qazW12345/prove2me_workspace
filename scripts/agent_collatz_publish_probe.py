@@ -19,7 +19,7 @@ def main():
     keep=[]
     for j in jobs:
         name=j.get("theorem_name") or j.get("definition_name") or j.get("name") or ""
-        if "syracuse" in name.lower() and ("new21" in name.lower() or "new22" in name.lower() or "new23" in name.lower() or "new24" in name.lower() or "new25" in name.lower() or "2097152" in name or "4194304" in name or "8388608" in name or "16777216" in name or "33554432" in name):
+        if "syracuse" in name.lower() and ("new21" in name.lower() or "new22" in name.lower() or "new23" in name.lower() or "new24" in name.lower() or "new25" in name.lower() or "new26" in name.lower() or "2097152" in name or "4194304" in name or "8388608" in name or "16777216" in name or "33554432" in name or "67108864" in name):
             keep.append({k:j.get(k) for k in ("job_id","id","kind","theorem_name","definition_name","name","status","theorem_id","error_message","created_at","updated_at")})
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps({"jobs":keep},indent=2)+"\n")
