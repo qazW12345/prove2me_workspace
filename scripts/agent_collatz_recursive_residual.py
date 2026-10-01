@@ -143,11 +143,23 @@ def finset_literal(vals, width=100):
 def find_exact(token, name, status=None):
     params = {"q":name,"limit":"100","offset":"0"}
     if status: params["status"] = status
-    page = api("GET","/theorems?"+urllib.parse.urlencode(params),token=token)
-    for item in page.get("theorems",[]):
-        if item.get("theorem_name") == name or item.get("definition_name") == name:
-            return item
-    return None
+    path = "/theorems?"+urllib.parse.urlencode(params)
+    last = None
+    for attempt in range(10):
+        try:
+            page = api("GET",path,token=token)
+            for item in page.get("theorems",[]):
+                if item.get("theorem_name") == name or item.get("definition_name") == name:
+                    return item
+            return None
+        except RuntimeError as exc:
+            last = exc
+            msg = str(exc)
+            if "HTTP 500" not in msg and "HTTP 502" not in msg and "HTTP 503" not in msg and "HTTP 504" not in msg:
+                raise
+            print("catalog-search-retry", json.dumps({"name":name,"attempt":attempt+1,"error":msg[:500]}))
+            time.sleep(min(5 + 3*attempt, 30))
+    raise last
 
 
 def poll_job(token, jid):
